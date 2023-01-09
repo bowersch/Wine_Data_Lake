@@ -1,7 +1,7 @@
 {
   "name": "wldp_dev",
   "version": "1.0.0",
-  "description": "",
+  "description": "Setup:\r     npm init\r     ^downloads required node packages\r Before Useage:\r     update config.json with correct template and data files\r Run: \r     npm start\r     ^ command will run/update server continuously, so there is no need to rerun in between file updates",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -1,0 +1,40 @@
+body {
+    font-family: 'Montserrat';
+}
+
+.header {
+    background-color: #FFFFFF;
+    color: #310866;
+}
+
+.mainContent {
+    background-image: url('/images/background.jpg');
+}
+
+.footer {
+    background-color: #3B0C77;
+    position: absolute;
+    left: 0%;
+    bottom: 0%;
+    width: 100%;
+    height: 8%;
+    color: #DACAF3;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.footer .contents {
+    margin-left: auto;
+    margin-right: 2%;
+}
+
+.footer .contents a {
+    text-decoration: none;
+}
+
+.footer .contents a:visited {
+    color: #DACAF3;
+}
