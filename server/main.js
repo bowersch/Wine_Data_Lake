@@ -12,7 +12,7 @@ app.engine('handlebars', handlebars.engine({
 app.use(express.static(__dirname + '/public'))
 
 app.get('/*', (req, res) => {
-    res.render('demo', {layout : 'main'});
+    res.render('demo', {layout : 'main', css: ["demo.css"]});
 });
 
 app.listen(port, () => console.log(`App open at http://localhost:${port}/`));

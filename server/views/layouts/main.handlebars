@@ -1,23 +1,38 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Wine Data Lake</title>
         <link rel="stylesheet" href="/css/mainTemplate.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-        <title>Wine Data Lake</title>
+        {{#each css}}
+            <link rel="stylesheet" href="/css/{{this}}">
+        {{/each}}
     </head>
     <body>
-        <div class="header">
-            <img src="logo.jpg">
-            WINE DATA LAKE
-            <button>Sign Up</button>
-            <button>Sign In</button>
-        </div>
-        <div class="mainContent">
-            {{{body}}}
-        </div>
-        <div class="footer">
-            <div class="contents">
-                <a href="">About</a> | <a href="">Contact Us</a> | <a href="">Developers</a> | <a href="">How to Use This Site</a>
+        {{#each js}}
+        <script src="/js/{{this}}"></script>
+        {{/each}}
+        <div class="wrapper">
+            <div class="header">
+                <div class="logoWrapper">
+                    <embed src="/svg/logo.svg">
+                </div>
+                <div class="accountWrapper">
+                    <div class="signUpWrapper">
+                        <button>Sign Up</button>
+                    </div>
+                    <div class="signInWrapper">
+                        <button>Sign In</button>
+                    </div>
+                </div>
+            </div>
+            <div class="mainContent">
+                {{{body}}}
+            </div>
+            <div class="footer">
+                <div class="contents">
+                    <a href="">About</a> | <a href="">Contact Us</a> | <a href="">Developers</a> | <a href="">How to Use This Site</a>
+                </div>
             </div>
         </div>
     </body>

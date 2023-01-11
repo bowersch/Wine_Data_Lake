@@ -1,23 +1,73 @@
-body {
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.wrapper {
     font-family: 'Montserrat';
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.header, .footer {
+    height: 6%;
+    margin: 0;
+    border: 0;
+    padding-top: 1%;
+    padding-bottom: 1%;
 }
 
 .header {
     background-color: #FFFFFF;
     color: #310866;
+    top: 0%;
+    display: flex;
+    align-items: center;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.accountWrapper {
+    margin-left: auto;
+    margin-right: 0;
+    display: flex;
+}
+
+.accountWrapper button {
+    background-color: #FBFCFD;
+    color: #310866;
+    border-radius: 25px;
+    border: 1px solid #8162B5;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 26px;
+}
+
+.accountWrapper button:hover {
+    cursor: pointer;
+}
+
+.signInWrapper button {
+    background-color: #FFFFFF;
+    border: none;
 }
 
 .mainContent {
-    background-image: url('/images/background.jpg');
+    background-image: url('/images/background.png');
+    flex: 1 1 auto;
+    display: flex;
+    align-items: stretch;
+    justify-items: center;
+    padding-left: 8%;
+    padding-right: 8%;
 }
 
 .footer {
     background-color: #3B0C77;
-    position: absolute;
-    left: 0%;
     bottom: 0%;
-    width: 100%;
-    height: 8%;
     color: #DACAF3;
     font-style: normal;
     font-weight: 500;
