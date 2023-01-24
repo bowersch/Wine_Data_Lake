@@ -3,13 +3,23 @@ const handlebars = require('express-handlebars');
 const app = express();
 const port = 3000;
 
+const testData = require('./demo.json')
+
 app.set('view engine', 'handlebars');
 
 app.engine('handlebars', handlebars.engine({
-    layoutsDir : __dirname + '/views/layouts'
+    layoutsDir: './views/layouts/'
 }));
 
-app.use(express.static(__dirname + '/public'))
+app.use(express.static('public'))
+
+app.get('/wines/*', (req, res) => {
+    res.render('wineEntry', {
+        layout : 'main',
+        css: ["wineEntry.css"],
+        data: testData
+    });
+});
 
 app.get('/*', (req, res) => {
     res.render('demo', {layout : 'main', css: ["demo.css"]});

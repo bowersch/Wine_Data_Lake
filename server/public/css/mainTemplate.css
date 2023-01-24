@@ -32,6 +32,7 @@ html, body {
     margin-left: auto;
     margin-right: 0;
     display: flex;
+    flex-direction: row;
 }
 
 .accountWrapper button {
@@ -50,7 +51,7 @@ html, body {
     cursor: pointer;
 }
 
-.signInWrapper button {
+.signInWrapper button, .userWrapper button {
     background-color: #FFFFFF;
     border: none;
 }
@@ -63,6 +64,8 @@ html, body {
     justify-items: center;
     padding-left: 8%;
     padding-right: 8%;
+    padding-top: 2%;
+    padding-bottom: 1%;
 }
 
 .footer {

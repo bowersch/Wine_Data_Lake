@@ -1,0 +1,46 @@
+<div class="entryWrapper">
+        <button class="favoriteWineButton"><i class="fa-regular fa-heart"></i></button>
+        <div class="entryDataWrapper">
+                <div class="wineName">
+                        {{data.name}}
+                </div>
+                <button class="visitButton">Visit Winery</button>
+                <div class="wineDescription">
+                        {{data.description}}
+                </div>
+                <div class="keywordsWrapper">
+                        Keywords   
+                </div>
+                <div class="wineKeywords">
+                        {{#each data.keywords}}
+                                <div class="keywordLink">
+                                        <a href="">{{this}}</a>
+                                </div>
+                        {{/each}}
+                </div>
+                <div class="properties">
+                        {{#each data.properties}}
+                                <div class="property">
+                                        <div class="propertyName">
+                                                {{@key}}
+                                                <button class="favoriteButton"><i class="fa-regular fa-heart"></i></button>
+                                        </div>
+                                        <div class="propertyValue">
+                                                {{this}}
+                                        </div>
+                                </div>
+                        {{/each}}
+                </div>
+        </div>
+        <div class="techSheet">
+                <iframe src="{{data.techSheet}}#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf"></iframe>
+                <div class="downloadButton">
+                        <a href="">Download Tech Sheet</a>
+                </div>
+        </div>
+        {{#if data.purchaseLink}}
+                <div class="purchaseWrapper">
+                        <a href="{{data.purchaseLink}}"><i class="fa-solid fa-cart-shopping"></i></a>
+                </div>
+        {{/if}}
+</div>
