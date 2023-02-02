@@ -60,5 +60,10 @@
                 }
             ]
         }
-    ]
+    ],
+
+    "userGreeting": "LeroyJenkins123",
+    "qualities": ["smoky", "bold", "fruity"],
+    "wineries": ["Alloro Vineyard", "Archery Summit", "Boedecker Cellars"],
+    "techsheets": ""
 }

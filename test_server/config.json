@@ -2,5 +2,6 @@
     "layout_path" : "/views/layouts",
     "layout_template" : "main",
     "template" : "directory",
+    "template2" : "userFavorites",
     "test_data" : "demo.json"
 }

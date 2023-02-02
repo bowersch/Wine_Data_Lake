@@ -14,6 +14,14 @@ app.engine('handlebars', handlebars.engine({
 
 app.use(express.static('public'))
 
+app.get('/userfavorites/*', (req, res) => {
+    res.render(config.template2, {
+        layout: config.layout_template,
+        css: ["userFavorites.css"],
+        data: test_data
+    });
+});
+
 app.get('/', (req, res) => {
     res.render(config.template, {
         layout : config.layout_template, 
