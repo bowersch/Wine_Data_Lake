@@ -30,4 +30,36 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/about*', (req, res) => {
+    res.render(config.template3, {
+        layout : config.layout_template, 
+        css: ["about.css"],
+        data : test_data
+    });
+});
+
+app.get('/contact*', (req, res) => {
+    res.render(config.template4, {
+        layout : config.layout_template, 
+        css: ["about.css"],
+        data : test_data
+    });
+});
+
+app.get('/developer*', (req, res) => {
+    res.render(config.template5, {
+        layout : config.layout_template, 
+        css: ["about.css"],
+        data : test_data
+    });
+});
+
+app.get('/help*', (req, res) => {
+    res.render(config.template6, {
+        layout : config.layout_template, 
+        css: ["about.css"],
+        data : test_data
+    });
+});
+
 app.listen(port, () => console.log(`App open at http://localhost:${port}/`));

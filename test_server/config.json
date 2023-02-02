@@ -3,5 +3,9 @@
     "layout_template" : "main",
     "template" : "directory",
     "template2" : "userFavorites",
+    "template3": "about", 
+    "template4": "contact",
+    "template5": "developers", 
+    "template6": "help",
     "test_data" : "demo.json"
 }
