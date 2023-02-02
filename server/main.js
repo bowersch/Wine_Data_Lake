@@ -21,10 +21,18 @@ app.get('/wines/*', (req, res) => {
     });
 });
 
-app.get('/direct/*', (req, res) => {
+app.get('/directory/*', (req, res) => {
     res.render('directory', {
         layout: 'main', 
         css: ["directory.css"],
+        data: testData
+    });
+});
+
+app.get('/favorites/*', (req, res) => {
+    res.render('userFavorites', {
+        layout: 'main', 
+        css: ["userFavorites.css"],
         data: testData
     });
 });
