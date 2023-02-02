@@ -15,7 +15,11 @@ app.engine('handlebars', handlebars.engine({
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-    res.render(config.template, {layout : config.layout_template, data : test_data});
+    res.render(config.template, {
+        layout : config.layout_template, 
+        css: ["directory.css"],
+        data : test_data
+    });
 });
 
 app.listen(port, () => console.log(`App open at http://localhost:${port}/`));

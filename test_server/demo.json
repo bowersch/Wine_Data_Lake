@@ -1,3 +1,64 @@
 {
-    "message": "Hello there."
+    "directoryTitle": "TECH SHEET DIRECTORY",
+    "winery": [
+        {
+            "name": "Alloro Vineyard",
+            "wines": [
+                {
+                    "wineType": "Riesling", 
+                    "year": 2017
+                },
+                {
+                    "wineType": "Pinot Noir", 
+                    "year": 2018
+                },
+                {
+                    "wineType": "Chardonnay", 
+                    "year": 2021
+                }
+            ]
+        },
+        {
+            "name": "Archery Summit",
+            "wines": [
+                {
+                    "wineType": "Pinot Noir",
+                    "year": 2018
+                },
+                {
+                    "wineType": "Chardonnay", 
+                    "year": 2019
+                },
+                {
+                    "wineType": "Chardonnay", 
+                    "year": 2020
+                },
+                {
+                    "wineType": "Pinot Noir", 
+                    "year": 2020
+                }
+            ]
+        },
+        {
+            "name": "Boedecker Cellars",
+            "wines": [
+                {
+                    "wineType": "Pinot Noir",
+                    "year": 2015
+                },
+                {
+                    "wineType": "Pinot Noir",
+                    "year": 2017
+                },
+                {
+                    "wineType": "Pinot Noir",
+                    "year": 2018
+                },
+                {
+                    "wineType": "Chardonnay",
+                    "year": 2019
+                }
+            ]
+        }
+    ]
 }
