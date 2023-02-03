@@ -14,22 +14,21 @@
         "Aging": "new and neutral french oak"
     },
     "purchaseLink": "#"
-=======
     "directoryTitle": "TECH SHEET DIRECTORY",
     "winery": [
         {
             "name": "Alloro Vineyard",
             "wines": [
                 {
-                    "wineType": "Riesling", 
+                    "wineType": "Riesling",
                     "year": 2017
                 },
                 {
-                    "wineType": "Pinot Noir", 
+                    "wineType": "Pinot Noir",
                     "year": 2018
                 },
                 {
-                    "wineType": "Chardonnay", 
+                    "wineType": "Chardonnay",
                     "year": 2021
                 }
             ]
@@ -42,15 +41,15 @@
                     "year": 2018
                 },
                 {
-                    "wineType": "Chardonnay", 
+                    "wineType": "Chardonnay",
                     "year": 2019
                 },
                 {
-                    "wineType": "Chardonnay", 
+                    "wineType": "Chardonnay",
                     "year": 2020
                 },
                 {
-                    "wineType": "Pinot Noir", 
+                    "wineType": "Pinot Noir",
                     "year": 2020
                 }
             ]

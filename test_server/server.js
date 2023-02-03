@@ -14,12 +14,51 @@ app.engine('handlebars', handlebars.engine({
 
 app.use(express.static('public'));
 
-app.get('/*', (req, res) => {
+app.get('/userfavorites/*', (req, res) => {
+    res.render(config.template2, {
+        layout: config.layout_template,
+        css: ["userFavorites.css"],
+        data: test_data
+    });
+});
+
+app.get('/', (req, res) => {
     res.render(config.template, {
         layout : config.layout_template,
-        data : test_data,
-        css: ['wineEntry.css']/*,
-        user: 'stinkyMcGee'*/
+        css: ["directory.css"],
+        data : test_data
+    });
+});
+
+app.get('/about*', (req, res) => {
+    res.render(config.template3, {
+        layout : config.layout_template,
+        css: ["about.css"],
+        data : test_data
+    });
+});
+
+app.get('/contact*', (req, res) => {
+    res.render(config.template4, {
+        layout : config.layout_template,
+        css: ["about.css"],
+        data : test_data
+    });
+});
+
+app.get('/developer*', (req, res) => {
+    res.render(config.template5, {
+        layout : config.layout_template,
+        css: ["about.css"],
+        data : test_data
+    });
+});
+
+app.get('/help*', (req, res) => {
+    res.render(config.template6, {
+        layout : config.layout_template,
+        css: ["about.css"],
+        data : test_data
     });
 });
 
