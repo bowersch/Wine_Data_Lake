@@ -1,5 +1,4 @@
 {
-<<<<<<< Updated upstream
     "name": "Pino Noir Johan",
     "description": "As far as we know, this is the first bottling of pure 943 in Oregon history. Some may think we’re crazy, isolating a clone such as 943, but the wine was simply too distinctive not to isolate at least the very best barrels. This is the only Origin wine produced in 2015, the only wine in the cellar that we felt warranted this distinct label. Clone 943 was brought into the United States around the same time as most Dijon clones, but in fact is not designated a Dijon clone...",
     "keywords": ["crips", "dry", "pino gris"],
@@ -13,7 +12,7 @@
         "Soils": "sedimentary",
         "Aging": "new and neutral french oak"
     },
-    "purchaseLink": "#"
+    "purchaseLink": "#",
     "directoryTitle": "TECH SHEET DIRECTORY",
     "winery": [
         {
@@ -81,5 +80,4 @@
     "qualities": ["smoky", "bold", "fruity"],
     "wineries": ["Alloro Vineyard", "Archery Summit", "Boedecker Cellars"],
     "techsheets": ""
->>>>>>> Stashed changes
 }
