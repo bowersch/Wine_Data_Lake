@@ -1,4 +1,5 @@
 {
+<<<<<<< Updated upstream
     "name": "Pino Noir Johan",
     "description": "As far as we know, this is the first bottling of pure 943 in Oregon history. Some may think we’re crazy, isolating a clone such as 943, but the wine was simply too distinctive not to isolate at least the very best barrels. This is the only Origin wine produced in 2015, the only wine in the cellar that we felt warranted this distinct label. Clone 943 was brought into the United States around the same time as most Dijon clones, but in fact is not designated a Dijon clone...",
     "keywords": ["crips", "dry", "pino gris"],
@@ -13,4 +14,73 @@
         "Aging": "new and neutral french oak"
     },
     "purchaseLink": "#"
+=======
+    "directoryTitle": "TECH SHEET DIRECTORY",
+    "winery": [
+        {
+            "name": "Alloro Vineyard",
+            "wines": [
+                {
+                    "wineType": "Riesling", 
+                    "year": 2017
+                },
+                {
+                    "wineType": "Pinot Noir", 
+                    "year": 2018
+                },
+                {
+                    "wineType": "Chardonnay", 
+                    "year": 2021
+                }
+            ]
+        },
+        {
+            "name": "Archery Summit",
+            "wines": [
+                {
+                    "wineType": "Pinot Noir",
+                    "year": 2018
+                },
+                {
+                    "wineType": "Chardonnay", 
+                    "year": 2019
+                },
+                {
+                    "wineType": "Chardonnay", 
+                    "year": 2020
+                },
+                {
+                    "wineType": "Pinot Noir", 
+                    "year": 2020
+                }
+            ]
+        },
+        {
+            "name": "Boedecker Cellars",
+            "wines": [
+                {
+                    "wineType": "Pinot Noir",
+                    "year": 2015
+                },
+                {
+                    "wineType": "Pinot Noir",
+                    "year": 2017
+                },
+                {
+                    "wineType": "Pinot Noir",
+                    "year": 2018
+                },
+                {
+                    "wineType": "Chardonnay",
+                    "year": 2019
+                }
+            ]
+        }
+    ],
+
+    "userGreeting": "LeroyJenkins",
+    "qualities": ["smoky", "bold", "fruity"],
+    "wineries": ["Alloro Vineyard", "Archery Summit", "Boedecker Cellars"],
+    "techsheets": ""
+>>>>>>> Stashed changes
 }
