@@ -1,3 +1,19 @@
+CREATE TABLE IF NOT EXISTS ava
+(
+	ava_id           SERIAL PRIMARY KEY,
+	ava_name         VARCHAR(255) NOT NULL,
+	location	     VARCHAR(800),
+	climate		     VARCHAR(800),
+	soils			 VARCHAR(800),
+	topography       VARCHAR(800)
+);
+
+CREATE TABLE IF NOT EXISTS varietals
+(
+	varietal_id      SERIAL PRIMARY KEY,
+	varietal_name    VARCHAR(255)	
+);
+
 CREATE TABLE IF NOT EXISTS regional_varietals
 (
 	ava_id		     INTEGER REFERENCES ava(ava_id),
@@ -10,12 +26,6 @@ CREATE TABLE IF NOT EXISTS techsheets
 	source_file      VARCHAR(255)
 );
 
-CREATE TABLE IF NOT EXISTS varietals
-(
-	varietal_id      SERIAL PRIMARY KEY,
-	varietal_name    VARCHAR(255)	
-);
-
 CREATE TABLE IF NOT EXISTS wineries
 (
 	winery_id        SERIAL PRIMARY KEY,
@@ -24,16 +34,6 @@ CREATE TABLE IF NOT EXISTS wineries
 	address	         VARCHAR(255),
 	phone_number     VARCHAR(30),
 	winery_url		 VARCHAR(255)
-);
-
-CREATE TABLE IF NOT EXISTS ava
-(
-	ava_id           SERIAL PRIMARY KEY,
-	ava_name         VARCHAR(255) NOT NULL,
-	location	     VARCHAR(800),
-	climate		     VARCHAR(800),
-	soils			 VARCHAR(800),
-	topography       VARCHAR(800)
 );
 
 CREATE TABLE IF NOT EXISTS bottle_data
