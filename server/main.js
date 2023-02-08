@@ -1,7 +1,7 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
 const app = express();
-const port = 8080;
+const PORT = process.env.PORT || 8080;
 
 const testData = require('./demo.json')
 
@@ -73,4 +73,4 @@ app.get('/*', (req, res) => {
     res.render('demo', {layout : 'main', css: ["demo.css"]});
 });
 
-app.listen(port, () => console.log(`App open at http://localhost:${port}/`));
+app.listen(PORT, () => console.log(`App open.`));
