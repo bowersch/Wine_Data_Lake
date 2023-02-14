@@ -1,7 +1,7 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
 const app = express();
-const port = 3000;
+const port = 8080;
 
 const testData = require('./demo.json')
 
@@ -23,7 +23,7 @@ app.get('/wines/*', (req, res) => {
 
 app.get('/directory/*', (req, res) => {
     res.render('directory', {
-        layout: 'main', 
+        layout: 'main',
         css: ["directory.css"],
         data: testData
     });
@@ -31,7 +31,7 @@ app.get('/directory/*', (req, res) => {
 
 app.get('/favorites/*', (req, res) => {
     res.render('userFavorites', {
-        layout: 'main', 
+        layout: 'main',
         css: ["userFavorites.css"],
         data: testData
     });
@@ -39,7 +39,7 @@ app.get('/favorites/*', (req, res) => {
 
 app.get('/about*', (req, res) => {
     res.render('about', {
-        layout: 'main', 
+        layout: 'main',
         css: ["about.css"],
         data: testData
     });
@@ -47,7 +47,7 @@ app.get('/about*', (req, res) => {
 
 app.get('/contact*', (req, res) => {
     res.render('contact', {
-        layout: 'main', 
+        layout: 'main',
         css: ["about.css"],
         data: testData
     });
@@ -55,7 +55,7 @@ app.get('/contact*', (req, res) => {
 
 app.get('/developers*', (req, res) => {
     res.render('developers', {
-        layout: 'main', 
+        layout: 'main',
         css: ["about.css"],
         data: testData
     });
@@ -63,7 +63,7 @@ app.get('/developers*', (req, res) => {
 
 app.get('/help*', (req, res) => {
     res.render('help', {
-        layout: 'main', 
+        layout: 'main',
         css: ["about.css"],
         data: testData
     });

@@ -12,7 +12,7 @@ app.engine('handlebars', handlebars.engine({
     layoutsDir : config.layouts_path
 }));
 
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 app.get('/userfavorites/*', (req, res) => {
     res.render(config.template2, {
@@ -24,7 +24,7 @@ app.get('/userfavorites/*', (req, res) => {
 
 app.get('/', (req, res) => {
     res.render(config.template, {
-        layout : config.layout_template, 
+        layout : config.layout_template,
         css: ["directory.css"],
         data : test_data
     });
@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 
 app.get('/about*', (req, res) => {
     res.render(config.template3, {
-        layout : config.layout_template, 
+        layout : config.layout_template,
         css: ["about.css"],
         data : test_data
     });
@@ -40,7 +40,7 @@ app.get('/about*', (req, res) => {
 
 app.get('/contact*', (req, res) => {
     res.render(config.template4, {
-        layout : config.layout_template, 
+        layout : config.layout_template,
         css: ["about.css"],
         data : test_data
     });
@@ -48,7 +48,7 @@ app.get('/contact*', (req, res) => {
 
 app.get('/developer*', (req, res) => {
     res.render(config.template5, {
-        layout : config.layout_template, 
+        layout : config.layout_template,
         css: ["about.css"],
         data : test_data
     });
@@ -56,7 +56,7 @@ app.get('/developer*', (req, res) => {
 
 app.get('/help*', (req, res) => {
     res.render(config.template6, {
-        layout : config.layout_template, 
+        layout : config.layout_template,
         css: ["about.css"],
         data : test_data
     });
