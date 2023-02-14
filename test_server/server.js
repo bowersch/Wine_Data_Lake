@@ -18,8 +18,9 @@ app.get('/*', (req, res) => {
     res.render(config.template, {
         layout : config.layout_template,
         data : test_data,
-        css: ['wineEntry.css']/*,
-        user: 'stinkyMcGee'*/
+        css: config.css,
+        js: config.js,
+        user: 'stinkyMcGee'
     });
 });
 
