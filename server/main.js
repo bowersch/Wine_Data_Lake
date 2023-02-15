@@ -69,6 +69,22 @@ app.get('/help*', (req, res) => {
     });
 });
 
+app.get('/login/*', (req, res) => {
+    res.render('login', {
+        layout: 'main',
+        css: ["login.css"],
+        data: testData
+    });
+});
+
+app.get('/home/*', (req, res) => {
+    res.render('home', {
+        layout: 'main',
+        css: ["home.css"],
+        data: testData
+    });
+});
+
 app.get('/*', (req, res) => {
     res.render('demo', {layout : 'main', css: ["demo.css"]});
 });
