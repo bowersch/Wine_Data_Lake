@@ -25,10 +25,40 @@ app.get('/userfavorites/*', (req, res) => {
 app.get('/', (req, res) => {
     res.render(config.template, {
         layout : config.layout_template,
-        data : test_data,
-        css: config.css,
-        js: config.js,
-        user: 'stinkyMcGee'
+        css: ["login.css"],
+        data : test_data
+    });
+});
+
+app.get('/about*', (req, res) => {
+    res.render(config.template3, {
+        layout : config.layout_template,
+        css: ["about.css"],
+        data : test_data
+    });
+});
+
+app.get('/contact*', (req, res) => {
+    res.render(config.template4, {
+        layout : config.layout_template,
+        css: ["about.css"],
+        data : test_data
+    });
+});
+
+app.get('/developer*', (req, res) => {
+    res.render(config.template5, {
+        layout : config.layout_template,
+        css: ["about.css"],
+        data : test_data
+    });
+});
+
+app.get('/help*', (req, res) => {
+    res.render(config.template6, {
+        layout : config.layout_template,
+        css: ["about.css"],
+        data : test_data
     });
 });
 
