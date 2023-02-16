@@ -1,0 +1,25 @@
+<div class = "contentBackground">
+    <div class = "directoryHeader">
+        <h1>TECH SHEET DIRECTORY</h1>
+    </div>
+    <div class = "wineList">
+        <h2>WINERIES (A - Z)</h2>
+    </div>
+    <div class = "individualWinery">
+        {{#each data.winery}}
+            <table>
+            <th colspan="3" align="left"><h3><b>{{this.name}}</b></h3></th>
+                <tr>
+                    <td width = 150px align="center"><img src="/images/winery_logo.png" /></td>
+                    <td>
+                        <div class = "wineToTechSheet">
+                            {{#each this.wines}}
+                                <li><a href = "">{{this.year}} {{this.wineType}}</a></li><br>
+                            {{/each}}
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        {{/each}}
+    </div>
+</div>

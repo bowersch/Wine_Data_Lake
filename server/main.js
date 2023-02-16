@@ -45,6 +45,54 @@ app.get('/results/*', (req, res) => {
     });
 });
 
+app.get('/directory/*', (req, res) => {
+    res.render('directory', {
+        layout: 'main',
+        css: ["directory.css"],
+        data: testData
+    });
+});
+
+app.get('/favorites/*', (req, res) => {
+    res.render('userFavorites', {
+        layout: 'main',
+        css: ["userFavorites.css"],
+        data: testData
+    });
+});
+
+app.get('/about*', (req, res) => {
+    res.render('about', {
+        layout: 'main',
+        css: ["about.css"],
+        data: testData
+    });
+});
+
+app.get('/contact*', (req, res) => {
+    res.render('contact', {
+        layout: 'main',
+        css: ["about.css"],
+        data: testData
+    });
+});
+
+app.get('/developers*', (req, res) => {
+    res.render('developers', {
+        layout: 'main',
+        css: ["about.css"],
+        data: testData
+    });
+});
+
+app.get('/help*', (req, res) => {
+    res.render('help', {
+        layout: 'main',
+        css: ["about.css"],
+        data: testData
+    });
+});
+
 app.get('/*', (req, res) => {
     res.render('demo', {layout : 'main', css: ["demo.css"]});
 });
