@@ -9,6 +9,7 @@ const secrets = require("./secrets.json")
 const client = new Client({
     host: '34.168.133.161',
     port: 5432,
+    database: "postgres",
     user: secrets.user,
     password: secrets.password
 });
@@ -20,7 +21,7 @@ client.connect((err) => {
     }
 });
 
-client.query('SELECT table_name FROM INFORMATION_SCHEMA.TABLES', (err, res) => {
+client.query('SELECT quality_name FROM qualities', (err, res) => {
     if (err) throw err
     console.log(res)
     client.end()
@@ -36,10 +37,10 @@ app.engine('handlebars', handlebars.engine({
 
 app.use(express.static('public'));
 
-app.get('/wines/*', (req, res) => {
-    res.render('wineEntry', {
+app.get('/results/*', (req, res) => {
+    res.render('wineResults', {
         layout : 'main',
-        css: ["wineEntry.css"],
+        css: ["wineResults.css"],
         data: testData
     });
 });
