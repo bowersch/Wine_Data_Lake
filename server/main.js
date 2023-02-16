@@ -77,7 +77,7 @@ app.get('/login/*', (req, res) => {
     });
 });
 
-app.get('/home/*', (req, res) => {
+app.get('/*', (req, res) => {
     res.render('home', {
         layout: 'main',
         css: ["home.css"],

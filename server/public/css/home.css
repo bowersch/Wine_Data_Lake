@@ -1,4 +1,3 @@
-@import url("htttps://fonts/googleapis.com/css?family=Montserrat:400,700,500,600|Modern+Antiqua:400");
 
 .home-unauthenticated {
     align-items: flex-start;
@@ -51,8 +50,12 @@
 }
 
 .origin_johan_pinot_2015-2{
-    height: 270px;
-    width: 273.79;
+    height: 100%;
+    margin-left: -4px;
+    margin-top: 5px;
+    object-fit: fill;
+    width: 276px;
+    
 }
 
 .sample-thumbnail {
@@ -67,12 +70,13 @@
     margin-top: 2px;
     overflow: hidden;
     width: 280px;
+    border-radius: 18px;
+    box-shadow: 0px 4px 4px #00000040;
 }
 
 .image-2 {
-
     content: center;
-   
+    object-fit: fill;
     height: 100%;
     width: 110%;
 }
@@ -273,18 +277,20 @@
 }
 
 .nv_johan_helixchardonnay {
-    height: 229.39px;
+    height: 240.39px;
     margin-left: 51.1px;
     margin-top: 0.8px;
-    object-fit: cover;
+    object-fit: fill;
     width: 262.45px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 4px #00000040;
 }
 
 .origin_johan_pinot_2015 {
     height: 249.39px;
     margin-left: -4px;
     margin-top: 0.8px;
-    object-fit: cover;
+    object-fit: fill;
     width: 270.45px;
 }
 
@@ -292,14 +298,14 @@
     height: 249.39px;
     margin-left: 40.1px;
     margin-top: 1.6px;
-    object-fit: cover;
+    object-fit: fill;
     width: 270.45px;
 }
 
 .nv_johan_petillant {
     height: 250.74px;
-    margin-left: 34px;
-    object-fit: cover;
+    margin-left: 45px;
+    object-fit: fill;
     width: 270.45px;
 }
 
@@ -316,23 +322,25 @@
     height: 229.56px;
     margin-left: 48.1px;
     margin-top: 1.6px;
-    object-fit: cover;
+    object-fit: fill;
     width: 267.29px;
 }
 
 .nv_johan_helixchardonnay-1 {
     height: 219.35px;
     margin-left: 48.1px;
-    margin-top: 1.6px;
-    object-fit: cover;
+    margin-top: 1.5px;
+    object-fit: fill;
     width: 267.29px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 4px #00000040;
 }
 
 .nv_johan_petillant-1 {
     height: 230.8px;
-    margin-left: 35.5px;
+    margin-left: 45px;
     margin-top: 0;
-    object-fit: cover;
+    object-fit: fill;
     width: 267.29px;
 }
 
@@ -340,24 +348,9 @@
     height: 229.56px;
     margin-top: 1.6px;
     width: 267.29px;
+    object-fit: fill;
 }
 
-/*.footer {
-    align-items: flex-start;
-    background-color: #3B0C77;
-    display: flex;
-    flex-direction: row;
-    height: 117px;
-    justify-content: flex-end;
-    left: 0;
-    min-width: 1440px;
-    mix-blend-mode: normal;
-    padding: 44px 42px;
-    position: absolute;
-    top: 826px;
-    width: auto;
-}
-*/
 .overlap-group-1 {
     height: 28px;
     position: relative;
@@ -411,53 +404,14 @@
     white-space: nowrap;
 }
 
-.developer {
-    cursor: pointer;
-    left:225px;
-    letter-spacing: 0;
-    line-height: 26px;
-    position: absolute;
-    text-align: center;
-    top: 2px;
-    white-space: nowrap;
-}
+
 
 .wine-background {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 102%;
-    height: 110%;
-}
-
-/*.header {
-    align-items: center;
-    background-color: var(--white);
-    display: flex;
-    flex-direction: row;
-    flex-shrink: 1;
-    height: 81px;
-    justify-content: flex-start;
-    min-width: 1440px;
-    padding: 9px 26px;
-    width: auto;
-}
-*/
-.hamburger {
-    align-items: flex-start;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    margin-bottom: 1px;
-    min-height: 32px;
-    width: 43px;
-}
-
-.rectangle {
-    background-color: var(--deluge);
-    height: 6px;
-    width: 43px;
+    width: 100%;
+    height: 100%;
 }
 
 .overlap-group1 {
@@ -468,31 +422,7 @@
     width: 196px;
 }
 
-.sign-up-sign-in {
-    align-items: flex-start;
-    cursor: pointer;
-    display: flex;
-    gap: 30px;
-    height: 31px;
-    left: 0;
-    min-width: 196px;
-    position: absolute;
-    top: 1px;
-}
 
-.sign-up {
-    align-items: flex-start;
-    align-self: flex-end;
-    background-color: #fbfcfd;
-    border: 1px solid;
-    border-color: var(--deluge);
-    border-radius: 25px;
-    display: flex;
-    height: 31px;
-    margin-bottom: -1px;
-    margin-left: -1px;
-    min-width: 111px;
-}
 
 .overlap-group {
     align-items: flex-start;
@@ -528,10 +458,3 @@
     top: 0;
 }
 
-.logo {
-    align-self: flex-start;
-    cursor: pointer;
-    height: 62px;
-    margin-left: 24px;
-    width: 272px;
-}

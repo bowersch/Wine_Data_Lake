@@ -1,13 +1,3 @@
-@import url("htttps://fonts/googleapis.com/css?family=Montserrat:400,700,500,600|Modern+Antiqua:400");
-
-.login-page {
-    align-items: flex-start;
-    background-color: white;
-    border: 1px none;
-    display: flex;
-    overflow: hidden;
-    width:auto 1440px;
-}
 
 .hidden,
 .hidden * {
@@ -22,14 +12,7 @@
     width: 1442px;
 }
 
-.base {
-    background-color: white;
-    height: 1024px;
-    left: 2px;
-    position: absolute;
-    top: 0px;
-    width: 1440px;
-}
+
 
 .wine-background {
     height: 100%;
@@ -90,7 +73,15 @@
     min-width: 148px;
 }
 
-.x-solid-1 {
+.fa-lock {
+    color: #977EB3;
+    margin-top: 8px;
+    height: 40px;
+    width: 35px;
+}
+
+.fa-user {
+    color: #977EB3;
     margin-top: 8px;
     height: 40px;
     width: 35px;
