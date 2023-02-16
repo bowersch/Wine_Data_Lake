@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS ava
 CREATE TABLE IF NOT EXISTS ava
 (
 	ava_id           SERIAL PRIMARY KEY,
@@ -10,6 +11,7 @@ CREATE TABLE IF NOT EXISTS ava
 	topography       VARCHAR(800)
 );
 
+DROP TABLE IF EXISTS varietals
 CREATE TABLE IF NOT EXISTS varietals
 (
 	varietal_id      SERIAL PRIMARY KEY,
@@ -18,6 +20,7 @@ CREATE TABLE IF NOT EXISTS varietals
 
 );
 
+DROP TABLE IF EXISTS regional_varietals
 CREATE TABLE IF NOT EXISTS regional_varietals
 (
 
@@ -27,6 +30,7 @@ CREATE TABLE IF NOT EXISTS regional_varietals
 	varietal_id      INTEGER REFERENCES varietals(varietal_id)
 );
 
+DROP TABLE IF EXISTS techsheets
 CREATE TABLE IF NOT EXISTS techsheets
 (
 	techsheet_id     SERIAL PRIMARY KEY,
@@ -34,6 +38,7 @@ CREATE TABLE IF NOT EXISTS techsheets
 	source_file      VARCHAR(255) UNIQUE NOT NULL
 );
 
+DROP TABLE IF EXISTS winemakers
 CREATE TABLE IF NOT EXISTS winemakers
 (
 	winemaker_id     SERIAL PRIMARY KEY,
@@ -41,6 +46,7 @@ CREATE TABLE IF NOT EXISTS winemakers
 
 );
 
+DROP TABLE IF EXISTS wineries
 CREATE TABLE IF NOT EXISTS wineries
 (
 	winery_id        SERIAL PRIMARY KEY,
@@ -53,6 +59,7 @@ CREATE TABLE IF NOT EXISTS wineries
 	winery_url		 VARCHAR(255)
 );
 
+DROP TABLE IF EXISTS bottle_data
 CREATE TABLE IF NOT EXISTS bottle_data
 (
 
@@ -76,6 +83,7 @@ CREATE TABLE IF NOT EXISTS bottle_data
 
 );
 
+DROP TABLE IF EXISTS qualities
 CREATE TABLE IF NOT EXISTS qualities
 (
 	quality_id	      SERIAL PRIMARY KEY,
@@ -85,6 +93,7 @@ CREATE TABLE IF NOT EXISTS qualities
 
 );
 
+DROP TABLE IF EXISTS wine_qualities
 CREATE TABLE IF NOT EXISTS wine_qualities
 (
 
@@ -94,6 +103,7 @@ CREATE TABLE IF NOT EXISTS wine_qualities
 	quality_id       INTEGER REFERENCES qualities(quality_id)
 );
 
+DROP TABLE IF EXISTS users
 CREATE TABLE IF NOT EXISTS users
 (	
 	user_id          SERIAL PRIMARY KEY,
@@ -104,6 +114,7 @@ CREATE TABLE IF NOT EXISTS users
 
 );
 
+DROP TABLE IF EXISTS favorite_ava
 CREATE TABLE IF NOT EXISTS favorite_ava
 (
 
@@ -113,6 +124,7 @@ CREATE TABLE IF NOT EXISTS favorite_ava
 	ava_id           INTEGER REFERENCES ava(ava_id)
 );
 
+DROP TABLE IF EXISTS favorite_qualities
 CREATE TABLE IF NOT EXISTS favorite_qualities
 (
 
@@ -122,6 +134,7 @@ CREATE TABLE IF NOT EXISTS favorite_qualities
 	quality_id       INTEGER REFERENCES qualities(quality_id)
 );
 
+DROP TABLE IF EXISTS favorite_techsheets
 CREATE TABLE IF NOT EXISTS favorite_techsheets
 (
 
@@ -131,6 +144,7 @@ CREATE TABLE IF NOT EXISTS favorite_techsheets
 	techsheet_id     INTEGER REFERENCES techsheets(techsheet_id)
 );
 
+DROP TABLE IF EXISTS favorite_wineries
 CREATE TABLE IF NOT EXISTS favorite_wineries
 (
 
