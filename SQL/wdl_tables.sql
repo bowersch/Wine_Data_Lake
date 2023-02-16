@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS ava;
+DROP TABLE IF EXISTS ava CASCADE;
 CREATE TABLE IF NOT EXISTS ava
 (
 	ava_id           SERIAL PRIMARY KEY,
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS ava
 	topography       VARCHAR(800)
 );
 
-DROP TABLE IF EXISTS varietals;
+DROP TABLE IF EXISTS varietals CASCADE;
 CREATE TABLE IF NOT EXISTS varietals
 (
 	varietal_id      SERIAL PRIMARY KEY,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS varietals
 
 );
 
-DROP TABLE IF EXISTS regional_varietals;
+DROP TABLE IF EXISTS regional_varietals CASCADE;
 CREATE TABLE IF NOT EXISTS regional_varietals
 (
 
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS regional_varietals
 	varietal_id      INTEGER REFERENCES varietals(varietal_id)
 );
 
-DROP TABLE IF EXISTS techsheets;
+DROP TABLE IF EXISTS techsheets CASCADE;
 CREATE TABLE IF NOT EXISTS techsheets
 (
 	techsheet_id     SERIAL PRIMARY KEY,
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS techsheets
 	source_file      VARCHAR(255) UNIQUE NOT NULL
 );
 
-DROP TABLE IF EXISTS winemakers;
+DROP TABLE IF EXISTS winemakers CASCADE;
 CREATE TABLE IF NOT EXISTS winemakers
 (
 	winemaker_id     SERIAL PRIMARY KEY,
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS winemakers
 
 );
 
-DROP TABLE IF EXISTS wineries;
+DROP TABLE IF EXISTS wineries CASCADE;
 CREATE TABLE IF NOT EXISTS wineries
 (
 	winery_id        SERIAL PRIMARY KEY,
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS wineries
 	winery_url		 VARCHAR(255)
 );
 
-DROP TABLE IF EXISTS bottle_data;
+DROP TABLE IF EXISTS bottle_data CASCADE;
 CREATE TABLE IF NOT EXISTS bottle_data
 (
 
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS bottle_data
 
 );
 
-DROP TABLE IF EXISTS qualities;
+DROP TABLE IF EXISTS qualities CASCADE;
 CREATE TABLE IF NOT EXISTS qualities
 (
 	quality_id	      SERIAL PRIMARY KEY,
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS qualities
 
 );
 
-DROP TABLE IF EXISTS wine_qualities;
+DROP TABLE IF EXISTS wine_qualities CASCADE;
 CREATE TABLE IF NOT EXISTS wine_qualities
 (
 
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS wine_qualities
 	quality_id       INTEGER REFERENCES qualities(quality_id)
 );
 
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE IF NOT EXISTS users
 (	
 	user_id          SERIAL PRIMARY KEY,
@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS users
 
 );
 
-DROP TABLE IF EXISTS favorite_ava;
+DROP TABLE IF EXISTS favorite_ava CASCADE;
 CREATE TABLE IF NOT EXISTS favorite_ava
 (
 
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS favorite_ava
 	ava_id           INTEGER REFERENCES ava(ava_id)
 );
 
-DROP TABLE IF EXISTS favorite_qualities;
+DROP TABLE IF EXISTS favorite_qualities CASCADE;
 CREATE TABLE IF NOT EXISTS favorite_qualities
 (
 
@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS favorite_qualities
 	quality_id       INTEGER REFERENCES qualities(quality_id)
 );
 
-DROP TABLE IF EXISTS favorite_techsheets;
+DROP TABLE IF EXISTS favorite_techsheets CASCADE;
 CREATE TABLE IF NOT EXISTS favorite_techsheets
 (
 
@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS favorite_techsheets
 	techsheet_id     INTEGER REFERENCES techsheets(techsheet_id)
 );
 
-DROP TABLE IF EXISTS favorite_wineries;
+DROP TABLE IF EXISTS favorite_wineries CASCADE;
 CREATE TABLE IF NOT EXISTS favorite_wineries
 (
 
