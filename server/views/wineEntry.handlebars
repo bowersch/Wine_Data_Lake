@@ -5,9 +5,11 @@
                         {{data.name}}
                 </div>
                 <button class="visitButton">Visit Winery</button>
-                <div class="wineDescription">
-                        {{data.description}}
-                </div>
+                {{#if data.description}}
+                        <div class="wineDescription">
+                                {{data.description}}
+                        </div>
+                {{/if}}
                 <div class="keywordsWrapper">
                         Keywords
                 </div>
@@ -33,7 +35,7 @@
                 </div>
         </div>
         <div class="techSheet">
-                <iframe src="{{data.techSheet}}#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf"></iframe>
+                <embed src="{{data.techSheet}}">
                 <div class="downloadButton">
                         <a href="">Download Tech Sheet</a>
                 </div>
