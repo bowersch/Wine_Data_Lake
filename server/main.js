@@ -42,10 +42,9 @@ app.get('/wines/demo', (req, res) => {
 });
 
 app.get('/wines/:id', (req, r0) => {
-    var q = 'SELECT bottle_data.wine_name, bottle_data.pct_alcohol, bottle_data.ta, bottle_data.ph, bottle_data.year, wineries.winery_name FROM bottle_data INNER JOIN wineries ON bottle_data.winery_id = wineries.winery_id WHERE bottle_id = $1;';
+    var q = 'SELECT bottle_data.wine_name, bottle_data.pct_alcohol, bottle_data.ta, bottle_data.ph, bottle_data.year, techsheets.source_file, wineries.winery_name FROM bottle_data INNER JOIN wineries ON bottle_data.winery_id = wineries.winery_id INNER JOIN techsheets ON bottle_data.techsheet_id = techsheets.techsheet_id WHERE bottle_id = $1;';
     client.query(q, [req.params.id], (err, r1) => {
         if (err) throw err;
-        console.log(r1.rows);
         r0.render('wineEntry', {
             layout : 'main',
             css: ["wineEntry.css"],
@@ -53,6 +52,7 @@ app.get('/wines/:id', (req, r0) => {
                 "name" : r1.rows[0].wine_name,
                 "keywords" : [r1.rows[0].year],
                 "description" : r1.rows[0].winery_name + " winery",
+                "techSheet" : r1.rows[0].source_file,
                 "properties": {
                     "ABV" : r1.rows[0].pct_alcohol,
                     "Tannins" : r1.rows[0].ta,
