@@ -5,8 +5,8 @@
     align-items: center;
     position: relative;
     top: 0;
-    border-radius: 12px;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     border-radius: 12px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -33,11 +33,10 @@
 }
 
 .userGreeting {
-    width: 82.24%;
+    width: 82.2%;
     height: 15%;
     background-color: #8162B5;
     color: white;
-    overflow: hidden;
     display: flex;
     align-items: center;
 }
@@ -49,25 +48,30 @@
 }
 
 .favorites {
+    width:75%;
     color: #310866;
     list-style: none;
-    overflow: hidden;
     float: left;
     padding-left: 5%;
 }
 
-.qualities li {
+.subquality li {
     padding-left: 5%;
 }
 
-.wineries td {
+.wineries {
+    width: 80%;
+}
+
+.subwinery {
+    display: inline-block;
     text-align: center;
     align-content: center;
     justify-content: center;
     padding: 2%;
 }
 
-.wineries img {
+.subwinery img {
     width: 100px;
     height: auto;
 }
