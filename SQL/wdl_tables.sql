@@ -1,3 +1,18 @@
+DROP TABLE IF EXISTS ava CASCADE;
+DROP TABLE IF EXISTS varietals CASCADE;
+DROP TABLE IF EXISTS regional_varietals CASCADE;
+DROP TABLE IF EXISTS techsheets CASCADE;
+DROP TABLE IF EXISTS winemakers CASCADE;
+DROP TABLE IF EXISTS wineries CASCADE;
+DROP TABLE IF EXISTS bottle_data CASCADE;
+DROP TABLE IF EXISTS qualities CASCADE;
+DROP TABLE IF EXISTS wine_qualities CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS favorite_ava CASCADE;
+DROP TABLE IF EXISTS favorite_qualities CASCADE;
+DROP TABLE IF EXISTS favorite_techsheets CASCADE;
+DROP TABLE IF EXISTS favorite_wineries CASCADE;
+
 CREATE TABLE IF NOT EXISTS ava
 (
 	ava_id           SERIAL PRIMARY KEY,
@@ -55,7 +70,6 @@ CREATE TABLE IF NOT EXISTS wineries
 
 CREATE TABLE IF NOT EXISTS bottle_data
 (
-
     bottle_id          SERIAL PRIMARY KEY,
     winery_id          INTEGER REFERENCES wineries(winery_id),
     year               VARCHAR(6) NOT NULL,
@@ -72,8 +86,8 @@ CREATE TABLE IF NOT EXISTS bottle_data
     ava_id             INTEGER REFERENCES ava(ava_id),
     techsheet_id       INTEGER REFERENCES techsheets(techsheet_id),
     run_date           DATE DEFAULT CURRENT_DATE,
-	winemaker_id       INTEGER REFERENCES winemakers(winemaker_id)
-
+	winemaker_id       INTEGER REFERENCES winemakers(winemaker_id),
+	description        VARCHAR(1000)
 );
 
 CREATE TABLE IF NOT EXISTS qualities
