@@ -1,12 +1,12 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
-const queryHelper = require('./queryHelper.js');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
+const queryHelper = require('./queryHelper.js');
 
 const secrets = require("./secrets.json");
 const testData = require('./demo.json');
-const resultsDummy = require('./resultsDummy.json');
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -37,7 +37,13 @@ app.engine('handlebars', handlebars.engine({
 }));
 
 app.use(express.static('public'));
-app.use(cookieParser());
+//app.use(cookieParser());
+app.use(session({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    saveUninitialized: true,
+    resave: false 
+}));
+
 app.use((req, res, next) => {
     res.locals.pack = {
         template: null,
@@ -46,26 +52,13 @@ app.use((req, res, next) => {
             css: null,
             js: null,
             data: null,
-            user: null
+            user: req.session.username ? req.session.username : null
         }
     };
-    if(req.cookies.userId && !res.locals.pack.config.user) {
-        queryHelper.getUsername(req.cookies.userId, client, (username) => {
-            res.locals.pack.config.user = username;
-        });
-    }
     next();
 });
 
 require('./routes.js')(app, client, queryHelper);
-
-app.get('/results/*', (req, res) => {
-    res.render('wineResults', {
-        layout : 'main',
-        css: ["wineResults.css"],
-        data: resultsDummy
-    });
-});
 
 app.use((req, res) => {
     res.render(res.locals.pack.template, res.locals.pack.config);
