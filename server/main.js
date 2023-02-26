@@ -64,4 +64,4 @@ app.use((req, res) => {
     res.render(res.locals.pack.template, res.locals.pack.config);
 });
 
-app.listen(PORT, () => console.log(`App open.`));
+app.listen(port, () => console.log(`App open.`));
