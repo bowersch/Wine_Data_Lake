@@ -1,6 +1,6 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
-const cookieParser = require('cookie-parser');
+//const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
 const queryHelper = require('./js/queryHelper.js');
@@ -15,7 +15,7 @@ const { Client } = require("pg");
 
 
 const client = new Client({
-    host: '34.168.133.161',
+    host: '10.115.240.4',
     port: 5432,
     database: "postgres",
     user: secrets.user,
