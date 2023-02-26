@@ -25,14 +25,18 @@
                             <button>{{user}}</button>
                         </div>
                         <div class="signOutWrapper">
-                            <button>Sign Out</button>
+                            <form action="/logout" method="post">
+                                <button name="signOut" value="signOut">Sign Out</button>
+                            </form>
                         </div>
                     {{else}}
                         <div class="signUpWrapper">
                             <button>Sign Up</button>
                         </div>
                         <div class="signInWrapper">
-                            <button>Sign In</button>
+                            <form action="/authenticate" method="post">
+                                <button name="signIn" value="signIn">Sign In</button>
+                            </form>
                         </div>
                     {{/if}}
                 </div>

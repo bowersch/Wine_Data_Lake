@@ -25,7 +25,7 @@ app.get('/userfavorites/*', (req, res) => {
 app.get('/', (req, res) => {
     res.render(config.template, {
         layout : config.layout_template,
-        css: ["directory.css"],
+        css: ["login.css"],
         data : test_data
     });
 });
