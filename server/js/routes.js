@@ -1,8 +1,8 @@
 module.exports = function(app, client, queryHelper) {
 
     app.get('/', (req, res, next) => {
-        res.locals.pack.template = 'demo';
-        res.locals.pack.config.css = ['demo.css'];
+        res.locals.pack.template = 'home';
+        res.locals.pack.config.css = ['home.css'];
         next();
     });
 
@@ -29,7 +29,7 @@ module.exports = function(app, client, queryHelper) {
     app.get('/results/*', (req, res, next) => {
         res.locals.pack.template = 'wineResults';
         res.locals.pack.config.css = ['wineResults.css'];
-        res.locals.pack.config.data = require('./resultsDummy.json');;
+        res.locals.pack.config.data = require('../resultsDummy.json');;
         next();
     });
 

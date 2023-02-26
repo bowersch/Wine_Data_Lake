@@ -3,7 +3,7 @@ const handlebars = require('express-handlebars');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
-const queryHelper = require('./queryHelper.js');
+const queryHelper = require('./js/queryHelper.js');
 
 const secrets = require("./secrets.json");
 const testData = require('./demo.json');
@@ -58,7 +58,7 @@ app.use((req, res, next) => {
     next();
 });
 
-require('./routes.js')(app, client, queryHelper);
+require('./js/routes.js')(app, client, queryHelper);
 
 app.use((req, res) => {
     res.render(res.locals.pack.template, res.locals.pack.config);
