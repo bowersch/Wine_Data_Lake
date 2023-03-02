@@ -39,13 +39,16 @@
     width: 550px;
 }
 
+
+
 .username-input {
     align-items: flex-start;
     align-self: flex-start;
     cursor: pointer;
     display: flex;
     margin-top: 13px;
-    min-width: 495px;
+    width: 547px;
+
 }
 
 .username-container {
@@ -53,14 +56,15 @@
     background-color: #F2F0F0;
     border: 2px solid;
     border-color: #977EB3;
-    display: flex;
+    display: inline-block;
     gap: 37px;
     height: 51px;
-    min-width: 525px;
+    min-width: 469px;
+    margin-left: 25px;
     padding: 5px 8px;
 }
-
-.username {
+/*for actual text input*/
+.username-container {
     color: #977EB3;
     font-family: 'Montserrat';
     font-weight: 500;
@@ -70,8 +74,10 @@
     line-height: normal;
     margin-bottom: 3px;
     min-height: 34px;
-    min-width: 148px;
+
 }
+
+
 
 .fa-lock {
     color: #977EB3;
@@ -103,13 +109,28 @@
 .overlap-group2 {
     align-items: flex-start;
     background-color:#3b0c77;
+    border: #3b0c77;
     border-radius: 15px;
     display: flex;
-    height: 50px;
+    height: 60px;
     margin-left: 1px;
     margin-top: 24px;
     min-width: 125px;
     padding: 9px 199px;
+    cursor: pointer;
+}
+
+.overlap-group2:hover {
+    align-items: flex-start;
+    background-color:#7f669f;
+    border-radius: 15px;
+    display: flex;
+    height: 60px;
+    margin-left: 1px;
+    margin-top: 24px;
+    min-width: 125px;
+    padding: 9px 199px;
+    cursor: pointer;
 }
 
 .login {
@@ -165,12 +186,12 @@
     display: flex;
     gap: 37px;
     height: 51px;
-    min-width: 525px;
+    min-width: 470px;
     padding: 5px 8px;
-    margin-right: 4px;
+    margin-left: 20px;
 }
 
-.password {
+.overlap-group1 {
     color: #977EB3;
     font-family: 'Montserrat';
     font-weight: 500;
@@ -180,7 +201,7 @@
     line-height: normal;
     margin-bottom: 3px;
     min-height: 34px;
-    min-width: 148px;
+    
 }
 
 .logo-container {
@@ -194,11 +215,29 @@
     border: 1px solid #3b0c77;
     border-radius: 15px;
     display: flex;
-    height: 50px;
+    height: 65px;
     margin-left: 1px;
     margin-top: 13px;
     min-width: 125px;
     padding: 9px 111px;
+    cursor: pointer;
+}
+
+
+
+
+.overlap-group3:hover {
+    align-items: flex-start;
+    background-color: #cac8ca;
+    border: 1px solid #3b0c77;
+    border-radius: 15px;
+    display: flex;
+    height: 65px;
+    margin-left: 1px;
+    margin-top: 13px;
+    min-width: 125px;
+    padding: 9px 111px;
+    cursor: pointer;
 }
 
 .new-account {
