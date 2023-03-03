@@ -72,15 +72,9 @@ app.get('/userfavorites*', checkNotAuthenticated, (req, res) => {
     });
 });
 
-<<<<<<< Updated upstream
-app.get('/', (req, res) => {
-    res.render(config.template, {
-        layout : config.layout_template,
-=======
 app.get('/directory*', (req, res) => {
     res.render("directory", {
         layout : "main",
->>>>>>> Stashed changes
         css: ["directory.css"],
         data : test_data
     });
@@ -118,9 +112,6 @@ app.get('/help*', (req, res) => {
     });
 });
 
-<<<<<<< Updated upstream
-app.listen(port, () => console.log(`App open at http://localhost:${port}/`));
-=======
 app.get("/logout", (req, res) => {
     req.logout(req.user, err => {
         if(err) return next(err);
@@ -226,4 +217,3 @@ function checkNotAuthenticated(req, res, next) {
 }
 
 app.listen(port, () => console.log(`App open at http://localhost:${port}/`));
->>>>>>> Stashed changes
