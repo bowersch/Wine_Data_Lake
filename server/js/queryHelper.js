@@ -1,42 +1,51 @@
 exports.getWineriesWines = (client, callback) => {
     var q = "SELECT wineries.winery_id, wineries.winery_name FROM wineries ORDER BY winery_name ASC;";
     client.query(q, (err, res) => {
-        if (err) console.log(err);
-        var wineries = [];
-        for (let i = 0; i < res.rows.length; i++) {
-            client.query("SELECT bottle_data.bottle_id, bottle_data.year, bottle_data.wine_name FROM bottle_data WHERE bottle_data.winery_id = $1;",
-                [res.rows[i].winery_id],
-                (err2, res2) => {
-                    if (err2) console.log(err2);
-                    let x = {
-                        "winery_name" : res.rows[i].winery_name,
-                        "wines": res2.rows
-                    };
-                    wineries[i] = x;
-                    if(i == res.rows.length - 1) {
-                        callback(wineries);
+        if (err) {
+            console.log(err);
+            callback(null);
+        }
+        else {
+            var wineries = [];
+            for (let i = 0; i < res.rows.length; i++) {
+                client.query("SELECT bottle_data.bottle_id, bottle_data.year, bottle_data.wine_name FROM bottle_data WHERE bottle_data.winery_id = $1;",
+                    [res.rows[i].winery_id],
+                    (err2, res2) => {
+                        if (err2) console.log(err2);
+                        let x = {
+                            "winery_name" : res.rows[i].winery_name,
+                            "wines": res2.rows
+                        };
+                        wineries[i] = x;
+                        if(i == res.rows.length - 1) {
+                            callback(wineries);
+                        }
                     }
-                }
-            );
-        };
+                );
+            }
+        }
     });
 }
 
 exports.getWineInfo = (id, client, callback) => {
     var q = "SELECT bottle_data.wine_name, bottle_data.pct_alcohol, bottle_data.ta, bottle_data.ph, bottle_data.year, techsheets.source_file, wineries.winery_name FROM bottle_data INNER JOIN wineries ON bottle_data.winery_id = wineries.winery_id INNER JOIN techsheets ON bottle_data.techsheet_id = techsheets.techsheet_id WHERE bottle_id = $1;";
     client.query(q, [id], (err, res) => {
-        if (err) console.log(err);
-        callback({
-            "name" : res.rows[0].wine_name,
-            "keywords" : [res.rows[0].year],
-            "description" : res.rows[0].winery_name + " winery",
-            "techSheet" : res.rows[0].source_file,
-            "properties": {
-                "ABV" : res.rows[0].pct_alcohol,
-                "Tannins" : res.rows[0].ta,
-                "pH" : res.rows[0].ph
-            }
-        });
+        if (err) {
+            console.log(err);
+            callback(null);
+        } else {
+            callback({
+                "name" : res.rows[0].wine_name,
+                "keywords" : [res.rows[0].year],
+                "description" : res.rows[0].winery_name + " winery",
+                "techSheet" : res.rows[0].source_file,
+                "properties": {
+                    "ABV" : res.rows[0].pct_alcohol,
+                    "Tannins" : res.rows[0].ta,
+                    "pH" : res.rows[0].ph
+                }
+            });
+        }
     });
 }
 
@@ -77,9 +86,31 @@ exports.getUsername = (id, client, callback) => {
         (err, res) => {
             if(err) {
                 console.log(err);
+                callback(null);
             } else {
                 callback(res.rows[0].username);
             }
         }
     );
+}
+
+exports.logWineView = (userId, bottleId, client, callback) => {
+    client.query("INSERT INTO wine_views (user_id, bottle_id) VALUES ($1, $2);",
+    [userId, bottleId],
+    (err, res) => {
+        if(err) console.log(err);
+        callback();
+    });
+}
+
+exports.randomWineId = (client, callback) => {
+    client.query("SELECT bottle_id FROM bottle_data ORDER BY RANDOM() LIMIT 1;",
+    (err, res) => {
+        if(err) {
+            console.log(err);
+            callback(null);
+        } else {
+            callback(res.rows[0].bottle_id);
+        }
+    });
 }

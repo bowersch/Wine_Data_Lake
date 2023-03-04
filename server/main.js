@@ -15,7 +15,7 @@ const { Client } = require("pg");
 
 
 const client = new Client({
-    host: '34.168.133.161',
+    host: '34.168.239.168',
     port: 5432,
     database: "postgres",
     user: secrets.user,
@@ -37,7 +37,7 @@ app.engine('handlebars', handlebars.engine({
 }));
 
 app.use(express.static('public'));
-//app.use(cookieParser());
+app.use(cookieParser());
 app.use(session({
     secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
     saveUninitialized: true,
@@ -61,7 +61,8 @@ app.use((req, res, next) => {
 require('./js/routes.js')(app, client, queryHelper);
 
 app.use((req, res) => {
-    res.render(res.locals.pack.template, res.locals.pack.config);
+    if(res.locals.pack.template)
+        res.render(res.locals.pack.template, res.locals.pack.config);
 });
 
 app.listen(port, () => console.log(`App open at http://localhost:${port}/`));

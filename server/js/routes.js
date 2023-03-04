@@ -8,12 +8,13 @@ module.exports = function(app, client, queryHelper) {
 
     app.post('/authenticate', 
         (req, res, next) => {
-            res.locals.userId = 1;
+            res.locals.userId = 2;
             next();
         },
         (req, res) => {
             req.session.userId = res.locals.userId;
             queryHelper.getUsername(res.locals.userId, client, username => {
+                if (!username) res.status(400).send('Error.');
                 req.session.username = username;
                 res.redirect('/favorites');
             });
@@ -33,12 +34,30 @@ module.exports = function(app, client, queryHelper) {
         next();
     });
 
+    app.get('/wines/random', (req, res, next) => {
+        queryHelper.randomWineId(client, id => {
+            if (!id) res.status(400).send('Error.');
+            else {
+                res.redirect('/wines/' + id);
+            }
+        });
+    });
+
     app.get('/wines/:id', (req, res, next) => {
         queryHelper.getWineInfo(req.params.id, client, data => {
-            res.locals.pack.template = 'wineEntry';
-            res.locals.pack.config.css = ['wineEntry.css'];
-            res.locals.pack.config.data = data;
-            next();
+            if(!data) res.status(400).send('Error.');
+            else {
+                res.locals.pack.template = 'wineEntry';
+                res.locals.pack.config.css = ['wineEntry.css'];
+                res.locals.pack.config.data = data;
+                if(req.session.userId) {
+                    queryHelper.logWineView(req.session.userId, req.params.id, client, () => {
+                        next();
+                    });
+                } else {
+                    next();
+                }
+            }
         });
     });
     
