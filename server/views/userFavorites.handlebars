@@ -5,17 +5,13 @@
         <a href="/logout">Log out</a></p>
     </div>
     <div class="userGreeting">
-        <h1>Hi, {{data.userGreeting}}!</h1>
+        <h1>Hi, {{data.username}}!</h1>
     </div>
     <div class="favorites">
         <div class="qualities">
             <h2><i class="fa-solid fa-heart"></i> Favorite Qualities</h2>
             {{#each data.qualities}}
-<<<<<<< Updated upstream
-                <div class="subquality"><li><a href="">{{this}}</a></li></div><br>
-=======
                 <li><a href="">{{this}}</a></li><br>
->>>>>>> Stashed changes
             {{/each}}
         </div>
         <div class="wineries">
@@ -25,11 +21,7 @@
                 <td>
                 <img src="/images/winery_logo.png" />
                 <li><a href="">{{this}}</a></li><br>
-<<<<<<< Updated upstream
-                </div>
-=======
                 </td>
->>>>>>> Stashed changes
             {{/each}}
             </table>
         </div>

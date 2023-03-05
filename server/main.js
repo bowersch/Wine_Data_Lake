@@ -1,7 +1,5 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
-<<<<<<< Updated upstream
-=======
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const { client } = require("./dbConfig");
@@ -13,13 +11,9 @@ const queryHelper = require('./js/queryHelper.js');
 //const secrets = require("./secrets.json");
 const testData = require('./demo.json');
 
->>>>>>> Stashed changes
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 
-<<<<<<< Updated upstream
-const testData = require('./demo.json')
-=======
 const initializePassport = require("./passportConfig");
 initializePassport(passport);
 
@@ -42,7 +36,6 @@ client.connect((err) => {
         console.log('connected')
     }
 });
->>>>>>> Stashed changes
 
 app.set('view engine', 'handlebars');
 
@@ -50,25 +43,6 @@ app.engine('handlebars', handlebars.engine({
     layoutsDir: './views/layouts/'
 }));
 
-<<<<<<< Updated upstream
-app.use(express.static('public'))
-
-app.get('/wines/*', (req, res) => {
-    res.render('wineEntry', {
-        layout : 'main',
-        css: ["wineEntry.css"],
-        data: testData
-    });
-});
-
-app.get('/directory/*', (req, res) => {
-    res.render('directory', {
-        layout: 'main',
-        css: ["directory.css"],
-        data: testData
-    });
-});
-=======
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
 //app.use(cookieParser());
@@ -97,50 +71,9 @@ app.use((req, res, next) => {
 });
 
 require('./js/routes.js')(app, client, queryHelper, passport, bcrypt, flash);
->>>>>>> Stashed changes
 
-app.get('/favorites/*', (req, res) => {
-    res.render('userFavorites', {
-        layout: 'main',
-        css: ["userFavorites.css"],
-        data: testData
-    });
-});
-
-app.get('/about*', (req, res) => {
-    res.render('about', {
-        layout: 'main',
-        css: ["about.css"],
-        data: testData
-    });
-});
-
-app.get('/contact*', (req, res) => {
-    res.render('contact', {
-        layout: 'main',
-        css: ["about.css"],
-        data: testData
-    });
-});
-
-app.get('/developers*', (req, res) => {
-    res.render('developers', {
-        layout: 'main',
-        css: ["about.css"],
-        data: testData
-    });
-});
-
-app.get('/help*', (req, res) => {
-    res.render('help', {
-        layout: 'main',
-        css: ["about.css"],
-        data: testData
-    });
-});
-
-app.get('/*', (req, res) => {
-    res.render('demo', {layout : 'main', css: ["demo.css"]});
+app.use((req, res) => {
+    res.render(res.locals.pack.template, res.locals.pack.config);
 });
 
 app.listen(port, () => console.log(`App open at http://localhost:${port}/`));
