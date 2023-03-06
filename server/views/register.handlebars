@@ -1,7 +1,14 @@
 
 <div class="login-page screen">
     <div class="overlap-group6">
-        
+        <ul>
+            {{#if errors}}
+                {{#each errors}}
+                    <p>{{this.message}}</p>
+                {{/each}}
+            {{/if}}
+        </ul>
+        <form action="/register" method="POST">
         <div class="overlap-group4">
             <img class="logo-container" src="/images/wineLogo.JPG" alt="Logo Container" />
             <h1 class="title">register</h1>
@@ -9,31 +16,37 @@
             <div class="username-input">
                 <div class="username-container">
                     <i class="fa-solid fa-user fa-2x"></i>
-                    <div class="username montserrat-medium-windsor-28px-2">EMail</div>
+                    <div class="username montserrat-medium-windsor-28px-2">Username</div>
+                    <input type="text" id="username" name="username" placeholder="Username" required />
                 </div>
             </div>
             <div class="username-input">
                 <div class="username-container">
                     <i class="fa-solid fa-user fa-2x"></i>
-                    <div class="username montserrat-medium-windsor-28px-2">Username</div>
+                    <div class="username montserrat-medium-windsor-28px-2">EMail</div>
+                    <input type="text" id="email" name="email" placeholder="Email" required />
                 </div>
             </div>
             <div class="password-input">
                 <div class="overlap-group1">
                     <i class="fa-solid fa-lock fa-2x"></i>
                     <div class="password montserrat-medium-windsor-28px-2">Password</div>
+                    <input type="password" id="password" name="password" placeholder="Password" required />
                 </div>
             </div>
              <div class="password-input">
                 <div class="overlap-group1">
                     <i class="fa-solid fa-lock fa-2x"></i>
                     <div class="password montserrat-medium-windsor-28px-2">Confirm Password</div>
+                    <input type="password" id="password2" name="password2" placeholder="Password2" required />
                 </div>
             </div>
            
             <div class="overlap-group2">
                 <div class="login">Register</div>
+                <input type="submit" value="Register" />
             </div>
          </div>
+         </form>
     </div>
 </div>
