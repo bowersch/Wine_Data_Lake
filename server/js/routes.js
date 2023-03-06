@@ -16,29 +16,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
         res.locals.pack.template = 'register';
         res.locals.pack.config.css = ['register.css'];
         next();
-    })
-
-    app.post('/authenticate', 
-        (req, res, next) => {
-            res.locals.userId = 1;
-            next();
-        },
-        (req, res) => {
-            req.session.userId = res.locals.userId;
-            queryHelper.getUsername(res.locals.userId, client, username => {
-                if (!username) res.status(400).send('Error.');
-                req.session.username = username;
-                res.redirect('/favorites');
-            });
-        }
-    );
-    /*
-    app.post('/logout', (req, res) => {
-        req.session.destroy((err) => {
-            res.redirect('/');
-        });
     });
-    */
 
     app.get("/logout", (req, res) => {
         req.logout(req.user, err => {
@@ -91,16 +69,13 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
         });
     });
 
-    app.get('/favorites', (req, res, next) => {
-        if(!req.session.userId) res.status(400).send('No user signed in.');
-        else {
-            queryHelper.getUserFavoriteInfo(req.session.userId, client, data => {
-                res.locals.pack.template = 'userFavorites';
-                res.locals.pack.config.css = ['userFavorites.css'];
-                res.locals.pack.config.data = data;
-                next();
-            });
-        }
+    app.get('/favorites', checkNotAuthenticated, (req, res, next) => {
+        queryHelper.getUserFavoriteInfo(req.session.passport.user.id, client, data => {
+            res.locals.pack.template = 'userFavorites';
+            res.locals.pack.config.css = ['userFavorites.css'];
+            res.locals.pack.config.data = data;
+            next();
+        });
     });
 
     app.get('/about', (req, res, next) => {
@@ -131,7 +106,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
         successRedirect: "/favorites",
         failureRedirect: "/login",
         failureFlash: true
-    }))
+    }));
 
     app.post('/register', async(req, res) => {
         let { username, email, password, password2 } = req.body;
@@ -152,14 +127,12 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
 
         if(errors.length > 0) {
             res.render("register", { errors });
-        }
-        else {
+        } else {
             //form validation has passed
             let hashedPassword = await bcrypt.hash(password, 10);
 
             //check if email already exists
-            client.query(
-                `SELECT * FROM users WHERE email = $1;`, 
+            client.query(`SELECT * FROM users WHERE email = $1;`, 
                 [email], 
                 (err, results) => {
                      if(err){
@@ -193,19 +166,23 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
     });
 
     function checkAuthenticated(req, res, next) {
+
         if(req.isAuthenticated()) {
             return res.redirect('/favorites');
         }
 
         next();
+
     }
 
     function checkNotAuthenticated(req, res, next) {
+
         if(req.isAuthenticated()) {
             return next();
         }
 
         res.redirect('/login');
+        
     }
 
 };

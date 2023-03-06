@@ -50,8 +50,9 @@ exports.getWineInfo = (id, client, callback) => {
 }
 
 exports.getUserFavoriteInfo = (id, client, callback) => {
-    var q = "SELECT users.username FROM users WHERE users.user_id = $1;";
-    client.query(q, [id], (err, res) => {
+    client.query("SELECT users.username FROM users WHERE users.user_id = $1;",
+        [id], 
+        (err, res) => {
         if(err) console.log(err);
         client.query("SELECT qualities.quality_name FROM qualities WHERE qualities.quality_id = (SELECT favorite_qualities.quality_id FROM favorite_qualities WHERE favorite_qualities.user_id = $1);",
             [id],

@@ -980,8 +980,8 @@ WHERE rvar.reg_varietals_id IS NULL;
 
 
 
-INSERT INTO users (username, secret_hash, secret_salt, email)
-VALUES ('leroyjenkins', 'password', 'salty', 'leroyjenkins@gmail.com');
+INSERT INTO users (username, user_auth, email)
+VALUES ('leroyjenkins', 'password', 'leroyjenkins@gmail.com');
 
 
 

@@ -114,8 +114,7 @@ CREATE TABLE IF NOT EXISTS users
 	user_id         SERIAL PRIMARY KEY,
 
 	username        VARCHAR(30) UNIQUE NOT NULL,
-	secret_salt		VARCHAR(255) NOT NULL,
-	secret_hash		VARCHAR(255) NOT NULL,
+	user_auth		VARCHAR(255) NOT NULL,
 	email           VARCHAR(50) UNIQUE NOT NULL
 
 );

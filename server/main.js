@@ -1,6 +1,5 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
-const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
 const queryHelper = require('./js/queryHelper.js');
@@ -16,12 +15,7 @@ const testData = require('./demo.json');
 const app = express();
 const port = process.env.PORT || 8080;
 
-const initializePassport = require("./passportConfig");
-initializePassport(passport);
-
-
 const { Client } = require("pg");
-
 
 const client = new Client({
     host: '34.168.239.168',
@@ -30,6 +24,7 @@ const client = new Client({
     user: secrets.user,
     password: secrets.password
 });
+
 client.connect((err) => {
     if(err) {
         console.error('connection error', err.stack)
@@ -37,6 +32,9 @@ client.connect((err) => {
         console.log('connected')
     }
 });
+
+const initializePassport = require("./js/passportConfig");
+initializePassport(passport, client, bcrypt);
 
 app.set('view engine', 'handlebars');
 
@@ -46,9 +44,8 @@ app.engine('handlebars', handlebars.engine({
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
-//app.use(cookieParser());
 app.use(session({
-    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    secret: "akjfhakjaw8723bs873ka7ykhasi7yq2kjhfa8k72ydbk37",
     saveUninitialized: true,
     resave: false 
 }));
@@ -65,7 +62,7 @@ app.use((req, res, next) => {
             css: null,
             js: null,
             data: null,
-            user: req.session.username ? req.session.username : null
+            user: req.session.passport ? req.session.passport.user.username : null
         }
     };
     next();
@@ -74,7 +71,7 @@ app.use((req, res, next) => {
 require('./js/routes.js')(app, client, queryHelper, passport, bcrypt, flash);
 
 app.use((req, res) => {
-    res.render(res.locals.pack.template, res.locals.pack.config);
+    if(res.locals.pack.template) res.render(res.locals.pack.template, res.locals.pack.config);
 });
 
 app.listen(port, () => console.log(`App open at http://localhost:${port}/`));
