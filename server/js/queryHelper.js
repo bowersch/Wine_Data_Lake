@@ -95,9 +95,9 @@ exports.getUsername = (id, client, callback) => {
     );
 }
 
-exports.logWineView = (userId, bottleId, client, callback) => {
-    client.query("INSERT INTO wine_views (user_id, bottle_id) VALUES ($1, $2);",
-    [userId, bottleId],
+exports.logWineView = (userId, bottleId, ip, client, callback) => {
+    client.query("INSERT INTO wine_views (user_id, bottle_id, viewer_ip) VALUES ($1, $2, $3);",
+    [userId, bottleId, ip],
     (err, res) => {
         if(err) console.log(err);
         callback();

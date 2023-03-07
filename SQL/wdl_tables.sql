@@ -165,6 +165,7 @@ CREATE TABLE IF NOT EXISTS wine_views
 	wine_view_id	SERIAL PRIMARY KEY,
 	user_id			INTEGER REFERENCES users(user_id),
 	bottle_id		INTEGER REFERENCES bottle_data(bottle_id),
-	view_date		DATE DEFAULT CURRENT_DATE
+	view_date		DATE DEFAULT CURRENT_DATE,
+	viewer_ip		VARCHAR(15)
 
 );

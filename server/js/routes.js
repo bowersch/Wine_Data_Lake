@@ -1,4 +1,6 @@
-module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
+module.exports = function(app, client, queryHelper, passport, bcrypt, flash, IP) {
+
+    console.log("routes loaded.");
 
     app.get('/', (req, res, next) => {
         res.locals.pack.template = 'home';
@@ -49,13 +51,13 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
                 res.locals.pack.template = 'wineEntry';
                 res.locals.pack.config.css = ['wineEntry.css'];
                 res.locals.pack.config.data = data;
-                if(req.session.userId) {
-                    queryHelper.logWineView(req.session.userId, req.params.id, client, () => {
+                queryHelper.logWineView(req.passport ? req.passport.user.id : null,
+                    req.params.id,
+                    IP.address(), 
+                    client, () => {
                         next();
-                    });
-                } else {
-                    next();
-                }
+                    }   
+                );
             }
         });
     });
@@ -165,24 +167,18 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
         }
     });
 
-    function checkAuthenticated(req, res, next) {
-
-        if(req.isAuthenticated()) {
-            return res.redirect('/favorites');
-        }
-
-        next();
-
-    }
-
-    function checkNotAuthenticated(req, res, next) {
-
-        if(req.isAuthenticated()) {
-            return next();
-        }
-
-        res.redirect('/login');
-        
-    }
-
 };
+
+function checkAuthenticated(req, res, next) {
+    if(req.isAuthenticated()) {
+        return res.redirect('/favorites');
+    }
+    next();
+}
+
+function checkNotAuthenticated(req, res, next) {
+    if(req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/login');
+}

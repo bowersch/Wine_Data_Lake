@@ -1,7 +1,7 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
 const session = require('express-session');
-
+const IP = require('ip');
 const queryHelper = require('./js/queryHelper.js');
 
 const secrets = require("./secrets.json");
@@ -14,10 +14,11 @@ const testData = require('./demo.json');
 
 const app = express();
 const port = process.env.PORT || 8080;
+const api = express.Router();
 
-const { Client } = require("pg");
+const { Pool } = require("pg");
 
-const client = new Client({
+const conn = new Pool({
     host: '34.168.239.168',
     port: 5432,
     database: "postgres",
@@ -25,7 +26,7 @@ const client = new Client({
     password: secrets.password
 });
 
-client.connect((err) => {
+conn.connect((err) => {
     if(err) {
         console.error('connection error', err.stack)
     } else {
@@ -33,8 +34,10 @@ client.connect((err) => {
     }
 });
 
+require("./js/api.js")(api, conn);
+
 const initializePassport = require("./js/passportConfig");
-initializePassport(passport, client, bcrypt);
+initializePassport(passport, conn, bcrypt);
 
 app.set('view engine', 'handlebars');
 
@@ -54,6 +57,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+app.use("/api", api);
+
 app.use((req, res, next) => {
     res.locals.pack = {
         template: null,
@@ -68,7 +73,7 @@ app.use((req, res, next) => {
     next();
 });
 
-require('./js/routes.js')(app, client, queryHelper, passport, bcrypt, flash);
+require('./js/routes.js')(app, conn, queryHelper, passport, bcrypt, flash, IP);
 
 app.use((req, res) => {
     if(res.locals.pack.template) res.render(res.locals.pack.template, res.locals.pack.config);
