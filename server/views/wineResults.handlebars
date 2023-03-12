@@ -24,19 +24,17 @@
                 </div>
         </div>
         <div class="resultsContainer">
-                {{#each data.results}}
-                        <a href="/wines/{{this.id}}"><div class="result">
-                                <div classs="resultInfo">
+                {{#each data.rows}}
+                        <a href="/wines/{{this.bottle_id}}"><div class="result">
+                                <div class="resultInfo">
                                         <div class="title">
-                                                {{this.title}}
+                                                {{this.wine_name}}
                                         </div>
                                         <div class="subtitle">
-                                                {{this.subtitle}}
+                                                {{this.winery_name}}
                                         </div>
                                         <div class="keywords">
-                                                {{#each this.keywords}}
-                                                        {{this}}
-                                                {{/each}}
+                                                {{this.varietal_name}}
                                         </div>
                                         <br>
                                         <div class="description">
@@ -44,7 +42,7 @@
                                         </div>
                                 </div>
                                 <div class="resultTechsheet">
-                                        <embed src="{{this.techsheet}}">
+                                        <embed src="{{this.source_file}}">
                                 </div>
                         </div></a>
                 {{/each}}
