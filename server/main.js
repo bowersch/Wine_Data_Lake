@@ -1,7 +1,6 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
 const session = require('express-session');
-const IP = require('ip');
 const queryHelper = require('./js/queryHelper.js');
 
 const secrets = require("./secrets.json");
@@ -73,7 +72,7 @@ app.use((req, res, next) => {
     next();
 });
 
-require('./js/routes.js')(app, conn, queryHelper, passport, bcrypt, flash, IP);
+require('./js/routes.js')(app, conn, queryHelper, passport, bcrypt, flash);
 
 app.use((req, res) => {
     if(res.locals.pack.template) res.render(res.locals.pack.template, res.locals.pack.config);

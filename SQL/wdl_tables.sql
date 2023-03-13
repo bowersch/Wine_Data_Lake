@@ -13,6 +13,19 @@ DROP TABLE IF EXISTS favorite_qualities CASCADE;
 DROP TABLE IF EXISTS favorite_techsheets CASCADE;
 DROP TABLE IF EXISTS favorite_wineries CASCADE;
 DROP TABLE IF EXISTS wine_views CASCADE;
+DROP TABLE IF EXISTS locations CASCADE;
+
+CREATE TABLE IF NOT EXISTS locations 
+(
+	location_id		SERIAL PRIMARY KEY,
+	city			VARCHAR(255),
+	region			VARCHAR(255),
+	country			VARCHAR(255),
+	continent		VARCHAR(255),
+	postal			VARCHAR(64),
+	latitude		FLOAT(12),
+	longitude		FLOAT(12)
+);
 
 CREATE TABLE IF NOT EXISTS ava
 (
@@ -166,6 +179,7 @@ CREATE TABLE IF NOT EXISTS wine_views
 	user_id			INTEGER REFERENCES users(user_id),
 	bottle_id		INTEGER REFERENCES bottle_data(bottle_id),
 	view_date		DATE DEFAULT CURRENT_DATE,
-	viewer_ip		VARCHAR(15)
+	viewer_ip		VARCHAR(15),
+	viewer_location	INTEGER REFERENCES locations(location_id)
 
 );

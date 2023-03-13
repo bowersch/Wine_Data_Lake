@@ -1,5 +1,5 @@
 <div class="entryWrapper">
-        <button class="favoriteWineButton"><i class="fa-regular fa-heart"></i></button>
+        <button class="favoriteWineButton" onclick="toggleFavorite(this,'wine',{{data.id}})"><i class="fa-regular fa-heart"></i></button>
         <div class="entryDataWrapper">
                 <div class="wineName">
                         {{data.name}}
@@ -25,7 +25,7 @@
                                 <div class="property">
                                         <div class="propertyName">
                                                 {{@key}}
-                                                <button class="favoriteButton"><i class="fa-regular fa-heart"></i></button>
+                                                <button class="favoriteButton" onclick="toggleFavorite(this,'quality','{{@key}}')"><i class="fa-regular fa-heart"></i></button>
                                         </div>
                                         <div class="propertyValue">
                                                 {{this}}
@@ -37,7 +37,7 @@
         <div class="techSheet">
                 <embed src="https://storage.googleapis.com/winedatalake-377223.appspot.com/techSheets/{{data.techSheet}}">
                 <div class="downloadButton">
-                        <a href="">Download Tech Sheet</a>
+                        <a href="https://storage.googleapis.com/winedatalake-377223.appspot.com/techSheets/{{data.techSheet}}">Download Tech Sheet</a>
                 </div>
         </div>
         {{#if data.purchaseLink}}

@@ -28,16 +28,17 @@ exports.getWineriesWines = (client, callback) => {
 }
 
 exports.getWineInfo = (id, client, callback) => {
-    var q = "SELECT bottle_data.wine_name, bottle_data.pct_alcohol, bottle_data.ta, bottle_data.ph, bottle_data.year, techsheets.source_file, wineries.winery_name FROM bottle_data INNER JOIN wineries ON bottle_data.winery_id = wineries.winery_id INNER JOIN techsheets ON bottle_data.techsheet_id = techsheets.techsheet_id WHERE bottle_id = $1;";
+    var q = "SELECT bottle_data.bottle_id, bottle_data.description, bottle_data.wine_name, bottle_data.pct_alcohol, bottle_data.ta, bottle_data.ph, bottle_data.year, techsheets.source_file, wineries.winery_name FROM bottle_data INNER JOIN wineries ON bottle_data.winery_id = wineries.winery_id INNER JOIN techsheets ON bottle_data.techsheet_id = techsheets.techsheet_id WHERE bottle_id = $1;";
     client.query(q, [id], (err, res) => {
         if (err) {
             console.log(err);
             callback(null);
         } else {
             callback({
+                "id" : res.rows[0].bottle_id,
                 "name" : res.rows[0].wine_name,
                 "keywords" : [res.rows[0].year],
-                "description" : res.rows[0].winery_name + " winery",
+                "description" : res.rows[0].description,
                 "techSheet" : res.rows[0].source_file,
                 "properties": {
                     "ABV" : res.rows[0].pct_alcohol,
@@ -95,13 +96,26 @@ exports.getUsername = (id, client, callback) => {
     );
 }
 
-exports.logWineView = (userId, bottleId, ip, client, callback) => {
-    client.query("INSERT INTO wine_views (user_id, bottle_id, viewer_ip) VALUES ($1, $2, $3);",
-    [userId, bottleId, ip],
+exports.logWineView = (userId, bottleId, ip, location_id, client, callback) => {
+    client.query("INSERT INTO wine_views (user_id, bottle_id, viewer_ip, viewer_location) VALUES ($1, $2, $3, $4);",
+    [userId, bottleId, ip, location_id],
     (err, res) => {
         if(err) console.log(err);
         callback();
     });
+}
+
+exports.logViewLocation = (client, city, region, country, continent, postal, latitude, longitude, callback) => {
+    client.query("INSERT INTO locations (city, region, country, continent, postal, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING location_id;",
+    [city, region, country, continent, postal, latitude, longitude],
+    (err, res) => {
+        if(err) {
+            console.log(err);
+            callback(null);
+        } else {
+            callback(res.rows[0].location_id);
+        }
+    })
 }
 
 exports.randomWineId = (client, callback) => {

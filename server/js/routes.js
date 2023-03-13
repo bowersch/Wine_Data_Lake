@@ -1,4 +1,8 @@
-module.exports = function(app, client, queryHelper, passport, bcrypt, flash, IP) {
+const axios = require('axios')
+const parser = require('body-parser');
+const jsonParser = parser.json();
+
+module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
 
     console.log("routes loaded.");
 
@@ -50,14 +54,45 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, IP)
             else {
                 res.locals.pack.template = 'wineEntry';
                 res.locals.pack.config.css = ['wineEntry.css'];
+                res.locals.pack.config.js = ['wineEntry.js'];
                 res.locals.pack.config.data = data;
-                queryHelper.logWineView(req.passport ? req.passport.user.id : null,
-                    req.params.id,
-                    IP.address(), 
-                    client, () => {
-                        next();
-                    }   
-                );
+                axios.get('https://api.ipify.org?format=json').then(response => {
+                    const ip = response.data.ip;
+                    axios.get('https://ipapi.co/' + ip + '/' + 'json').then(response => {
+                        if(!response.error) {   
+                                queryHelper.logViewLocation(client,
+                                response.data.city,
+                                response.data.region,
+                                response.data.country,
+                                response.data.continent_code,
+                                response.data.postal,
+                                response.data.latitude,
+                                response.data.longitude,
+                                location_id => {
+                                    queryHelper.logWineView(
+                                        req.passport ? req.passport.user.id : null,
+                                        req.params.id,
+                                        ip, 
+                                        location_id,
+                                        client, () => {
+                                            next();
+                                        }   
+                                    );
+                                }
+                            );
+                        } else {
+                            queryHelper.logWineView(
+                                req.passport ? req.passport.user.id : null,
+                                req.params.id,
+                                ip, 
+                                null,
+                                client, () => {
+                                    next();
+                                }   
+                            );
+                        }
+                    });
+                });
             }
         });
     });
@@ -165,6 +200,28 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, IP)
                 }
             )
         }
+    });
+
+    app.post('/addFavorite', jsonParser, (req, res) => {
+
+        var data = {
+            itemType : req.body.itemType,
+            itemId : req.body.itemId,
+            userId : req.isAuthenticated() ? req.session.passport.user.id : null
+        };
+        console.log('Add Favorite : ' + JSON.stringify(data));
+
+    });
+
+    app.post('/removeFavorite', jsonParser, (req, res) => {
+        
+        var data = {
+            itemType : req.body.itemType,
+            itemId : req.body.itemId,
+            userId : req.isAuthenticated() ? req.session.passport.user.id : null
+        };
+        console.log('Add Favorite : ' + JSON.stringify(data));
+
     });
 
 };
