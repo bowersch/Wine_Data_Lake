@@ -12,6 +12,20 @@ DROP TABLE IF EXISTS favorite_ava CASCADE;
 DROP TABLE IF EXISTS favorite_qualities CASCADE;
 DROP TABLE IF EXISTS favorite_techsheets CASCADE;
 DROP TABLE IF EXISTS favorite_wineries CASCADE;
+DROP TABLE IF EXISTS wine_views CASCADE;
+DROP TABLE IF EXISTS locations CASCADE;
+
+CREATE TABLE IF NOT EXISTS locations 
+(
+	location_id		SERIAL PRIMARY KEY,
+	city			VARCHAR(255),
+	region			VARCHAR(255),
+	country			VARCHAR(255),
+	continent		VARCHAR(255),
+	postal			VARCHAR(64),
+	latitude		FLOAT(12),
+	longitude		FLOAT(12)
+);
 
 CREATE TABLE IF NOT EXISTS ava
 (
@@ -110,11 +124,11 @@ CREATE TABLE IF NOT EXISTS wine_qualities
 
 CREATE TABLE IF NOT EXISTS users
 (	
-	user_id          SERIAL PRIMARY KEY,
+	user_id         SERIAL PRIMARY KEY,
 
-	username         VARCHAR(30) UNIQUE NOT NULL,
-	user_auth		 VARCHAR(255) NOT NULL,
-	email            VARCHAR(50) UNIQUE NOT NULL
+	username        VARCHAR(30) UNIQUE NOT NULL,
+	user_auth		VARCHAR(255) NOT NULL,
+	email           VARCHAR(50) UNIQUE NOT NULL
 
 );
 
@@ -124,7 +138,8 @@ CREATE TABLE IF NOT EXISTS favorite_ava
 	fav_ava_id       SERIAL PRIMARY KEY,
 
 	user_id          INTEGER REFERENCES users(user_id),
-	ava_id           INTEGER REFERENCES ava(ava_id)
+	ava_id           INTEGER REFERENCES ava(ava_id),
+	favorite_date	 DATE DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE IF NOT EXISTS favorite_qualities
@@ -133,7 +148,8 @@ CREATE TABLE IF NOT EXISTS favorite_qualities
 	fav_qualities_id SERIAL PRIMARY KEY,
 
 	user_id          INTEGER REFERENCES users(user_id),
-	quality_id       INTEGER REFERENCES qualities(quality_id)
+	quality_id       INTEGER REFERENCES qualities(quality_id),
+	favorite_date	 DATE DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE IF NOT EXISTS favorite_techsheets
@@ -142,7 +158,8 @@ CREATE TABLE IF NOT EXISTS favorite_techsheets
 	fav_techsheet_id SERIAL PRIMARY KEY,
 
 	user_id          INTEGER REFERENCES users(user_id),
-	techsheet_id     INTEGER REFERENCES techsheets(techsheet_id)
+	techsheet_id     INTEGER REFERENCES techsheets(techsheet_id),
+	favorite_date	 DATE DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE IF NOT EXISTS favorite_wineries
@@ -151,5 +168,18 @@ CREATE TABLE IF NOT EXISTS favorite_wineries
 	fav_winery_id    SERIAL PRIMARY KEY,
 
 	user_id          INTEGER REFERENCES users(user_id),
-	winery_id        INTEGER REFERENCES wineries(winery_id)
+	winery_id        INTEGER REFERENCES wineries(winery_id),
+	favorite_date	 DATE DEFAULT CURRENT_DATE
+);
+
+CREATE TABLE IF NOT EXISTS wine_views
+(
+
+	wine_view_id	SERIAL PRIMARY KEY,
+	user_id			INTEGER REFERENCES users(user_id),
+	bottle_id		INTEGER REFERENCES bottle_data(bottle_id),
+	view_date		DATE DEFAULT CURRENT_DATE,
+	viewer_ip		VARCHAR(15),
+	viewer_location	INTEGER REFERENCES locations(location_id)
+
 );

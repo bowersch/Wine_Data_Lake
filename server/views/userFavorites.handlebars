@@ -1,7 +1,8 @@
 <div class="contentBackground">
     <div class="userProfilePicDiv">
         <img src="/images/user.png" />
-        <p>Dashboard<br>Log out</p>
+        <p>Dashboard<br>
+        <a href="/logout">Log out</a></p>
     </div>
     <div class="userGreeting">
         <h1>Hi, {{data.username}}!</h1>
@@ -15,12 +16,14 @@
         </div>
         <div class="wineries">
             <h2><i class="fa-solid fa-heart"></i> Favorite Wineries</h2>
+            <table>
             {{#each data.wineries}}
-                <div class="subwinery">
+                <td>
                 <img src="/images/winery_logo.png" />
                 <li><a href="">{{this.winery_name}}</a></li><br>
                 </div>
             {{/each}}
+            </table>
         </div>
         <div class="techsheets">
             <h2><i class="fa-solid fa-heart"></i> Favorite Techsheets</h2>
