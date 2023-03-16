@@ -1,5 +1,7 @@
 <div class="entryWrapper">
+        <!--
         <button class="favoriteWineButton" onclick="toggleFavorite(this,'wine',{{data.id}})"><i class="fa-regular fa-heart"></i></button>
+        -->
         <div class="entryDataWrapper">
                 <div class="wineName">
                         {{data.name}}
@@ -24,11 +26,15 @@
                         {{#each data.properties}}
                                 <div class="property">
                                         <div class="propertyName">
-                                                {{@key}}
-                                                <button class="favoriteButton" onclick="toggleFavorite(this,'quality','{{@key}}')"><i class="fa-regular fa-heart"></i></button>
+                                                {{this.quality_name}}
+                                                {{#if this.current_favorite}}
+                                                        <button class="favoriteButton" onclick="toggleFavorite(this,'quality','{{this.quality_id}}')"><i class="fa-solid fa-heart"></i></button>
+                                                {{else}}
+                                                        <button class="favoriteButton" onclick="toggleFavorite(this,'quality','{{this.quality_id}}')"><i class="fa-regular fa-heart"></i></button>
+                                                {{/if}}
                                         </div>
                                         <div class="propertyValue">
-                                                {{this}}
+                                                {{this.description}}
                                         </div>
                                 </div>
                         {{/each}}
