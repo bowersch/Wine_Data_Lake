@@ -49,7 +49,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
     });
 
     app.get('/wines/:id', (req, res, next) => {
-        queryHelper.getWineInfo(req.params.id, client, data => {
+        queryHelper.getWineInfo(req.params.id, req.isAuthenticated() ? req.session.passport.user.id : null, client, data => {
             if(!data) res.status(400).send('Error.');
             else {
                 res.locals.pack.template = 'wineEntry';
@@ -209,7 +209,12 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
             itemId : req.body.itemId,
             userId : req.isAuthenticated() ? req.session.passport.user.id : null
         };
-        console.log('Add Favorite : ' + JSON.stringify(data));
+        if(data.userId == null) return;
+        switch(data.itemType) {
+            case 'quality': {
+                queryHelper.addFavoriteQuality(data.userId, data.itemId, client);
+            }
+        }
 
     });
 
@@ -220,7 +225,12 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
             itemId : req.body.itemId,
             userId : req.isAuthenticated() ? req.session.passport.user.id : null
         };
-        console.log('Add Favorite : ' + JSON.stringify(data));
+        if(data.userId == null) return;
+        switch(data.itemType) {
+            case 'quality': {
+                queryHelper.delFavoriteQuality(data.userId, data.itemId, client);
+            }
+        }
 
     });
 

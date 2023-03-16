@@ -79,3 +79,5 @@ app.use((req, res) => {
 });
 
 app.listen(port, () => console.log(`App open at http://localhost:${port}/`));
+
+//conn.query("INSERT INTO favorite_qualities (user_id, quality_id) VALUES (2, 109);");
