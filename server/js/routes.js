@@ -47,56 +47,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
             }
         });
     });
-
-    app.get('/wines/:id', (req, res, next) => {
-        queryHelper.getWineInfo(req.params.id, req.isAuthenticated() ? req.session.passport.user.id : null, client, data => {
-            if(!data) res.status(400).send('Error.');
-            else {
-                res.locals.pack.template = 'wineEntry';
-                res.locals.pack.config.css = ['wineEntry.css'];
-                res.locals.pack.config.js = ['wineEntry.js'];
-                res.locals.pack.config.data = data;
-                axios.get('https://api.ipify.org?format=json').then(response => {
-                    const ip = response.data.ip;
-                    axios.get('https://ipapi.co/' + ip + '/' + 'json').then(response => {
-                        if(!response.error) {   
-                                queryHelper.logViewLocation(client,
-                                response.data.city,
-                                response.data.region,
-                                response.data.country,
-                                response.data.continent_code,
-                                response.data.postal,
-                                response.data.latitude,
-                                response.data.longitude,
-                                location_id => {
-                                    queryHelper.logWineView(
-                                        req.passport ? req.passport.user.id : null,
-                                        req.params.id,
-                                        ip, 
-                                        location_id,
-                                        client, () => {
-                                            next();
-                                        }   
-                                    );
-                                }
-                            );
-                        } else {
-                            queryHelper.logWineView(
-                                req.passport ? req.passport.user.id : null,
-                                req.params.id,
-                                ip, 
-                                null,
-                                client, () => {
-                                    next();
-                                }   
-                            );
-                        }
-                    });
-                });
-            }
-        });
-    });
-
+    
     // Citation
     // Date: 03/12/2023
     // Source: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%206%20-%20Dynamically%20Filling%20Dropdowns%20and%20Adding%20a%20Search%20Box 
@@ -128,6 +79,54 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
         })
     });
 
+    app.get('/wines/:bottle_id', (req, res, next) => {
+        queryHelper.getWineInfo(req.params.bottle_id, req.isAuthenticated() ? req.session.passport.user.id : null, client, data => {
+            if(!data) res.status(400).send('Error.');
+            else {
+                res.locals.pack.template = 'wineEntry';
+                res.locals.pack.config.css = ['wineEntry.css'];
+                res.locals.pack.config.js = ['wineEntry.js'];
+                res.locals.pack.config.data = data;
+                axios.get('https://api.ipify.org?format=json').then(response => {
+                    const ip = response.data.ip;
+                    axios.get('https://ipapi.co/' + ip + '/' + 'json').then(response => {
+                        if(!response.error) {   
+                                queryHelper.logViewLocation(client,
+                                response.data.city,
+                                response.data.region,
+                                response.data.country,
+                                response.data.continent_code,
+                                response.data.postal,
+                                response.data.latitude,
+                                response.data.longitude,
+                                location_id => {
+                                    queryHelper.logWineView(
+                                        req.passport ? req.passport.user.id : null,
+                                        req.params.bottle_id,
+                                        ip, 
+                                        location_id,
+                                        client, () => {
+                                            next();
+                                        }   
+                                    );
+                                }
+                            );
+                        } else {
+                            queryHelper.logWineView(
+                                req.passport ? req.passport.user.id : null,
+                                req.params.bottle_id,
+                                ip, 
+                                null,
+                                client, () => {
+                                    next();
+                                }   
+                            );
+                        }
+                    });
+                });
+            }
+        });
+    });
     
     app.get('/directory', (req, res, next) => {
         queryHelper.getWineriesWines(client, data => {
