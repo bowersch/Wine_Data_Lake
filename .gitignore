@@ -1,2 +1,5 @@
 **/node_modules
-test_server/
+test_server/*
+**/secrets.json
+test_server/config.json
+test_server/server.js

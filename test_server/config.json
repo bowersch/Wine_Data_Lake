@@ -1,6 +1,9 @@
 {
     "layout_path" : "/views/layouts",
     "layout_template" : "main",
-    "template" : "main",
-    "test_data" : "demo.json"
+    "template" : "wineResults",
+    "test_data" : "demo.json",
+    "css" : ["wineResults.css"],
+    "js" : ["searchResults.js"]
 }
+

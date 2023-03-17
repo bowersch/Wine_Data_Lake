@@ -1,41 +1,42 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
-const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const { client } = require("./dbConfig");
+const queryHelper = require('./js/queryHelper.js');
+
+const secrets = require("./secrets.json");
+
 const bcrypt = require("bcrypt");
 const flash = require('express-flash');
 const passport = require('passport');
-const queryHelper = require('./js/queryHelper.js');
 
-//const secrets = require("./secrets.json");
 const testData = require('./demo.json');
 
 const app = express();
 const port = process.env.PORT || 8080;
+const api = express.Router();
 
-const initializePassport = require("./passportConfig");
-initializePassport(passport);
+const { Pool } = require("pg");
 
-/*
-const { Client } = require("pg");
-
-
-const client = new Client({
-    host: '34.168.133.161',
+const conn = new Pool({
+    host: '34.168.239.168',
     port: 5432,
     database: "postgres",
     user: secrets.user,
     password: secrets.password
 });
-*/
-client.connect((err) => {
+
+conn.connect((err) => {
     if(err) {
         console.error('connection error', err.stack)
     } else {
         console.log('connected')
     }
 });
+
+require("./js/api.js")(api, conn);
+
+const initializePassport = require("./js/passportConfig");
+initializePassport(passport, conn, bcrypt);
 
 app.set('view engine', 'handlebars');
 
@@ -45,9 +46,8 @@ app.engine('handlebars', handlebars.engine({
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
-//app.use(cookieParser());
 app.use(session({
-    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    secret: "akjfhakjaw8723bs873ka7ykhasi7yq2kjhfa8k72ydbk37",
     saveUninitialized: true,
     resave: false 
 }));
@@ -55,6 +55,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+
+app.use("/api", api);
 
 app.use((req, res, next) => {
     res.locals.pack = {
@@ -64,16 +66,18 @@ app.use((req, res, next) => {
             css: null,
             js: null,
             data: null,
-            user: req.session.username ? req.session.username : null
+            user: req.session.passport ? req.session.passport.user.username : null
         }
     };
     next();
 });
 
-require('./js/routes.js')(app, client, queryHelper, passport, bcrypt, flash);
+require('./js/routes.js')(app, conn, queryHelper, passport, bcrypt, flash);
 
 app.use((req, res) => {
-    res.render(res.locals.pack.template, res.locals.pack.config);
+    if(res.locals.pack.template) res.render(res.locals.pack.template, res.locals.pack.config);
 });
 
 app.listen(port, () => console.log(`App open at http://localhost:${port}/`));
+
+//conn.query("INSERT INTO favorite_qualities (user_id, quality_id) VALUES (2, 109);");

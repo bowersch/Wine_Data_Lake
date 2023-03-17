@@ -1,4 +1,10 @@
-module.exports = function(app, client, queryHelper, passport, bcrypt ,flash) {
+const axios = require('axios')
+const parser = require('body-parser');
+const jsonParser = parser.json();
+
+module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
+
+    console.log("routes loaded.");
 
     app.get('/', (req, res, next) => {
         res.locals.pack.template = 'home';
@@ -16,28 +22,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt ,flash) {
         res.locals.pack.template = 'register';
         res.locals.pack.config.css = ['register.css'];
         next();
-    })
-
-    app.post('/authenticate', 
-        (req, res, next) => {
-            res.locals.userId = 1;
-            next();
-        },
-        (req, res) => {
-            req.session.userId = res.locals.userId;
-            queryHelper.getUsername(res.locals.userId, client, username => {
-                req.session.username = username;
-                res.redirect('/favorites');
-            });
-        }
-    );
-    /*
-    app.post('/logout', (req, res) => {
-        req.session.destroy((err) => {
-            res.redirect('/');
-        });
     });
-    */
 
     app.get("/logout", (req, res) => {
         req.logout(req.user, err => {
@@ -47,51 +32,68 @@ module.exports = function(app, client, queryHelper, passport, bcrypt ,flash) {
         });
     });
 
-// Citation
-// Date: 03/12/2023
-// Source: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%206%20-%20Dynamically%20Filling%20Dropdowns%20and%20Adding%20a%20Search%20Box 
-// Comment: Referred to search bar implementation for this query! 
-app.get('/search-results', (req, res) => {
-        
-    let query1;
-
-    let search = '%' + req.query.search + '%';
-
-    //if text box is empty when submit is done, set to a basic query
-    //otherwise, set to a search query
-    if(search === undefined){
-        query1 = "SELECT * FROM wine_data LIMIT 100;";
-    }
-    else {
-        // For Postgresql use ILIKE because database defaulted to case-sensitive 
-        query1 = `SELECT * FROM wine_data WHERE wine_name ILIKE $1 OR
-                  winery_name ILIKE $1 OR varietal_name ILIKE $1 OR 
-                  winemaker_name ILIKE $1 OR ava_name ILIKE $1 OR
-                  year ILIKE $1`
-    }
-
-    client.query(query1, [search], function(error, rows, fields) {
-        return res.render("wineResults", {
-            layout: "main",
-            css: ["wineResults.css"],
-            data: rows});
-    })
-});
-
-    /*
     app.get('/results/*', (req, res, next) => {
         res.locals.pack.template = 'wineResults';
         res.locals.pack.config.css = ['wineResults.css'];
         res.locals.pack.config.data = require('../resultsDummy.json');;
         next();
     });
-*/
+
+    app.get('/wines/random', (req, res, next) => {
+        queryHelper.randomWineId(client, id => {
+            if (!id) res.status(400).send('Error.');
+            else {
+                res.redirect('/wines/' + id);
+            }
+        });
+    });
+
     app.get('/wines/:id', (req, res, next) => {
-        queryHelper.getWineInfo(req.params.id, client, data => {
-            res.locals.pack.template = 'wineEntry';
-            res.locals.pack.config.css = ['wineEntry.css'];
-            res.locals.pack.config.data = data;
-            next();
+        queryHelper.getWineInfo(req.params.id, req.isAuthenticated() ? req.session.passport.user.id : null, client, data => {
+            if(!data) res.status(400).send('Error.');
+            else {
+                res.locals.pack.template = 'wineEntry';
+                res.locals.pack.config.css = ['wineEntry.css'];
+                res.locals.pack.config.js = ['wineEntry.js'];
+                res.locals.pack.config.data = data;
+                axios.get('https://api.ipify.org?format=json').then(response => {
+                    const ip = response.data.ip;
+                    axios.get('https://ipapi.co/' + ip + '/' + 'json').then(response => {
+                        if(!response.error) {   
+                                queryHelper.logViewLocation(client,
+                                response.data.city,
+                                response.data.region,
+                                response.data.country,
+                                response.data.continent_code,
+                                response.data.postal,
+                                response.data.latitude,
+                                response.data.longitude,
+                                location_id => {
+                                    queryHelper.logWineView(
+                                        req.passport ? req.passport.user.id : null,
+                                        req.params.id,
+                                        ip, 
+                                        location_id,
+                                        client, () => {
+                                            next();
+                                        }   
+                                    );
+                                }
+                            );
+                        } else {
+                            queryHelper.logWineView(
+                                req.passport ? req.passport.user.id : null,
+                                req.params.id,
+                                ip, 
+                                null,
+                                client, () => {
+                                    next();
+                                }   
+                            );
+                        }
+                    });
+                });
+            }
         });
     });
 
@@ -137,15 +139,12 @@ app.get('/search-results', (req, res) => {
     });
 
     app.get('/favorites', checkNotAuthenticated, (req, res, next) => {
-       //if(!req.session.userId) res.status(400).send('No user signed in.');
-        //else {
-            //queryHelper.getUserFavoriteInfo(req.session.userId, client, data => {
-                res.locals.pack.template = 'userFavorites';
-                res.locals.pack.config.css = ['userFavorites.css'];
-                //res.locals.pack.config.data = data;
-                next();
-            //});
-       // }
+        queryHelper.getUserFavoriteInfo(req.session.passport.user.id, client, data => {
+            res.locals.pack.template = 'userFavorites';
+            res.locals.pack.config.css = ['userFavorites.css'];
+            res.locals.pack.config.data = data;
+            next();
+        });
     });
 
     app.get('/about', (req, res, next) => {
@@ -176,7 +175,7 @@ app.get('/search-results', (req, res) => {
         successRedirect: "/favorites",
         failureRedirect: "/login",
         failureFlash: true
-    }))
+    }));
 
     app.post('/register', async(req, res) => {
         let { username, email, password, password2 } = req.body;
@@ -197,14 +196,12 @@ app.get('/search-results', (req, res) => {
 
         if(errors.length > 0) {
             res.render("register", { errors });
-        }
-        else {
+        } else {
             //form validation has passed
             let hashedPassword = await bcrypt.hash(password, 10);
 
             //check if email already exists
-            client.query(
-                `SELECT * FROM users WHERE email = $1;`, 
+            client.query(`SELECT * FROM users WHERE email = $1;`, 
                 [email], 
                 (err, results) => {
                      if(err){
@@ -237,20 +234,50 @@ app.get('/search-results', (req, res) => {
         }
     });
 
-    function checkAuthenticated(req, res, next) {
-        if(req.isAuthenticated()) {
-            return res.redirect('/favorites');
+    app.post('/addFavorite', jsonParser, (req, res) => {
+
+        var data = {
+            itemType : req.body.itemType,
+            itemId : req.body.itemId,
+            userId : req.isAuthenticated() ? req.session.passport.user.id : null
+        };
+        if(data.userId == null) return;
+        switch(data.itemType) {
+            case 'quality': {
+                queryHelper.addFavoriteQuality(data.userId, data.itemId, client);
+            }
         }
 
-        next();
-    }
+    });
 
-    function checkNotAuthenticated(req, res, next) {
-        if(req.isAuthenticated()) {
-            return next();
+    app.post('/removeFavorite', jsonParser, (req, res) => {
+        
+        var data = {
+            itemType : req.body.itemType,
+            itemId : req.body.itemId,
+            userId : req.isAuthenticated() ? req.session.passport.user.id : null
+        };
+        if(data.userId == null) return;
+        switch(data.itemType) {
+            case 'quality': {
+                queryHelper.delFavoriteQuality(data.userId, data.itemId, client);
+            }
         }
 
-        res.redirect('/login');
-    }
+    });
 
 };
+
+function checkAuthenticated(req, res, next) {
+    if(req.isAuthenticated()) {
+        return res.redirect('/favorites');
+    }
+    next();
+}
+
+function checkNotAuthenticated(req, res, next) {
+    if(req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/login');
+}
