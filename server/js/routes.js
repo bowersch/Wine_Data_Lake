@@ -47,8 +47,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
             }
         });
     });
-
-
+    
     // Citation
     // Date: 03/12/2023
     // Source: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%206%20-%20Dynamically%20Filling%20Dropdowns%20and%20Adding%20a%20Search%20Box 

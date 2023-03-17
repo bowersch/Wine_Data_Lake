@@ -1,4 +1,3 @@
-
 .home-unauthenticated {
     align-items: flex-start;
     background-color: var(--white);
@@ -427,8 +426,6 @@
     white-space: nowrap;
 }
 
-
-
 .wine-background {
     display: block;
     margin-left: auto;
@@ -444,8 +441,6 @@
     position: relative;
     width: 196px;
 }
-
-
 
 .overlap-group {
     align-items: flex-start;
@@ -480,4 +475,3 @@
     position: absolute;
     top: 0;
 }
-

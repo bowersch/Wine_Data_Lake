@@ -120,6 +120,38 @@ app.get("/logout", (req, res) => {
     });
 });
 
+
+// Citation
+// Date: 03/12/2023
+// Source: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%206%20-%20Dynamically%20Filling%20Dropdowns%20and%20Adding%20a%20Search%20Box 
+// Comment: Referred to search bar implementation for this query! 
+app.get('/search-results', (req, res) => {
+        
+    let query1;
+
+    let search = '%' + req.query.search + '%';
+
+    //if text box is empty when submit is done, set to a basic query
+    //otherwise, set to a search query
+    if(search === undefined){
+        query1 = "SELECT * FROM wine_data LIMIT 100;";
+    }
+    else {
+        // For Postgresql use ILIKE because database defaulted to case-sensitive 
+        query1 = `SELECT * FROM wine_data WHERE wine_name ILIKE $1 OR
+                  winery_name ILIKE $1 OR varietal_name ILIKE $1 OR 
+                  winemaker_name ILIKE $1 OR ava_name ILIKE $1 OR
+                  year ILIKE $1`
+    }
+
+    pool.query(query1, [search], function(error, rows, fields) {
+        return res.render("wineResults", {
+            layout: "main",
+            css: ["wineResults.css"],
+            data: rows});
+    })
+});
+
 app.get('/', (req, res) => {
     res.render("home", {
         layout : "main",

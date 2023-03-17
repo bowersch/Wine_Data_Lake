@@ -168,9 +168,33 @@ CREATE TABLE IF NOT EXISTS favorite_wineries
 	fav_winery_id    SERIAL PRIMARY KEY,
 
 	user_id          INTEGER REFERENCES users(user_id),
-	winery_id        INTEGER REFERENCES wineries(winery_id),
-	favorite_date	 DATE DEFAULT CURRENT_DATE
+	winery_id        INTEGER REFERENCES wineries(winery_id)
 );
+
+
+CREATE OR REPLACE VIEW wine_data AS
+	SELECT 
+		bd.bottle_id,
+		bd.wine_name,
+		v.varietal_name,
+		w.winery_name,
+		wm.winemaker_name,
+		av.ava_name,
+		bd.year,
+		ts.source_file,
+		bd.description
+	FROM bottle_data AS bd
+		LEFT OUTER JOIN varietals AS v
+			ON bd.varietal_id = v.varietal_id
+		LEFT OUTER JOIN wineries AS w
+			ON bd.winery_id = w.winery_id
+		LEFT OUTER JOIN winemakers AS wm
+			ON bd.winemaker_id = wm.winemaker_id
+		LEFT OUTER JOIN ava AS av
+			ON bd.ava_id = av.ava_id
+		LEFT OUTER JOIN techsheets AS ts
+			ON bd.techsheet_id = ts.techsheet_id;
+
 
 CREATE TABLE IF NOT EXISTS wine_views
 (
@@ -183,3 +207,4 @@ CREATE TABLE IF NOT EXISTS wine_views
 	viewer_location	INTEGER REFERENCES locations(location_id)
 
 );
+
