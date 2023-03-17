@@ -1,0 +1,185 @@
+
+.hidden,
+.hidden * {
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.overlap-group6 {
+    height: 1024px;
+    margin-left: 80px;
+    position: relative;
+    width: 1442px;
+}
+
+
+
+.wine-background {
+    height: 100%;
+    width: 200%;
+    left: 8px;
+    object-fit: cover;
+    position: absolute;
+    top: 0px;
+    width: 1440px;
+}
+
+.overlap-group4 {
+    align-items: center;
+    background-color: white;
+    border-radius: 50px;
+    box-shadow: 0px 4px 4px #00000040;
+    display: flex;
+    flex-direction: column;
+    left: 410px;
+    min-height: 545px;
+    padding: 19px 26px;
+    position: absolute;
+    top: 100px;
+    width: 550px;
+}
+
+
+
+.box-input {
+    align-items: flex-start;
+    align-self: flex-start;
+    cursor: pointer;
+    display: flex;
+    margin-top: 13px;
+    width: 547px;
+
+}
+
+
+
+
+
+.aPercentage {
+    align-items: flex-start;
+    align-self: flex-start;
+    cursor: pointer;
+    display: flex;
+    margin-top: 13px;
+    width: 547px;
+
+}
+
+
+
+.box-container {
+    align-items: flex-start;
+    background-color: #F2F0F0;
+    border: 2px solid;
+    border-color: #977EB3;
+    display: inline-block;
+    gap: 37px;
+    height: 40px;
+    min-width: 469px;
+    margin-left: 25px;
+    padding: 5px 8px;
+}
+/*for actual text input*/
+.box-container {
+    color: #977EB3;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    font-size: 38px;
+    align-items: center;
+    letter-spacing: 0px;
+    line-height: normal;
+    margin-bottom: 3px;
+    min-height: 34px;
+
+}
+
+
+
+
+
+
+
+
+.overlap-group2 {
+    align-items: flex-start;
+    background-color:#3b0c77;
+    border: #3b0c77;
+    border-radius: 15px;
+    display: flex;
+    height: 60px;
+    margin-left: 1px;
+    margin-top: 24px;
+    min-width: 125px;
+    width: 550px;
+    padding: 9px 150px;
+    cursor: pointer;
+}
+
+.overlap-group2:hover {
+    align-items: flex-start;
+    background-color:#7f669f;
+    border-radius: 15px;
+    display: flex;
+    height: 60px;
+    margin-left: 1px;
+    margin-top: 24px;
+    min-width: 125px;
+    width: 550px;
+    padding: 9px 150px;
+    cursor: pointer;
+}
+
+.upload {
+    color: white;
+    font-family: 'Montserrat';
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: 0px;
+    line-height: normal;
+    min-height: 29px;
+    align-items: center;
+    width: 300px
+}
+
+.sign-in-to-your-account {
+    color: #929292;
+    font-family: 'Montserrat';
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -15px;
+    min-height: 29px;
+    min-width: 282px;
+}
+
+.title {
+    white-space: nowrap;
+    color: #310866;
+    font-family: 'Montserrat';
+    font-size: 38px;
+    font-weight: 700;
+
+    line-height: normal;
+    margin-left: -175px;
+    margin-top: 3px;
+    min-height: 46px;
+    width: 188px;
+}
+
+
+
+
+
+.logo-container {
+    height: 96px;
+    width: 248px;
+}
+
+
+
+
+
+
+
+
