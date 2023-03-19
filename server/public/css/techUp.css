@@ -35,13 +35,13 @@
     min-height: 545px;
     padding: 19px 26px;
     position: absolute;
-    top: 192px;
+    top: 100px;
     width: 550px;
 }
 
 
 
-.username-input {
+.box-input {
     align-items: flex-start;
     align-self: flex-start;
     cursor: pointer;
@@ -51,20 +51,36 @@
 
 }
 
-.username-container {
+
+
+
+
+.aPercentage {
+    align-items: flex-start;
+    align-self: flex-start;
+    cursor: pointer;
+    display: flex;
+    margin-top: 13px;
+    width: 547px;
+
+}
+
+
+
+.box-container {
     align-items: flex-start;
     background-color: #F2F0F0;
     border: 2px solid;
     border-color: #977EB3;
     display: inline-block;
     gap: 37px;
-    height: 51px;
+    height: 40px;
     min-width: 469px;
     margin-left: 25px;
     padding: 5px 8px;
 }
 /*for actual text input*/
-.username-container {
+.box-container {
     color: #977EB3;
     font-family: 'Montserrat';
     font-weight: 500;
@@ -79,32 +95,10 @@
 
 
 
-.fa-lock {
-    color: #977EB3;
-    margin-top: 8px;
-    height: 40px;
-    width: 35px;
-}
 
-.fa-user {
-    color: #977EB3;
-    margin-top: 8px;
-    height: 40px;
-    width: 35px;
-}
 
-.i-forgot-my-password {
-    color: #3b0b77bf;
-    font-family: 'Montserrat';
-    font-size: 24px;
-    font-weight: 400;
-    letter-spacing: 0px;
-    line-height: medium;
-    margin-left: 1px;
-    margin-top: 11px;
-    min-height: 29px;
-    min-width: 253px;
-}
+
+
 
 .overlap-group2 {
     align-items: flex-start;
@@ -116,7 +110,8 @@
     margin-left: 1px;
     margin-top: 24px;
     min-width: 125px;
-    padding: 9px 199px;
+    width: 550px;
+    padding: 9px 150px;
     cursor: pointer;
 }
 
@@ -129,11 +124,12 @@
     margin-left: 1px;
     margin-top: 24px;
     min-width: 125px;
-    padding: 9px 199px;
+    width: 550px;
+    padding: 9px 150px;
     cursor: pointer;
 }
 
-.login {
+.upload {
     color: white;
     font-family: 'Montserrat';
     font-size: 36px;
@@ -142,6 +138,7 @@
     line-height: normal;
     min-height: 29px;
     align-items: center;
+    width: 300px
 }
 
 .sign-in-to-your-account {
@@ -157,96 +154,32 @@
 }
 
 .title {
+    white-space: nowrap;
     color: #310866;
     font-family: 'Montserrat';
     font-size: 38px;
     font-weight: 700;
-    letter-spacing: 0;
+
     line-height: normal;
-    margin-left: 68px;
+    margin-left: -175px;
     margin-top: 3px;
     min-height: 46px;
     width: 188px;
 }
 
-.password-input {
-    align-items: flex-start;
-    align-self: flex-end;
-    cursor: pointer;
-    display: flex;
-    margin-top: 24px;
-    min-width: 495px;
-}
 
-.overlap-group1 {
-    align-items: flex-start;
-    background-color: #F2F0F0;
-    border: 2px solid;
-    border-color: #977EB3;
-    display: flex;
-    gap: 37px;
-    height: 51px;
-    min-width: 470px;
-    padding: 5px 8px;
-    margin-left: 20px;
-}
 
-.overlap-group1 {
-    color: #977EB3;
-    font-family: 'Montserrat';
-    font-weight: 500;
-    font-size: 38px;
-    align-items: center;
-    letter-spacing: 0px;
-    line-height: normal;
-    margin-bottom: 3px;
-    min-height: 34px;
-    
-}
+
 
 .logo-container {
     height: 96px;
     width: 248px;
 }
 
-.overlap-group3 {
-    align-items: flex-start;
-    background-color: #F2F0F0;
-    border: 1px solid #3b0c77;
-    border-radius: 15px;
-    display: flex;
-    height: 65px;
-    margin-left: 1px;
-    margin-top: 13px;
-    min-width: 125px;
-    padding: 9px 111px;
-    cursor: pointer;
-}
 
 
 
 
-.overlap-group3:hover {
-    align-items: flex-start;
-    background-color: #cac8ca;
-    border: 1px solid #3b0c77;
-    border-radius: 15px;
-    display: flex;
-    height: 65px;
-    margin-left: 1px;
-    margin-top: 13px;
-    min-width: 125px;
-    padding: 9px 111px;
-    cursor: pointer;
-}
 
-.new-account {
-    color: #3b0c77;
-    font-family: 'Montserrat';
-    font-size: 24px;
-    font-weight: 400;
-    letter-spacing: 0;
-    margin-top: 10px;
-    line-height: normal;
-    min-height: 29px;
-}
+
+

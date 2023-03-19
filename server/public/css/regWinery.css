@@ -35,13 +35,53 @@
     min-height: 545px;
     padding: 19px 26px;
     position: absolute;
-    top: 192px;
+    top: 100px;
     width: 550px;
 }
 
 
 
 .username-input {
+    align-items: flex-start;
+    align-self: flex-start;
+    cursor: pointer;
+    display: flex;
+    margin-top: 13px;
+    width: 547px;
+
+}
+
+.address-input {
+    align-items: flex-start;
+    align-self: flex-start;
+    cursor: pointer;
+    display: flex;
+    margin-top: 13px;
+    width: 547px;
+
+}
+
+.phone-input {
+    align-items: flex-start;
+    align-self: flex-start;
+    cursor: pointer;
+    display: flex;
+    margin-top: 13px;
+    width: 547px;
+
+}
+
+.winery-input {
+    align-items: flex-start;
+    align-self: flex-start;
+    cursor: pointer;
+    display: flex;
+    margin-top: 13px;
+    width: 547px;
+
+}
+
+.email-input {
     align-items: flex-start;
     align-self: flex-start;
     cursor: pointer;
@@ -58,7 +98,7 @@
     border-color: #977EB3;
     display: inline-block;
     gap: 37px;
-    height: 51px;
+    height: 40px;
     min-width: 469px;
     margin-left: 25px;
     padding: 5px 8px;
@@ -86,12 +126,41 @@
     width: 35px;
 }
 
+.fa-location-dot {
+    color: #977EB3;
+    margin-top: 8px;
+    height: 40px;
+    width: 35px;
+}
+
+.fa-signature {
+    color: #977EB3;
+    margin-top: 8px;
+    height: 40px;
+    width: 35px;
+}
+
+.fa-envelope {
+    color: #977EB3;
+    margin-top: 8px;
+    height: 40px;
+    width: 35px;
+}
+
 .fa-user {
     color: #977EB3;
     margin-top: 8px;
     height: 40px;
     width: 35px;
 }
+
+.fa-phone {
+    color: #977EB3;
+    margin-top: 8px;
+    height: 40px;
+    width: 35px;
+}
+
 
 .i-forgot-my-password {
     color: #3b0b77bf;
@@ -116,7 +185,8 @@
     margin-left: 1px;
     margin-top: 24px;
     min-width: 125px;
-    padding: 9px 199px;
+    width: 550px;
+    padding: 9px 150px;
     cursor: pointer;
 }
 
@@ -129,7 +199,8 @@
     margin-left: 1px;
     margin-top: 24px;
     min-width: 125px;
-    padding: 9px 199px;
+    width: 550px;
+    padding: 9px 150px;
     cursor: pointer;
 }
 
@@ -142,6 +213,7 @@
     line-height: normal;
     min-height: 29px;
     align-items: center;
+    width: 300px
 }
 
 .sign-in-to-your-account {
@@ -157,19 +229,29 @@
 }
 
 .title {
+    white-space: nowrap;
     color: #310866;
     font-family: 'Montserrat';
     font-size: 38px;
     font-weight: 700;
-    letter-spacing: 0;
+
     line-height: normal;
-    margin-left: 68px;
+    margin-left: -175px;
     margin-top: 3px;
     min-height: 46px;
     width: 188px;
 }
 
 .password-input {
+    align-items: flex-start;
+    align-self: flex-end;
+    cursor: pointer;
+    display: flex;
+    margin-top: 24px;
+    min-width: 495px;
+}
+
+.passwordConfirmation-input {
     align-items: flex-start;
     align-self: flex-end;
     cursor: pointer;

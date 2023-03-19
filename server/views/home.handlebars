@@ -1,4 +1,3 @@
-
 <div class="home-anauthenticated screen">
     <div class="overlap-group2">
         <div class="overlap-group3">
@@ -38,23 +37,25 @@
                 </div>
                 <div class="content">
                     <div class="overlap-group1-1">
-                        <h1 class="slogan"> Choose the right glass</h1>
-                        <div class="search-components">
-                            <div class="flex-col">
-                                <div class="overlap-group-2">
-                                    <div class="search-by-keyword">Search by keyword...</div>
-                                    <div class="text-1-1">🔍</div>
+                        <form method="GET" id="search-results" action="/search-results">
+                            <h1 class="slogan"> Choose the right glass</h1>
+                            <div class="search-components">
+                                <div class="flex-col">
+                                    <input type="text" id="uInput" name="search" class="overlap-group-2" placeholder="Search-by-keyword🔍">
+                                        <!--<input type="text" id="uInput" name="search" class="search-by-keyword">Search by keyword...</input>
+                                        <div class="text-1-1">🔍</div> -->
+                                    </input>
+                                    <a onclick="window.event.stopPropagation()"><div class="advanced-search">Advanced Search ▼</div></a>
                                 </div>
-                                <a onclick="window.event.stopPropagation()"><div class="advanced-search">Advanced Search ▼</div></a>
+                                <button class="search-button" type="submit">
+                                    <div class="text-3 text-4">Search</div>
+                                </button>
                             </div>
-                            <div class="search-button">
-                                <div class="text-3 text-4">Search</div>
-                            </div>
-                        </div>
+                        </form>
                         <div class="big-dark-button">
                             <div class="big-dark-button-1 big-dark-button-3">
                                 <div class="big-dark-button-2 big-dark-button-3">
-                                    <div class="surprise-me valign-text-middle">Surprise Me?!</div>
+                                    <button class="surprise-me valign-text-middle" onclick="window.location.href='/wines/random';">Surprise Me?!</button>
                                 </div>
                             </div>
                         </div>

@@ -86,7 +86,7 @@
     width: 35px;
 }
 
-.fa-user {
+.fa-envelope {
     color: #977EB3;
     margin-top: 8px;
     height: 40px;
@@ -116,7 +116,8 @@
     margin-left: 1px;
     margin-top: 24px;
     min-width: 125px;
-    padding: 9px 199px;
+    width: 550px;
+    padding: 9px 150px;
     cursor: pointer;
 }
 
@@ -129,7 +130,8 @@
     margin-left: 1px;
     margin-top: 24px;
     min-width: 125px;
-    padding: 9px 199px;
+    width: 550px;
+    padding: 9px 150px;
     cursor: pointer;
 }
 
@@ -142,6 +144,7 @@
     line-height: normal;
     min-height: 29px;
     align-items: center;
+    width: 300px
 }
 
 .sign-in-to-your-account {
@@ -157,13 +160,14 @@
 }
 
 .title {
+    white-space: nowrap;
     color: #310866;
     font-family: 'Montserrat';
     font-size: 38px;
     font-weight: 700;
-    letter-spacing: 0;
+
     line-height: normal;
-    margin-left: 68px;
+    margin-left: -150px;
     margin-top: 3px;
     min-height: 46px;
     width: 188px;

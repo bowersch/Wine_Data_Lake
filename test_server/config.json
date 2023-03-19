@@ -1,9 +1,0 @@
-{
-    "layout_path" : "/views/layouts",
-    "layout_template" : "main",
-    "template" : "wineResults",
-    "test_data" : "demo.json",
-    "css" : ["wineResults.css"],
-    "js" : ["searchResults.js"]
-}
-
