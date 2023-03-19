@@ -17,7 +17,7 @@ const sM = new SecretManagerServiceClient();
 
 async function getSecret(name) {
     var secret = await sM.getSecret({
-        name: name
+        name: 'projects/WineDataLake/secrets/' + name
     });
     return secret;
 }
