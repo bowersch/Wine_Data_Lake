@@ -15,13 +15,15 @@ const { Pool } = require("pg");
 const {SecretManagerServiceClient} = require('@google-cloud/secret-manager');
 const sM = new SecretManagerServiceClient();
 
-const user = await sM.getSecret({
-    name: "DB_USER"
-});
+async function getSecret(name) {
+    var secret = await sM.getSecret({
+        name: name
+    });
+    return secret;
+}
 
-const pass = await sM.getSecret({
-    name: "DB_PASS"
-});
+var user = getSecret('BD_USER');
+var pass = getSecret('DB_PASS');
 
 const conn = new Pool({
     host: '127.0.0.1',
