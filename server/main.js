@@ -6,8 +6,6 @@ const bcrypt = require("bcrypt");
 const flash = require('express-flash');
 const passport = require('passport');
 
-const secrets = require('./js/secrets.js')
-
 const app = express();
 const port = process.env.PORT || 8080;
 const api = express.Router();
@@ -18,8 +16,8 @@ const conn = new Pool({
     host: '127.0.0.1',
     port: 5432,
     database: "postgres",
-    user: secrets.user,
-    password: secrets.password
+    user: process.env.USER,
+    password: process.env.PASS
 });
 
 conn.connect((err) => {
