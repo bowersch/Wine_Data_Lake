@@ -16,10 +16,10 @@ const {SecretManagerServiceClient} = require('@google-cloud/secret-manager');
 const sM = new SecretManagerServiceClient();
 
 async function getSecret(name) {
-    var secret = await sM.getSecret({
-        name: 'projects/WineDataLake/secrets/' + name
+    let [version] = await sM.accessSecretVersion({
+        name: 'projects/WineDataLake/secrets/' + name + '/versions/latest'
     });
-    return secret;
+    return version.payload.data.toString();
 }
 
 var user = getSecret('BD_USER');
