@@ -2,14 +2,9 @@ const express = require('express');
 const handlebars = require('express-handlebars');
 const session = require('express-session');
 const queryHelper = require('./js/queryHelper.js');
-
-const secrets = require("./secrets.json");
-
 const bcrypt = require("bcrypt");
 const flash = require('express-flash');
 const passport = require('passport');
-
-const testData = require('./demo.json');
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -18,11 +13,11 @@ const api = express.Router();
 const { Pool } = require("pg");
 
 const conn = new Pool({
-    host: '34.168.239.168',
+    host: '127.0.0.1',
     port: 5432,
     database: "postgres",
-    user: secrets.user,
-    password: secrets.password
+    user: process.env.USER,
+    password: process.env.SECRET
 });
 
 conn.connect((err) => {
@@ -79,5 +74,3 @@ app.use((req, res) => {
 });
 
 app.listen(port, () => console.log(`App open at http://localhost:${port}/`));
-
-//conn.query("INSERT INTO favorite_qualities (user_id, quality_id) VALUES (2, 109);");
