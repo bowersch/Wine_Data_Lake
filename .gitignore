@@ -3,3 +3,4 @@ test_server/*
 **/secrets.json
 test_server/config.json
 test_server/server.js
+server/secrets.json

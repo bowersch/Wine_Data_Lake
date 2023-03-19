@@ -15,14 +15,14 @@
         {{/each}}
         <div class="wrapper">
             <div class="header">
-                <div class="logoWrapper">
-                    <embed src="/svg/logo.svg">
-                </div>
+                <button onclick="window.location.href='/';" class="logoWrapper">
+                    <img src="/svg/logo.svg">
+                </button>
                 <div class="accountWrapper">
                     {{#if user}}
                         <div class="userWrapper">
                             <i class="fa-solid fa-user"></i>
-                            <button>{{user}}</button>
+                            <button onclick="window.location.href='/favorites';">{{user}}</button>
                         </div>
                         <div class="signOutWrapper">
                             <button onclick="window.location.href='/logout';">Sign Out</button>
