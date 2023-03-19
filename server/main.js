@@ -12,12 +12,23 @@ const api = express.Router();
 
 const { Pool } = require("pg");
 
+const {SecretManagerServiceClient} = require('@google-cloud/secret-manager');
+const sM = new SecretManagerServiceClient();
+
+const user = await sM.getSecret({
+    name: "DB_USER"
+});
+
+const pass = await sM.getSecret({
+    name: "DB_PASS"
+});
+
 const conn = new Pool({
     host: '127.0.0.1',
     port: 5432,
     database: "postgres",
-    user: process.env.USER,
-    password: process.env.PASS
+    user: user,
+    password: pass
 });
 
 conn.connect((err) => {
