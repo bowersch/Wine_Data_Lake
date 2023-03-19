@@ -17,7 +17,7 @@ const sM = new SecretManagerServiceClient();
 
 async function getSecret(name) {
     let [version] = await sM.accessSecretVersion({
-        name: 'projects/235077605970/secrets/' + name + '/versions/latest'
+        name: 'projects/WineDataLake/secrets/' + name + '/versions/latest'
     });
     return version.payload.data.toString();
 }
