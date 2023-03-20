@@ -1,1 +1,4 @@
 runtime: nodejs16
+
+vpc_access_connector:
+ name: projects/winedatalake-377223/locations/us-west1/connectors/wdl-run-sql
