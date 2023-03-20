@@ -17,6 +17,8 @@ const secrets = require('./js/secrets.js')
 var user = secrets.getSecret('DB_USER');
 var pass = secrets.getSecret('DB_PASS');
 
+console.log(user);
+
 const conn = new Pool({
     host: '10.115.240.3',
     port: 5432,

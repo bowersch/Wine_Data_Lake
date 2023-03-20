@@ -5,6 +5,6 @@ exports.getSecret = function (name) {
     sM.accessSecretVersion({
         name: 'projects/winedatalake-377223/secrets/' + name + '/versions/latest'
     }).then(version => {
-        return version.payload.data.toString('utf8');
+        return version.payload.data.toString();
     });
 }
