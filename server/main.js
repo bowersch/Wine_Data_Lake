@@ -19,7 +19,7 @@ var pass = secrets.getSecret('DB_PASS');
 
 const conn = new Pool({
     host: '10.115.240.3',
-    port: 5432,
+    port: 3306,
     database: "postgres",
     user: user,
     password: pass
