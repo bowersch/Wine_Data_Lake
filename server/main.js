@@ -14,19 +14,15 @@ const { Pool } = require("pg");
 
 const secrets = require('./js/secrets.js')
 
-var u;
-var p;
-(async () => {
-    u = await secrets.getSecret('DB_USER');
-    p = await secrets.getSecret('DB_PASS');
-})
+var user = secrets.getSecret('DB_USER');
+var pass = secrets.getSecret('DB_PASS');
 
 const conn = new Pool({
     host: '10.115.240.3',
     port: 5432,
     database: "postgres",
-    user: u,
-    password: p
+    user: user,
+    password: pass
 });
 
 conn.connect();
