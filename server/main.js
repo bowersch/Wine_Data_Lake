@@ -14,17 +14,14 @@ const { Pool } = require("pg");
 
 const secrets = require('./js/secrets.js')
 
-var user = secrets.getSecret('DB_USER');
-var pass = secrets.getSecret('DB_PASS');
-
-console.log(user);
+console.log("USERNAME:" + user);
 
 const conn = new Pool({
     host: '10.115.240.3',
     port: 5432,
     database: "postgres",
-    user: user,
-    password: pass
+    user: process.env.USER,
+    password: process.env.PASS
 });
 
 conn.connect();
