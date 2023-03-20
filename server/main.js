@@ -12,8 +12,8 @@ const api = express.Router();
 
 const { Pool } = require("pg");
 
-const secrets = require('./js/secrets.js')
-
+const secrets = require('./js/secrets.js');
+const user = secrets.getSecret('DB_USER');
 console.log("USERNAME:" + user);
 
 const conn = new Pool({
