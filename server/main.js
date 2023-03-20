@@ -25,13 +25,7 @@ const conn = new Pool({
     password: pass
 });
 
-conn.connect((err) => {
-    if(err) {
-        console.error('connection error', err.stack)
-    } else {
-        console.log('connected')
-    }
-});
+conn.connect();
 
 require("./js/api.js")(api, conn);
 
