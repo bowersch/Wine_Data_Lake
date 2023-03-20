@@ -12,18 +12,10 @@ const api = express.Router();
 
 const { Pool } = require("pg");
 
-const {SecretManagerServiceClient} = require('@google-cloud/secret-manager');
-const sM = new SecretManagerServiceClient();
+const secrets = require('./js/secrets.js')
 
-async function getSecret(name) {
-    let [version] = await sM.accessSecretVersion({
-        name: 'projects/winedatalake-377223/secrets/' + name + '/versions/latest'
-    });
-    return version.payload.data.toString();
-}
-
-var user = getSecret('BD_USER');
-var pass = getSecret('DB_PASS');
+var user = secrets.getSecret('BD_USER');
+var pass = secrets.getSecret('DB_PASS');
 
 const conn = new Pool({
     host: '127.0.0.1',
