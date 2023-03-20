@@ -12,9 +12,9 @@ const api = express.Router();
 
 const { Pool } = require("pg");
 
-const secrets = require('./js/secrets.js');
-const user = secrets.getSecret('DB_USER');
-console.log("USERNAME:" + user);
+//const secrets = require('./js/secrets.js');
+//const user = secrets.getSecret('DB_USER');
+//console.log("USERNAME:" + user);
 
 const conn = new Pool({
     host: '10.115.240.3',
