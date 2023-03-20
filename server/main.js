@@ -14,7 +14,7 @@ const { Pool } = require("pg");
 
 const secrets = require('./js/secrets.js')
 
-var user = secrets.getSecret('BD_USER');
+var user = secrets.getSecret('DB_USER');
 var pass = secrets.getSecret('DB_PASS');
 
 const conn = new Pool({
