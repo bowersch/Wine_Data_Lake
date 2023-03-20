@@ -1,6 +1,6 @@
 runtime: nodejs16
 env_variables:
-  USER: postgres
-  PASS: A_Great_pass00!
+  USER: 'postgres'
+  PASS: 'A_Great_pass00!'
 vpc_access_connector:
   name: projects/winedatalake-377223/locations/us-west1/connectors/wdl-run-sql
