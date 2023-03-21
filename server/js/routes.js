@@ -13,7 +13,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
     });
 
     app.get('/info', (req, res, next) => {
-        res.locals.pack.config.layout = null;
+        res.locals.pack.config.layout = 'productPageTemplate';
         res.locals.pack.template = 'productPage';
         res.locals.pack.config.css = ['productPage.css'];
         next();

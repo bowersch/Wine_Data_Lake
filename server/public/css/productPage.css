@@ -1,0 +1,52 @@
+body {
+    font-family: 'Montserrat';
+    margin: 0;
+    background-image: url('/images/background.png');
+    background-size: cover;
+}
+
+.sectionTitle {
+    font-size: 36px;
+    font-weight: 800;
+    padding-bottom: 8px;
+    color: #310866;
+}
+
+.titleWrapper {
+    background-color: #310866;
+    color: white;
+    padding: 16px;
+    font-size: 50px;
+    font-weight: 800;
+}
+
+.sectionWrapper {
+    margin: auto;
+    padding: 24px;
+    text-align: justify;
+}
+
+.quote {
+    width: 70%;
+}
+
+p {
+    width: 80%;
+    margin: auto;
+    padding: 8px;
+}
+
+img {
+    width: 60%;
+}
+
+.devs {
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    margin: auto;
+}
+
+.dev {
+    margin-right: 18px;
+}
