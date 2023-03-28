@@ -39,11 +39,10 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
         next();
     });
 
-
     // Citation
     // Date: 03/12/2023
-    // Source: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%206%20-%20Dynamically%20Filling%20Dropdowns%20and%20Adding%20a%20Search%20Box 
-    // Comment: Referred to search bar implementation for this query! 
+    // Source: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%206%20-%20Dynamically%20Filling%20Dropdowns%20and%20Adding%20a%20Search%20Box
+    // Comment: Referred to search bar implementation for this query!
     app.get('/search-results', (req, res) => {
             
         let query1;
@@ -56,9 +55,9 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
             query1 = "SELECT * FROM wine_data LIMIT 100;";
         }
         else {
-            // For Postgresql use ILIKE because database defaulted to case-sensitive 
+            // For Postgresql use ILIKE because database defaulted to case-sensitive
             query1 = `SELECT * FROM wine_data WHERE wine_name ILIKE $1 OR
-                    winery_name ILIKE $1 OR varietal_name ILIKE $1 OR 
+                    winery_name ILIKE $1 OR varietal_name ILIKE $1 OR
                     winemaker_name ILIKE $1 OR ava_name ILIKE $1 OR
                     year ILIKE $1`
         }
@@ -91,7 +90,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
                 axios.get('https://api.ipify.org?format=json').then(response => {
                     const ip = response.data.ip;
                     axios.get('https://ipapi.co/' + ip + '/' + 'json').then(response => {
-                        if(!response.error) {   
+                        if(!response.error) {
                                 queryHelper.logViewLocation(client,
                                 response.data.city,
                                 response.data.region,
@@ -104,11 +103,11 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
                                     queryHelper.logWineView(
                                         req.passport ? req.passport.user.id : null,
                                         req.params.bottle_id,
-                                        ip, 
+                                        ip,
                                         location_id,
                                         client, () => {
                                             next();
-                                        }   
+                                        }
                                     );
                                 }
                             );
@@ -116,11 +115,11 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
                             queryHelper.logWineView(
                                 req.passport ? req.passport.user.id : null,
                                 req.params.bottle_id,
-                                ip, 
+                                ip,
                                 null,
                                 client, () => {
                                     next();
-                                }   
+                                }
                             );
                         }
                     });
@@ -128,7 +127,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
             }
         });
     });
-    
+
     app.get('/directory', (req, res, next) => {
         queryHelper.getWineriesWines(client, data => {
             res.locals.pack.template = 'directory';
@@ -152,7 +151,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
         res.locals.pack.config.css = ['about.css'];
         next();
     });
-    
+
     app.get('/contact', (req, res, next) => {
         res.locals.pack.template = 'contact';
         res.locals.pack.config.css = ['about.css'];
@@ -201,8 +200,8 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
             let hashedPassword = await bcrypt.hash(password, 10);
 
             //check if email already exists
-            client.query(`SELECT * FROM users WHERE email = $1;`, 
-                [email], 
+            client.query(`SELECT * FROM users WHERE email = $1;`,
+                [email],
                 (err, results) => {
                      if(err){
                         throw err;
@@ -217,8 +216,8 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
                     else{
                         //add new user
                         client.query(
-                            "INSERT INTO users (username, email, user_auth) VALUES ($1, $2, $3) RETURNING user_id, user_auth;", 
-                            [username, email, hashedPassword], 
+                            "INSERT INTO users (username, email, user_auth) VALUES ($1, $2, $3) RETURNING user_id, user_auth;",
+                            [username, email, hashedPassword],
                             (err, results) => {
                                 if(err) {
                                     throw err;
@@ -251,7 +250,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
     });
 
     app.post('/removeFavorite', jsonParser, (req, res) => {
-        
+
         var data = {
             itemType : req.body.itemType,
             itemId : req.body.itemId,
