@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "nodemon ./main.js",
+    "test": "nodemon ./main.js ",
     "start": "node main.js"
   },
   "author": "",
@@ -24,5 +24,15 @@
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "pg": "^8.9.0"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+    "node_modules/**/node_modules"
+    ],
+    "delay": "2500",
+    "env": {
+      "CONN_PORT": "34.168.239.168"
+    }
   }
 }

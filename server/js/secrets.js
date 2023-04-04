@@ -1,10 +1,10 @@
 const {SecretManagerServiceClient} = require('@google-cloud/secret-manager');
-const sM = new SecretManagerServiceClient();
+const client = new SecretManagerServiceClient();
 
-exports.getSecret = function (name) {
-    sM.accessSecretVersion({
-        name: 'projects/winedatalake-377223/secrets/' + name + '/versions/latest'
-    }).then(version => {
-        return version.payload.data.toString();
+exports.getSecret = async (name) => {
+    const [version] = await client.accessSecretVersion({
+        name: `projects/winedatalake-377223/secrets/${name}/versions/latest`,
     });
+    const responsePayload = version.payload.data.toString();
+    return responsePayload;
 }
