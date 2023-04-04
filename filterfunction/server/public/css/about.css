@@ -1,0 +1,28 @@
+.contentBackground {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    position: relative;
+    top: 0;
+    border-radius: 12px;
+    overflow: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.pageHeader {
+    width: 100%;
+    height: 20%;
+    top: 0;
+    padding-top: 1.2%;
+    text-align: center;
+    font-size: x-large;
+    color: white;
+    background-color: #8162B5;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.pageContent {
+    padding-left: 10%;
+}
