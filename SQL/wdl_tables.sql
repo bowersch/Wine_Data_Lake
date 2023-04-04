@@ -12,6 +12,20 @@ DROP TABLE IF EXISTS favorite_ava CASCADE;
 DROP TABLE IF EXISTS favorite_qualities CASCADE;
 DROP TABLE IF EXISTS favorite_techsheets CASCADE;
 DROP TABLE IF EXISTS favorite_wineries CASCADE;
+DROP TABLE IF EXISTS wine_views CASCADE;
+DROP TABLE IF EXISTS locations CASCADE;
+
+CREATE TABLE IF NOT EXISTS locations 
+(
+	location_id		SERIAL PRIMARY KEY,
+	city			VARCHAR(255),
+	region			VARCHAR(255),
+	country			VARCHAR(255),
+	continent		VARCHAR(255),
+	postal			VARCHAR(64),
+	latitude		FLOAT(12),
+	longitude		FLOAT(12)
+);
 
 CREATE TABLE IF NOT EXISTS ava
 (
@@ -70,12 +84,13 @@ CREATE TABLE IF NOT EXISTS wineries
 
 CREATE TABLE IF NOT EXISTS bottle_data
 (
-
     bottle_id          SERIAL PRIMARY KEY,
     winery_id          INTEGER REFERENCES wineries(winery_id),
     year               VARCHAR(6) NOT NULL,
     wine_name          VARCHAR(255) NOT NULL,
     pct_alcohol        VARCHAR(10),
+	sweetness          VARCHAR(20) default 'sweet',
+	body               VARCHAR(20) default 'light',
     ta                 VARCHAR(10),
     ph                 VARCHAR(10),
     soils              VARCHAR(255),
@@ -87,8 +102,8 @@ CREATE TABLE IF NOT EXISTS bottle_data
     ava_id             INTEGER REFERENCES ava(ava_id),
     techsheet_id       INTEGER REFERENCES techsheets(techsheet_id),
     run_date           DATE DEFAULT CURRENT_DATE,
-	winemaker_id       INTEGER REFERENCES winemakers(winemaker_id)
-
+	winemaker_id       INTEGER REFERENCES winemakers(winemaker_id),
+	description        VARCHAR(1000)
 );
 
 CREATE TABLE IF NOT EXISTS qualities
@@ -111,11 +126,11 @@ CREATE TABLE IF NOT EXISTS wine_qualities
 
 CREATE TABLE IF NOT EXISTS users
 (	
-	user_id          SERIAL PRIMARY KEY,
+	user_id         SERIAL PRIMARY KEY,
 
-	username         VARCHAR(30) UNIQUE NOT NULL,
-	user_auth		 VARCHAR(255) NOT NULL,
-	email            VARCHAR(50) UNIQUE NOT NULL
+	username        VARCHAR(30) UNIQUE NOT NULL,
+	user_auth		VARCHAR(255) NOT NULL,
+	email           VARCHAR(50) UNIQUE NOT NULL
 
 );
 
@@ -125,7 +140,8 @@ CREATE TABLE IF NOT EXISTS favorite_ava
 	fav_ava_id       SERIAL PRIMARY KEY,
 
 	user_id          INTEGER REFERENCES users(user_id),
-	ava_id           INTEGER REFERENCES ava(ava_id)
+	ava_id           INTEGER REFERENCES ava(ava_id),
+	favorite_date	 DATE DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE IF NOT EXISTS favorite_qualities
@@ -134,7 +150,8 @@ CREATE TABLE IF NOT EXISTS favorite_qualities
 	fav_qualities_id SERIAL PRIMARY KEY,
 
 	user_id          INTEGER REFERENCES users(user_id),
-	quality_id       INTEGER REFERENCES qualities(quality_id)
+	quality_id       INTEGER REFERENCES qualities(quality_id),
+	favorite_date	 DATE DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE IF NOT EXISTS favorite_techsheets
@@ -143,7 +160,8 @@ CREATE TABLE IF NOT EXISTS favorite_techsheets
 	fav_techsheet_id SERIAL PRIMARY KEY,
 
 	user_id          INTEGER REFERENCES users(user_id),
-	techsheet_id     INTEGER REFERENCES techsheets(techsheet_id)
+	techsheet_id     INTEGER REFERENCES techsheets(techsheet_id),
+	favorite_date	 DATE DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE IF NOT EXISTS favorite_wineries
@@ -154,3 +172,44 @@ CREATE TABLE IF NOT EXISTS favorite_wineries
 	user_id          INTEGER REFERENCES users(user_id),
 	winery_id        INTEGER REFERENCES wineries(winery_id)
 );
+
+
+CREATE OR REPLACE VIEW wine_data AS
+	SELECT 
+		bd.bottle_id,
+		bd.wine_name,
+		bd.pct_alcohol,
+		bd.sweetness,
+		bd.body,
+		v.varietal_name,
+		w.winery_name,
+		wm.winemaker_name,
+		av.ava_name,
+		bd.year,
+		ts.source_file,
+		bd.description
+	FROM bottle_data AS bd
+		LEFT OUTER JOIN varietals AS v
+			ON bd.varietal_id = v.varietal_id
+		LEFT OUTER JOIN wineries AS w
+			ON bd.winery_id = w.winery_id
+		LEFT OUTER JOIN winemakers AS wm
+			ON bd.winemaker_id = wm.winemaker_id
+		LEFT OUTER JOIN ava AS av
+			ON bd.ava_id = av.ava_id
+		LEFT OUTER JOIN techsheets AS ts
+			ON bd.techsheet_id = ts.techsheet_id;
+
+
+CREATE TABLE IF NOT EXISTS wine_views
+(
+
+	wine_view_id	SERIAL PRIMARY KEY,
+	user_id			INTEGER REFERENCES users(user_id),
+	bottle_id		INTEGER REFERENCES bottle_data(bottle_id),
+	view_date		DATE DEFAULT CURRENT_DATE,
+	viewer_ip		VARCHAR(15),
+	viewer_location	INTEGER REFERENCES locations(location_id)
+
+);
+
