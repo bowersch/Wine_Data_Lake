@@ -12,6 +12,13 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
         next();
     });
 
+    app.get('/info', (req, res, next) => {
+        res.locals.pack.config.layout = 'productPageTemplate';
+        res.locals.pack.template = 'productPage';
+        res.locals.pack.config.css = ['productPage.css'];
+        next();
+    });
+
     app.get('/login', checkAuthenticated, (req, res, next) => {
         res.locals.pack.template ='login';
         res.locals.pack.config.css = ['login.css'];
