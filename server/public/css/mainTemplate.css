@@ -3,6 +3,14 @@ html, body {
     margin: 0;
 }
 
+.logoWrapper {
+    text-decoration: none;
+    border: none;
+    background-color: white;
+    z-index: 3;
+    cursor: pointer;
+}
+
 .wrapper {
     font-family: 'Montserrat';
     display: flex;
