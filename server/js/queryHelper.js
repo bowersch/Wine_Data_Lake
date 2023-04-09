@@ -110,7 +110,7 @@ exports.getUsername = (id, client, callback) => {
 }
 
 exports.logWineView = (userId, bottleId, ip, location_id, client, callback) => {
-    client.query("INSERT INTO wine_views (user_id, bottle_id, viewer_ip, viewer_location) VALUES ($1, $2, $3, $4);",
+    client.query("INSERT INTO wine_views (user_id, bottle_id, user_ip, user_location) VALUES ($1, $2, $3, $4);",
     [userId, bottleId, ip, location_id],
     (err, res) => {
         if(err) console.log(err);
@@ -118,7 +118,7 @@ exports.logWineView = (userId, bottleId, ip, location_id, client, callback) => {
     });
 }
 
-exports.logViewLocation = (client, city, region, country, continent, postal, latitude, longitude, callback) => {
+exports.logLocation = (client, city, region, country, continent, postal, latitude, longitude, callback) => {
     client.query("INSERT INTO locations (city, region, country, continent, postal, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING location_id;",
     [city, region, country, continent, postal, latitude, longitude],
     (err, res) => {
@@ -143,45 +143,41 @@ exports.randomWineId = (client, callback) => {
     });
 }
 
-exports.addFavoriteWinery = (userId, wineryId, client, callback) => {
-    client.query("INSERT INTO favorite_wineries (user_id, winery_id) VALUES ($1, $2);",
-        [userId, wineryId],
+exports.addFavoriteWinery = (userId, wineryId, ip, location_id, client) => {
+    client.query("INSERT INTO favorite_wineries (user_id, winery_id, user_ip, location_id) VALUES ($1, $2, $3, $4);",
+        [userId, wineryId, ip, location_id],
         (err, res) => {
             if(err) console.log(err);
-            callback();
         });
 }
 
-exports.delFavoriteWinery = (userId, wineryId, client, callback) => {
+exports.delFavoriteWinery = (userId, wineryId, client) => {
     client.query("DELETE FROM favorite_wineries WHERE user_id = $1 AND winery_id = $2;",
         [userId, wineryId],
         (err, res) => {
             if(err) console.log(err);
-            callback();
         });
 }
 
-exports.addFavoriteAva = (userId, avaId, client, callback) => {
-    client.query("INSERT INTO favorite_ava (user_id, ava_id) VALUES ($1, $2);",
-        [userId, avaId],
+exports.addFavoriteAva = (userId, avaId, ip, location_id, client) => {
+    client.query("INSERT INTO favorite_ava (user_id, ava_id, user_ip, user_location) VALUES ($1, $2, $3, $4);",
+        [userId, avaId, ip, location_id],
         (err, res) => {
             if(err) console.log(err);
-            callback();
         });
 }
 
-exports.delFavoriteAva = (userId, avaId, client, callback) => {
+exports.delFavoriteAva = (userId, avaId, client) => {
     client.query("DELETE FROM favorite_ava WHERE user_id = $1 AND ava_id = $2;",
         [userId, avaId],
         (err, res) => {
             if(err) console.log(err);
-            callback();
         });
 }
 
-exports.addFavoriteQuality = (userId, qualityId, client) => {
-    client.query("INSERT INTO favorite_qualities (user_id, quality_id) VALUES ($1, $2);",
-        [userId, qualityId],
+exports.addFavoriteQuality = (userId, qualityId, ip, location_id, client) => {
+    client.query("INSERT INTO favorite_qualities (user_id, quality_id, user_location) VALUES ($1, $2, $3, $4);",
+        [userId, qualityId, ip, location_id],
         (err, res) => {
             if(err) console.log(err);
         }
@@ -197,12 +193,11 @@ exports.delFavoriteQuality = (userId, qualityId, client) => {
     );
 }
 
-exports.addFavoriteSheet = (userId, sheetId, client, callback) => {
-    client.query("INSERT INTO favorite_techsheets (user_id, techsheet_id) VALUES ($1, $2);",
-        [userId, sheetId],
+exports.addFavoriteSheet = (userId, sheetId, ip, location_id, client) => {
+    client.query("INSERT INTO favorite_techsheets (user_id, techsheet_id, user_ip, user_location) VALUES ($1, $2, $3, $4);",
+        [userId, sheetId, ip, location_id],
         (err, res) => {
             if(err) console.log(err);
-            callback();
         }
     );
 }

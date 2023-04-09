@@ -4,8 +4,8 @@ module.exports = function(router, client) {
 
     router.get("/wines", (req, res) => {
 
-        client.query("SELECT wine_name, year, pct_alcohol FROM bottle_data WHERE year = $1;",
-        [req.query.year],
+        client.query("SELECT wine_name, year, pct_alcohol FROM bottle_data ORDER BY wine_name LIMIT $1 OFFSET $2;",
+        [req.query.limit, req.query.offset],
         (err, res2) => {
             if(err) {
                 console.log(err);

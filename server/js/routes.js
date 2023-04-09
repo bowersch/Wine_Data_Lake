@@ -97,8 +97,8 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
                 axios.get('https://api.ipify.org?format=json').then(response => {
                     const ip = response.data.ip;
                     axios.get('https://ipapi.co/' + ip + '/' + 'json').then(response => {
-                        if(!response.error) {
-                                queryHelper.logViewLocation(client,
+                        if(!response.error) {   
+                                queryHelper.logLocation(client,
                                 response.data.city,
                                 response.data.region,
                                 response.data.country,
@@ -248,11 +248,26 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
             userId : req.isAuthenticated() ? req.session.passport.user.id : null
         };
         if(data.userId == null) return;
-        switch(data.itemType) {
-            case 'quality': {
-                queryHelper.addFavoriteQuality(data.userId, data.itemId, client);
+        axios.get('https://ipapi.co/' + ip + '/' + 'json').then(response => {
+            if(!response.error) {   
+                    queryHelper.logLocation(client,
+                    response.data.city,
+                    response.data.region,
+                    response.data.country,
+                    response.data.continent_code,
+                    response.data.postal,
+                    response.data.latitude,
+                    response.data.longitude,
+                    location_id => {
+                        switch(data.itemType) {
+                            case 'quality': {
+                                queryHelper.addFavoriteQuality(data.userId, data.itemId, ip, location_id, client);
+                            }
+                        }
+                    }
+                );
             }
-        }
+        });
 
     });
 
