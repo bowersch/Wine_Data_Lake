@@ -1,8 +1,0 @@
-Server setup:
-    When inside /server/ directory, run "npm install" to install required packages locally
-    Server only boots a demo page currently
-Running server:
-    1. run "npm start" to boot up the server locally -- if ran this way server will need to be rebooted
-        for code changes to be visible
-    2. run "npm test" to boot server continuously using nodemon -- in this case the server will
-        automatically be rebooted after code changes are detected
