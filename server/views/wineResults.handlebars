@@ -24,6 +24,9 @@
                 </div>
         </div>
         <div class="resultsContainer">
+                {{#if message}}
+                        <p>{{message}}</p>
+                {{/if}}
                 {{#each data.rows}}
                         <a href="/wines/{{this.bottle_id}}"><div class="result">
                                 <div class="resultInfo">
