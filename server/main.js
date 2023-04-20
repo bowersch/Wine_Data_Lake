@@ -12,6 +12,8 @@ const api = express.Router();
 
 const { Pool } = require("pg");
 
+const popularityJS = require('./js/popularity.js');
+
 const secrets = require('./js/secrets.js');
 secrets.getSecret('DB_USER').then(user => { secrets.getSecret('DB_PASS').then(pass => {
 
@@ -27,7 +29,7 @@ secrets.getSecret('DB_USER').then(user => { secrets.getSecret('DB_PASS').then(pa
 
         console.log('DB connected.');
 
-        require("./js/api.js")(api, conn);
+        require("./js/api.js")(api, conn, popularityJS);
     
         const initializePassport = require("./js/passportConfig");
         initializePassport(passport, conn, bcrypt);
@@ -66,7 +68,7 @@ secrets.getSecret('DB_USER').then(user => { secrets.getSecret('DB_PASS').then(pa
             next();
         });
         
-        require('./js/routes.js')(app, conn, queryHelper, passport, bcrypt, flash);
+        require('./js/routes.js')(app, conn, queryHelper, passport, bcrypt, flash, popularityJS);
         
         app.use((req, res) => {
             if(res.locals.pack.template) res.render(res.locals.pack.template, res.locals.pack.config);

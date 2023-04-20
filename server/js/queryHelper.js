@@ -7,6 +7,7 @@ exports.getWineriesWines = (client, callback) => {
         }
         else {
             var wineries = [];
+            var done = 0;
             for (let i = 0; i < res.rows.length; i++) {
                 client.query("SELECT bottle_data.bottle_id, bottle_data.year, bottle_data.wine_name FROM bottle_data WHERE bottle_data.winery_id = $1;",
                     [res.rows[i].winery_id],
@@ -17,7 +18,8 @@ exports.getWineriesWines = (client, callback) => {
                             "wines": res2.rows
                         };
                         wineries[i] = x;
-                        if(i == res.rows.length - 1) {
+                        done++;
+                        if(done == res.rows.length) {
                             callback(wineries);
                         }
                     }
@@ -176,7 +178,7 @@ exports.delFavoriteAva = (userId, avaId, client) => {
 }
 
 exports.addFavoriteQuality = (userId, qualityId, ip, location_id, client) => {
-    client.query("INSERT INTO favorite_qualities (user_id, quality_id, user_location) VALUES ($1, $2, $3, $4);",
+    client.query("INSERT INTO favorite_qualities (user_id, quality_id, user_ip, user_location) VALUES ($1, $2, $3, $4);",
         [userId, qualityId, ip, location_id],
         (err, res) => {
             if(err) console.log(err);
