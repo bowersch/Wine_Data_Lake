@@ -183,55 +183,57 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
         failureFlash: true
     }));
 
+    // Date: 02/25/2023
+    // Source: https://www.youtube.com/watch?v=vxu1RrR0vbw
+    // Comment: followed tutorial by Conor Bailey to get User Authentication working
     app.post('/register', async(req, res) => {
         let { username, email, password, password2 } = req.body;
 
-        let errors = [];
-
-        if(!username || !email || !password || !password2) {
-            errors.push({ message: "Please enter all fields" });
-        }
-
-        if(password.length < 6) {
-            errors.push({ message: "Password should be at least 6 characters" });
-        }
-
+        //other error checking done through form require
+        //error: passwords do not match
         if(password != password2) {
-            errors.push({ message: "Passwords do not match" });
-        }
-
-        if(errors.length > 0) {
-            res.render("register", { errors });
+            res.render("register", {
+                layout:"main",
+                css: ["register.css"], 
+                message: "Passwords do not match" 
+             });
         } else {
             //form validation has passed
+            //hash the password
             let hashedPassword = await bcrypt.hash(password, 10);
 
             //check if email already exists
             client.query(`SELECT * FROM users WHERE email = $1;`,
                 [email],
-                (err, results) => {
-                     if(err){
-                        throw err;
+                (error, results) => {
+                     if(error){
+                        throw error;
                     }
-                    console.log(results.rows);
 
                     //if true, email is already in database
                     if(results.rows.length > 0) {
-                        errors.push({ message: "Email already registered" });
-                        res.render('register', { errors });
+                        //errors.push({ message: "Email already registered" });
+                        res.render("register", {
+                            layout:"main",
+                            css: ["register.css"], 
+                            message: "Email already registered" 
+                        });
                     }
                     else{
                         //add new user
                         client.query(
                             "INSERT INTO users (username, email, user_auth) VALUES ($1, $2, $3) RETURNING user_id, user_auth;",
                             [username, email, hashedPassword],
-                            (err, results) => {
-                                if(err) {
-                                    throw err;
+                            (error, results) => {
+                                if(error) {
+                                    throw error;
                                 }
-                                console.log(results.rows);
-                                req.flash("success_msg", "You are now registered. Please log in");
-                                res.redirect('/login');
+
+                                res.render("login", {
+                                    layout:"main",
+                                    css: ["login.css"], 
+                                    message: "You are now registered. Please log in" 
+                                });
                             }
                         )
                     }
