@@ -72,7 +72,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
         client.query(query1, [search], function(error, res2, fields) {
 
             //results found
-            if(rows.length > 0) {
+            if(res2.rows.length > 0) {
                 return res.render("wineResults", {
                     layout: "main",
                     css: ["wineResults.css"],
