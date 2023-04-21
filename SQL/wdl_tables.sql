@@ -4,6 +4,8 @@ DROP TABLE IF EXISTS regional_varietals CASCADE;
 DROP TABLE IF EXISTS techsheets CASCADE;
 DROP TABLE IF EXISTS winemakers CASCADE;
 DROP TABLE IF EXISTS wineries CASCADE;
+DROP TABLE IF EXISTS sweetness CASCADE;
+DROP TABLE IF EXISTS body CASCADE;
 DROP TABLE IF EXISTS bottle_data CASCADE;
 DROP TABLE IF EXISTS qualities CASCADE;
 DROP TABLE IF EXISTS wine_qualities CASCADE;
@@ -82,6 +84,18 @@ CREATE TABLE IF NOT EXISTS wineries
 	winery_url		 VARCHAR(255)
 );
 
+CREATE TABLE IF NOT EXISTS sweetness
+(
+	sweetness_id     SERIAL PRIMARY KEY,
+	sweetness_level  VARCHAR(15) UNIQUE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS body
+(
+	body_id          SERIAL PRIMARY KEY,
+	body_level       VARCHAR(8) UNIQUE NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS bottle_data
 (
     bottle_id          SERIAL PRIMARY KEY,
@@ -93,15 +107,17 @@ CREATE TABLE IF NOT EXISTS bottle_data
     ph                 VARCHAR(10),
     soils              VARCHAR(255),
     varietal_id        INTEGER REFERENCES varietals(varietal_id),
-    clones		       VARCHAR(255),
+    clones		      VARCHAR(255),
     clusters           VARCHAR(10),
     aging_process      VARCHAR(255),
     cases_produced     INTEGER,
     ava_id             INTEGER REFERENCES ava(ava_id),
     techsheet_id       INTEGER REFERENCES techsheets(techsheet_id),
     run_date           DATE DEFAULT CURRENT_DATE,
-	winemaker_id       INTEGER REFERENCES winemakers(winemaker_id),
-	description        VARCHAR(1000)
+    winemaker_id       INTEGER REFERENCES winemakers(winemaker_id),
+    description        VARCHAR(1000),
+    sweetness_id       INTEGER REFERENCES sweetness(sweetness_id),
+    body_id            INTEGER REFERENCES body(body_id)
 );
 
 CREATE TABLE IF NOT EXISTS qualities
