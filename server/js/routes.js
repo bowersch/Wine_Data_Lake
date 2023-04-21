@@ -70,10 +70,22 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
         }
 
         client.query(query1, [search], function(error, rows, fields) {
-            return res.render("wineResults", {
-                layout: "main",
-                css: ["wineResults.css"],
-                data: rows});
+
+            //results found
+            if(rows.length > 0) {
+                return res.render("wineResults", {
+                    layout: "main",
+                    css: ["wineResults.css"],
+                    message:"",
+                    data: rows});
+            }
+            //no results found
+            else {
+                return res.render("wineResults", {
+                    layout: "main",
+                    css: ["wineResults.css"],
+                    message: "No Results Found"});
+            }
         })
     });
 

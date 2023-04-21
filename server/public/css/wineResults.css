@@ -55,6 +55,11 @@
     margin-bottom: 32px;
 }
 
+.resultsContainer p {
+    font-size: x-large;
+    margin-left: 5vw;
+}
+
 .result {
     border-color: #D2D2D2;
     background-color: white;
