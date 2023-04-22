@@ -1,7 +1,7 @@
 <div class="resultsWrapper">
         <div class="infoContainer">
                 <div class="filtersContainer">
-                        {{#each data.activeFilters}}
+                        {{#each activeFilters}}
                                 <div class="activeFilter">
                                         {{this}}
                                         <button><i class="fa-solid fa-xmark"></i></button>
@@ -15,7 +15,7 @@
                 </div>
                 <hr class="solid">
                 <div class="keywordsContainer">
-                        {{#each data.activeKeywords}}
+                        {{#each activeKeywords}}
                                 <div class="activeKeyword">
                                         {{this}}
                                         <button><i class="fa-solid fa-xmark"></i></button>
@@ -27,7 +27,7 @@
                 {{#if message}}
                         <p>{{message}}</p>
                 {{/if}}
-                {{#each data.rows}}
+                {{#each data}}
                         <a href="/wines/{{this.bottle_id}}"><div class="result">
                                 <div class="resultInfo">
                                         <div class="title">

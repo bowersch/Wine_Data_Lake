@@ -2,7 +2,7 @@ const axios = require('axios')
 const parser = require('body-parser');
 const jsonParser = parser.json();
 
-module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
+module.exports = function(app, client, queryHelper, passport, bcrypt, flash, popularityJS) {
 
     console.log("routes loaded.");
 
@@ -69,15 +69,15 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
                     year ILIKE $1`
         }
 
-        client.query(query1, [search], function(error, rows, fields) {
+        client.query(query1, [search], function(error, res2, fields) {
 
             //results found
-            if(rows.length > 0) {
+            if(res2.rows.length > 0) {
                 return res.render("wineResults", {
                     layout: "main",
                     css: ["wineResults.css"],
                     message:"",
-                    data: rows});
+                    data: res2.rows});
             }
             //no results found
             else {
@@ -109,8 +109,8 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
                 axios.get('https://api.ipify.org?format=json').then(response => {
                     const ip = response.data.ip;
                     axios.get('https://ipapi.co/' + ip + '/' + 'json').then(response => {
-                        if(!response.error) {
-                                queryHelper.logViewLocation(client,
+                        if(!response.error) {   
+                                queryHelper.logLocation(client,
                                 response.data.city,
                                 response.data.region,
                                 response.data.country,
@@ -262,11 +262,29 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
             userId : req.isAuthenticated() ? req.session.passport.user.id : null
         };
         if(data.userId == null) return;
-        switch(data.itemType) {
-            case 'quality': {
-                queryHelper.addFavoriteQuality(data.userId, data.itemId, client);
-            }
-        }
+        axios.get('https://api.ipify.org?format=json').then(response => {
+            const ip = response.data.ip;
+            axios.get('https://ipapi.co/' + ip + '/' + 'json').then(response => {
+                if(!response.error) {   
+                        queryHelper.logLocation(client,
+                        response.data.city,
+                        response.data.region,
+                        response.data.country,
+                        response.data.continent_code,
+                        response.data.postal,
+                        response.data.latitude,
+                        response.data.longitude,
+                        location_id => {
+                            switch(data.itemType) {
+                                case 'quality': {
+                                    queryHelper.addFavoriteQuality(data.userId, data.itemId, ip, location_id, client);
+                                }
+                            }
+                        }
+                    );
+                }
+            });
+        });
 
     });
 
@@ -284,6 +302,31 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
             }
         }
 
+    });
+
+    app.get("/popular", (req, res) => {
+        popularityJS.getTopN(5, 0, client, table => {
+            var done = 0;
+            rows = [];
+            for(let i = 0; i < table.length; i++) {
+                client.query("SELECT * from wine_data WHERE bottle_id = $1;",
+                [table[i].id],
+                (err, res2) => {
+                    if(err) res.send(err);
+                    else {
+                        rows[i] = res2.rows[0];
+                        done++;
+                        if(done == table.length) {
+                            res.render("wineResults", {
+                                layout: "main",
+                                css: ["wineResults.css"],
+                                data: rows
+                            });
+                        }
+                    }
+                })
+            }
+        });
     });
 
 };
