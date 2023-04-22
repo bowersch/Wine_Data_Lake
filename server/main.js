@@ -15,6 +15,7 @@ const { Pool } = require("pg");
 const popularityJS = require('./js/popularity.js');
 
 const secrets = require('./js/secrets.js');
+const cookieParser = require('cookie-parser');
 secrets.getSecret('DB_USER').then(user => { secrets.getSecret('DB_PASS').then(pass => {
 
     const conn = new Pool({
@@ -42,6 +43,7 @@ secrets.getSecret('DB_USER').then(user => { secrets.getSecret('DB_PASS').then(pa
         
         app.use(express.urlencoded({ extended: false }));
         app.use(express.static('public'));
+        app.use(cookieParser());
         app.use(session({
             secret: "akjfhakjaw8723bs873ka7ykhasi7yq2kjhfa8k72ydbk37",
             saveUninitialized: true,

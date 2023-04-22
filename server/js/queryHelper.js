@@ -30,7 +30,7 @@ exports.getWineriesWines = (client, callback) => {
 }
 
 exports.getWineInfo = (wine_id, user_id, client, callback) => {
-    var q = "SELECT bottle_data.bottle_id, bottle_data.description, bottle_data.wine_name, bottle_data.pct_alcohol, bottle_data.ta, bottle_data.ph, bottle_data.year, techsheets.source_file, wineries.winery_name FROM bottle_data INNER JOIN wineries ON bottle_data.winery_id = wineries.winery_id INNER JOIN techsheets ON bottle_data.techsheet_id = techsheets.techsheet_id WHERE bottle_id = $1;";
+    var q = "SELECT * FROM wine_data WHERE bottle_id = $1;";
     client.query(q, [wine_id], async (err, res) => {
         if (err) {
             console.log(err);
@@ -41,7 +41,13 @@ exports.getWineInfo = (wine_id, user_id, client, callback) => {
                 callback({
                     "id" : res.rows[0].bottle_id,
                     "name" : res.rows[0].wine_name,
-                    "keywords" : [res.rows[0].year],
+                    "keywords" : [
+                        res.rows[0].varietal_name,
+                        res.rows[0].winery_name,
+                        res.rows[0].winemaker_name,
+                        res.rows[0].ava_name,
+                        res.rows[0].year
+                    ],
                     "description" : res.rows[0].description,
                     "techSheet" : res.rows[0].source_file,
                     "properties": qualities

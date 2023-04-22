@@ -11,7 +11,7 @@
         <div class="qualities">
             <h2><i class="fa-solid fa-heart"></i> Favorite Qualities</h2>
             {{#each data.qualities}}
-                <div class="subquality"><li><a href="">{{this.quality_name}}</a></li></div><br>
+                <div class="subquality"><li><a href="/search-results?search={{this.quality_name}}">{{this.quality_name}}</a></li></div><br>
             {{/each}}
         </div>
         <div class="wineries">
@@ -20,7 +20,7 @@
             {{#each data.wineries}}
                 <td>
                 <img src="/images/winery_logo.png" />
-                <li><a href="">{{this.winery_name}}</a></li><br>
+                <li><a href="/search-results?search={{this.winery_name}}">{{this.winery_name}}</a></li><br>
                 </div>
             {{/each}}
             </table>

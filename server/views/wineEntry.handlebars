@@ -1,11 +1,16 @@
 <div class="entryWrapper">
-        <!--
-        <button class="favoriteWineButton" onclick="toggleFavorite(this,'wine',{{data.id}})"><i class="fa-regular fa-heart"></i></button>
-        -->
+        
+        <button class="favoriteWineButton" onclick="toggleFavorite(this,'wine',{{data.techsheet_id}})"><i class="fa-regular fa-heart"></i></button>
+        
         <div class="entryDataWrapper">
                 <div class="wineName">
                         {{data.name}}
                 </div>
+                {{#if data.popStat}}
+                        <div class="popStat">
+                                Top {{data.popStat}}% of Popular Wines
+                        </div>
+                {{/if}}
                 <button class="visitButton">Visit Winery</button>
                 {{#if data.description}}
                         <div class="wineDescription">
@@ -18,7 +23,7 @@
                 <div class="wineKeywords">
                         {{#each data.keywords}}
                                 <div class="keywordLink">
-                                        <a href="">{{this}}</a>
+                                        <a href="/search-results?search={{this}}">{{this}}</a>
                                 </div>
                         {{/each}}
                 </div>
