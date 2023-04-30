@@ -4,14 +4,21 @@
         <div class="base"></div>
         <form action="/login" method="POST">
         <div class="overlap-group4">
+            <ul>
+                {{#if messages.success_msg}}
+                    <li>{{this}}</li>
+                {{/if}}
+            </ul>
+
+            <ul>
+                {{#if messages.error}}
+                    <li>{{this}}</li>
+                {{/if}}
+            </ul>
+
             <img class="logo-container" src="/images/wineLogo.JPG" alt="Logo Container" />
             <h1 class="title">Login</h1>
             <p class="sign-in-to-your-account"> Sign in to your account</p>
-            <ul>
-                {{#if message}}
-                    <p>{{message}}</p>
-                {{/if}}
-            </ul>
             <div class="username-input">
                 <i class="fa-solid fa-user fa-2x"></i>
 
