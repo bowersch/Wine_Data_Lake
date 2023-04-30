@@ -1,0 +1,38 @@
+{
+  "name": "wdl_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "nodemon ./main.js ",
+    "start": "node main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/secret-manager": "^4.2.1",
+    "axios": "^1.3.4",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-flash": "^0.0.2",
+    "express-handlebars": "^6.0.7",
+    "express-session": "^1.17.3",
+    "nodemon": "^2.0.21",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
+    "pg": "^8.9.0"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+    "node_modules/**/node_modules"
+    ],
+    "delay": "2500",
+    "env": {
+      "CONN_PORT": "34.168.239.168"
+    }
+  }
+}

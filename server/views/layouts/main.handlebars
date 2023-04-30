@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Wine Data Lake</title>
+        <link rel="stylesheet" href="/css/mainTemplate.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+        {{#each css}}
+            <link rel="stylesheet" href="/css/{{this}}">
+        {{/each}}
+    </head>
+    <body>
+        <script src="https://kit.fontawesome.com/aa5ee9cb69.js" crossorigin="anonymous"></script>
+        {{#each js}}
+            <script src="/js/{{this}}"></script>
+        {{/each}}
+        <div class="wrapper">
+            <div class="header">
+                <ul class="hamburgerMenu">
+                    <li><a class="menuList" href="/">Home</a></li>
+                    <li><a class="menuList" href="/directory">Directory</a></li>
+                    <li><a class="menuList" href="/about">About Us</a></li>
+                    <li><a class="menuList" href="/help">Help</a></li><br><br>
+                    {{#if user}}
+                        <li><a class="menuList" href="/favorites">Profile</a></li>
+                        <li><a class="menuList" href="/logout">Sign Out</a></li>
+                    {{else}}
+                        <li><a class="menuList" href="/register">Sign Up</a></li>
+                        <li><a class="menuList" href="/login">Sign In</a></li>
+                    {{/if}}
+                </ul>
+                <button class="hamburger" onclick="showHamburgerMenu()">
+                    <i class="fa-solid fa-bars fa-2xl" id="bars"></i>
+                    <i class="fa-solid fa-xmark fa-2xl" id="xmark"></i>
+                </button>
+                <script>
+                    // Citation
+                    // Date: 04/20/2023
+                    // Source: https://dev.to/ljcdev/easy-hamburger-menu-with-js-2do0
+                    // Comment: followed tutorial by ljc-dev for a hamburger menu
+                    function showHamburgerMenu() {
+
+                        const hamburgerMenu = document.querySelector(".hamburgerMenu");
+                        const bars = document.querySelector("#bars");
+                        const xmark = document.querySelector("#xmark");
+
+                        if(hamburgerMenu.classList.contains("showHamburgerMenu")){
+                            hamburgerMenu.classList.remove("showHamburgerMenu");
+                            xmark.style.display = "none";
+                            bars.style.display = "block";
+                        }
+                        else{
+                            hamburgerMenu.classList.add("showHamburgerMenu");
+                            xmark.style.display = "block";
+                            bars.style.display = "none";
+                        }
+                    }
+
+                </script>
+                <button onclick="window.location.href='/';" class="logoWrapper">
+                    <img src="/svg/logo.svg">
+                </button>
+                <div class="accountWrapper">
+                    {{#if user}}
+                        <div class="userWrapper">
+                            <i class="fa-solid fa-user"></i>
+                            <button onclick="window.location.href='/favorites';">{{user}}</button>
+                        </div>
+                        <div class="signOutWrapper">
+                            <button onclick="window.location.href='/logout';">Sign Out</button>
+                        </div>
+                    {{else}}
+                        <div class="signUpWrapper">
+                            <button onclick="window.location.href='/register';">Sign Up</button>
+                        </div>
+                        <div class="signInWrapper">
+                            <button onclick="window.location.href='/login';">Sign In</button>
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="mainContent">
+                {{{body}}}
+            </div>
+            <div class="footer">
+                <div class="contents">
+                    <a href="/about">About</a> | <a href="/contact">Contact Us</a> | <a href="/developers">Developers</a> | <a href="/help">How to Use This Site</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,54 @@
+<div class="entryWrapper">
+        <!--
+        <button class="favoriteWineButton" onclick="toggleFavorite(this,'wine',{{data.id}})"><i class="fa-regular fa-heart"></i></button>
+        -->
+        <div class="entryDataWrapper">
+                <div class="wineName">
+                        {{data.name}}
+                </div>
+                <button class="visitButton">Visit Winery</button>
+                {{#if data.description}}
+                        <div class="wineDescription">
+                                {{data.description}}
+                        </div>
+                {{/if}}
+                <div class="keywordsWrapper">
+                        Keywords
+                </div>
+                <div class="wineKeywords">
+                        {{#each data.keywords}}
+                                <div class="keywordLink">
+                                        <a href="">{{this}}</a>
+                                </div>
+                        {{/each}}
+                </div>
+                <div class="properties">
+                        {{#each data.properties}}
+                                <div class="property">
+                                        <div class="propertyName">
+                                                {{this.quality_name}}
+                                                {{#if this.current_favorite}}
+                                                        <button class="favoriteButton" onclick="toggleFavorite(this,'quality','{{this.quality_id}}')"><i class="fa-solid fa-heart"></i></button>
+                                                {{else}}
+                                                        <button class="favoriteButton" onclick="toggleFavorite(this,'quality','{{this.quality_id}}')"><i class="fa-regular fa-heart"></i></button>
+                                                {{/if}}
+                                        </div>
+                                        <div class="propertyValue">
+                                                {{this.description}}
+                                        </div>
+                                </div>
+                        {{/each}}
+                </div>
+        </div>
+        <div class="techSheet">
+                <embed src="https://storage.googleapis.com/winedatalake-377223.appspot.com/techSheets/{{data.techSheet}}">
+                <div class="downloadButton">
+                        <a href="https://storage.googleapis.com/winedatalake-377223.appspot.com/techSheets/{{data.techSheet}}">Download Tech Sheet</a>
+                </div>
+        </div>
+        {{#if data.purchaseLink}}
+                <div class="purchaseWrapper">
+                        <a href="{{data.purchaseLink}}"><i class="fa-solid fa-cart-shopping"></i></a>
+                </div>
+        {{/if}}
+</div>

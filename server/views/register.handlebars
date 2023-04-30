@@ -1,0 +1,44 @@
+
+<div class="login-page screen">
+    <div class="overlap-group6">
+        <form action="/register" method="POST" name="registerForm">
+        <div class="overlap-group4">
+            <img class="logo-container" src="/images/wineLogo.JPG" alt="Logo Container" />
+            <h1 class="title">register</h1>
+            <ul>
+                {{#if message}}
+                    <p>{{message}}</p>
+                {{/if}}
+            </ul>
+            <div class="username-input">
+                <div class="username-container">
+                    <i class="fa-solid fa-user fa-2x"></i>
+                    <input class="username montserrat-medium-windsor-28px-2" type="text" id="username" name="username" placeholder="Username" required />
+                </div>
+            </div>
+            <div class="username-input">
+                <div class="username-container">
+                    <i class="fa-solid fa-user fa-2x"></i>
+                    <input class="username montserrat-medium-windsor-28px-2" type="email" id="email" name="email" placeholder="Email" required />
+                </div>
+            </div>
+            <div class="username-input">
+                <div class="overlap-group1">
+                    <i class="fa-solid fa-lock fa-2x"></i>
+                    <input class="password montserrat-medium-windsor-28px-2" type="password" id="password" name="password" placeholder="Password" required minlength="6"/>
+                </div>
+            </div>
+            <div class="username-input">
+                <div class="overlap-group1">
+                    <i class="fa-solid fa-lock fa-2x"></i>
+                    <input class="password montserrat-medium-windsor-28px-2" type="password" id="password2" name="password2" placeholder="Password2" required minlength="6"/>
+                </div>
+            </div>
+           
+            <button class="overlap-group2" type="submit" value="Register">
+                <div class="login">Register</div>
+            </button>
+        </div>
+        </form>
+    </div>
+</div>

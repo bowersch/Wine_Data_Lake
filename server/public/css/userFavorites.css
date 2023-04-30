@@ -1,0 +1,77 @@
+.contentBackground {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    position: relative;
+    top: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.userProfilePicDiv {
+    width: 17.5%;
+    height: 100%;
+    border-right: 2px solid rgb(182, 181, 182);
+    float: left;
+}
+
+.userProfilePicDiv img {
+    width: 80%;
+    height: auto;
+    padding-top: 30%;
+    padding-left: 10%;
+}
+
+.userProfilePicDiv p {
+    text-align: center;
+    color: #310866;
+    font-weight: bolder;
+    font-size: large;
+}
+
+.userGreeting {
+    width: 82.2%;
+    height: 15%;
+    background-color: #8162B5;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.userGreeting h1 {
+    padding: 10%;
+    font-weight: bolder;
+    font-size: xx-large;
+}
+
+.favorites {
+    width:75%;
+    color: #310866;
+    list-style: none;
+    float: left;
+    padding-left: 5%;
+}
+
+.subquality li {
+    padding-left: 5%;
+}
+
+.wineries {
+    width: 80%;
+}
+
+.subwinery {
+    display: inline-block;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+    padding: 2%;
+}
+
+.subwinery img {
+    width: 100px;
+    height: auto;
+}

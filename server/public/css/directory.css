@@ -1,0 +1,72 @@
+.contentBackground {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    position: relative;
+    top: 0;
+    border-radius: 12px;
+    overflow: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.directoryHeader {
+    width: 100%;
+    height: 5.5%;
+    top: 0;
+    padding-top: 1.2%;
+    text-align: center;
+    font-size: x-large;
+    color: white;
+    background-color:  #8162B5;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.wineList {
+    color: rgb(44, 3, 73);
+    height: 2%;
+    padding-top: 0.5%;
+    padding-left: 10%;
+    padding-bottom: 2.5%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.individualWinery {
+    color: rgb(44, 3, 73);
+    padding-top: 2%;
+    padding-left: 15%;
+    margin: auto;
+}
+
+.individualWinery table {
+    width: 82%;
+    margin-left: 5%;
+    margin: 2%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.individualWinery th {
+    background-color:  #8162B5;
+    color: white;
+    font-size: large;
+    padding-left: 2%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.individualWinery td {
+    white-space: nowrap;
+    padding-bottom: 1%;
+    background-color: white;
+}
+
+.individualWinery img {
+    width: 100px;
+    height: 100px;
+}
+
+.wineToTechSheet li {
+    list-style: none;
+    text-decoration: none;
+    float: left;
+}
