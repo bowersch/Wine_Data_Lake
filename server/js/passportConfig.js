@@ -1,3 +1,7 @@
+// Date: 02/25/2023
+// Source: https://www.youtube.com/watch?v=vxu1RrR0vbw
+// Comment: followed tutorial by Conor Bailey to get User Authentication working
+
 const LocalStrategy = require("passport-local").Strategy;
 
 function initialize(passport, client, bcrypt) {
