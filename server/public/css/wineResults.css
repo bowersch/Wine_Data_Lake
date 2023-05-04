@@ -15,6 +15,27 @@
     display: flex;
 }
 
+.filter-search-area {
+    display: none;
+}
+
+.filter-alcohol-area {
+    width: 70px;
+}
+
+.apply-button {
+    margin-top: 5%;
+    width: 70%;
+    align-items: flex-end;
+    background-color: #8161b4;
+    color: white;
+    border-radius: 25px;
+    height: 40px;
+    font-size: 20px;
+    font-family: 'Montserrat';
+    justify-content: center;
+}
+
 .activeFilter, .activeKeyword {
     border: 1px solid #310866;
     border-radius: 25px;

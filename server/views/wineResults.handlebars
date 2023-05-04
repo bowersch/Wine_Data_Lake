@@ -22,6 +22,42 @@
                                 </div>
                         {{/each}}
                 </div>
+        <!-- filter area -->
+                <div>
+                        <form method="GET" id="filter-results" action="/search-filter">
+                                <div>
+                                    <input type="text" class="filter-search-area" name="filter_search" value="{{ data.search }}"/>
+                                </div>
+                                <div>
+                                    <h4>Body</h4>
+                                    <input type="radio" name="filter_body" value="light"/>light
+                                    <input type="radio" name="filter_body" value="moderate"/>moderate
+                                    <input type="radio" name="filter_body" value="heavy"/>heavy
+                                </div>
+                                <div>
+                                    <h4>Sweetness</h4>
+                                    <input type="radio" name="filter_sweet" value="1"/>Bone Dry
+                                    <br>
+                                    <input type="radio" name="filter_sweet" value="2"/>Dry
+                                    <br>
+                                    <input type="radio" name="filter_sweet" value="3"/>Off Dry
+                                    <br>
+                                    <input type="radio" name="filter_sweet" value="4"/>Medium Sweet
+                                    <br>
+                                    <input type="radio" name="filter_sweet" value="5"/>Sweet
+                                </div>
+                                <div>
+                                    <h4>Alcohol</h4>
+                                    from <input type="text" class="filter-alcohol-area" name="filter_alcohol_from" placeholder="xx.x%"/>
+                                    to <input type="text" class="filter-alcohol-area" name="filter_alcohol_to" placeholder="xx.x%"/>
+                                </div>
+                                <div>
+                                    <button class="apply-button" type="submit">
+                                        Apply
+                                    </button>
+                                </div>
+                        </form>
+                </div>
         </div>
         <div class="resultsContainer">
                 {{#if message}}

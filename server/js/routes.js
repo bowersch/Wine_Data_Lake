@@ -88,6 +88,62 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
             }
         })
     });
+    
+    app.get('/search-filter', (req, res) => {
+        let filter_search = req.query.filter_search;
+        let filter_body = req.query.filter_body;
+        let filter_sweet = req.query.filter_sweet;
+        let filter_alcohol_from = req.query.filter_alcohol_from;
+        let filter_alcohol_to = req.query.filter_alcohol_to;
+
+        let query1;
+
+        let search = '%' + filter_search + '%';
+
+        //if text box is empty when submit is done, set to a basic query
+        //otherwise, set to a search query
+        if(search === undefined){
+            query1 = "SELECT * FROM wine_data LIMIT 100;";
+        }
+        else {
+            // For Postgresql use ILIKE because database defaulted to case-sensitive
+            query1 = `SELECT * FROM wine_data WHERE wine_name ILIKE $1 OR
+                    winery_name ILIKE $1 OR varietal_name ILIKE $1 OR
+                    winemaker_name ILIKE $1 OR ava_name ILIKE $1 OR
+                    year ILIKE $1`
+        }
+
+        client.query(query1, [search], function(error, rows, fields) {
+            // filter result
+            let filter_rows = rows.rows;
+            if (filter_body !== '' && filter_body !== undefined && filter_body !== null) {
+                filter_rows = filter_rows.filter(item=>{
+                   return item.body === filter_body;
+                });
+            }
+            if (filter_sweet !== '' && filter_sweet !== undefined && filter_sweet !== null) {
+                filter_rows = filter_rows.filter(item=>{
+                    return item.sweetness === filter_sweet;
+                });
+            }
+            if (filter_alcohol_from !== '' && filter_alcohol_from !== undefined && filter_alcohol_from !== null) {
+                filter_rows = filter_rows.filter(item=>{
+                    return item.pct_alcohol >= filter_alcohol_from;
+                });
+            }
+            if (filter_alcohol_to !== '' && filter_alcohol_to !== undefined && filter_alcohol_to !== null) {
+                filter_rows = filter_rows.filter(item=>{
+                    return item.pct_alcohol <= filter_alcohol_to;
+                });
+            }
+
+            return res.render("wineResults", {
+                layout: "main",
+                css: ["wineResults.css"],
+                data: {"rows": filter_rows, "search": filter_search},
+            });
+        })
+    });
 
     app.get('/wines/random', (req, res, next) => {
         queryHelper.randomWineId(client, id => {
