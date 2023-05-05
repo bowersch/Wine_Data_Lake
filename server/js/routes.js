@@ -51,7 +51,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
     // Source: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%206%20-%20Dynamically%20Filling%20Dropdowns%20and%20Adding%20a%20Search%20Box
     // Comment: Referred to search bar implementation for this query!
     app.get('/search-results', (req, res) => {
-            
+
         let query1;
 
         let search = '%' + req.query.search + '%';
@@ -70,6 +70,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
         }
 
         client.query(query1, [search], function(error, res2, fields) {
+            if (error) alert("Error while searching results.")
 
             //results found
             if(res2.rows.length > 0) {
@@ -88,7 +89,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
             }
         })
     });
-    
+
     app.get('/search-filter', (req, res) => {
         let filter_search = req.query.filter_search;
         let filter_body = req.query.filter_body;
@@ -144,7 +145,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
             });
         })
     });
-
+    
     app.get('/wines/random', (req, res, next) => {
         queryHelper.randomWineId(client, id => {
             if (!id) res.status(400).send('Error.');
@@ -165,7 +166,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
                 axios.get('https://api.ipify.org?format=json').then(response => {
                     const ip = response.data.ip;
                     axios.get('https://ipapi.co/' + ip + '/' + 'json').then(response => {
-                        if(!response.error) {   
+                        if(!response.error) {
                                 queryHelper.logLocation(client,
                                 response.data.city,
                                 response.data.region,
@@ -205,6 +206,8 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
 
     app.get('/directory', (req, res, next) => {
         queryHelper.getWineriesWines(client, data => {
+            if(!data) res.status(400).send('Error.');
+
             res.locals.pack.template = 'directory';
             res.locals.pack.config.css = ['directory.css'];
             res.locals.pack.config.data = data;
@@ -214,6 +217,8 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
 
     app.get('/favorites', checkNotAuthenticated, (req, res, next) => {
         queryHelper.getUserFavoriteInfo(req.session.passport.user.id, client, data => {
+            if(!data) res.status(400).send('Error.');
+
             res.locals.pack.template = 'userFavorites';
             res.locals.pack.config.css = ['userFavorites.css'];
             res.locals.pack.config.data = data;
@@ -262,8 +267,8 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
         if(password != password2) {
             res.render("register", {
                 layout:"main",
-                css: ["register.css"], 
-                message: "Passwords do not match" 
+                css: ["register.css"],
+                message: "Passwords do not match"
              });
         } else {
             //form validation has passed
@@ -283,8 +288,8 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
                         //errors.push({ message: "Email already registered" });
                         res.render("register", {
                             layout:"main",
-                            css: ["register.css"], 
-                            message: "Email already registered" 
+                            css: ["register.css"],
+                            message: "Email already registered"
                         });
                     }
                     else{
@@ -299,8 +304,8 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
 
                                 res.render("login", {
                                     layout:"main",
-                                    css: ["login.css"], 
-                                    message: "You are now registered. Please log in" 
+                                    css: ["login.css"],
+                                    message: "You are now registered. Please log in"
                                 });
                             }
                         )
@@ -321,7 +326,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
         axios.get('https://api.ipify.org?format=json').then(response => {
             const ip = response.data.ip;
             axios.get('https://ipapi.co/' + ip + '/' + 'json').then(response => {
-                if(!response.error) {   
+                if(!response.error) {
                         queryHelper.logLocation(client,
                         response.data.city,
                         response.data.region,
