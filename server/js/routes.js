@@ -5,7 +5,7 @@ const nodemailer = require('nodemailer');
 
 const jsonParser = parser.json();
 
-module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
+module.exports = function(app, client, queryHelper, passport, bcrypt, flash, popularityJS) {
 
     console.log("routes loaded.");
 
@@ -72,15 +72,15 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
                     year ILIKE $1`
         }
 
-        client.query(query1, [search], function(error, rows, fields) {
+        client.query(query1, [search], function(error, res2, fields) {
 
             //results found
-            if(rows.length > 0) {
+            if(res2.rows.length > 0) {
                 return res.render("wineResults", {
                     layout: "main",
                     css: ["wineResults.css"],
                     message:"",
-                    data: rows});
+                    data: res2.rows});
             }
             //no results found
             else {
@@ -89,6 +89,62 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
                     css: ["wineResults.css"],
                     message: "No Results Found"});
             }
+        })
+    });
+    
+    app.get('/search-filter', (req, res) => {
+        let filter_search = req.query.filter_search;
+        let filter_body = req.query.filter_body;
+        let filter_sweet = req.query.filter_sweet;
+        let filter_alcohol_from = req.query.filter_alcohol_from;
+        let filter_alcohol_to = req.query.filter_alcohol_to;
+
+        let query1;
+
+        let search = '%' + filter_search + '%';
+
+        //if text box is empty when submit is done, set to a basic query
+        //otherwise, set to a search query
+        if(search === undefined){
+            query1 = "SELECT * FROM wine_data LIMIT 100;";
+        }
+        else {
+            // For Postgresql use ILIKE because database defaulted to case-sensitive
+            query1 = `SELECT * FROM wine_data WHERE wine_name ILIKE $1 OR
+                    winery_name ILIKE $1 OR varietal_name ILIKE $1 OR
+                    winemaker_name ILIKE $1 OR ava_name ILIKE $1 OR
+                    year ILIKE $1`
+        }
+
+        client.query(query1, [search], function(error, rows, fields) {
+            // filter result
+            let filter_rows = rows.rows;
+            if (filter_body !== '' && filter_body !== undefined && filter_body !== null) {
+                filter_rows = filter_rows.filter(item=>{
+                   return item.body === filter_body;
+                });
+            }
+            if (filter_sweet !== '' && filter_sweet !== undefined && filter_sweet !== null) {
+                filter_rows = filter_rows.filter(item=>{
+                    return item.sweetness === filter_sweet;
+                });
+            }
+            if (filter_alcohol_from !== '' && filter_alcohol_from !== undefined && filter_alcohol_from !== null) {
+                filter_rows = filter_rows.filter(item=>{
+                    return item.pct_alcohol >= filter_alcohol_from;
+                });
+            }
+            if (filter_alcohol_to !== '' && filter_alcohol_to !== undefined && filter_alcohol_to !== null) {
+                filter_rows = filter_rows.filter(item=>{
+                    return item.pct_alcohol <= filter_alcohol_to;
+                });
+            }
+
+            return res.render("wineResults", {
+                layout: "main",
+                css: ["wineResults.css"],
+                data: {"rows": filter_rows, "search": filter_search},
+            });
         })
     });
 
@@ -112,8 +168,8 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
                 axios.get('https://api.ipify.org?format=json').then(response => {
                     const ip = response.data.ip;
                     axios.get('https://ipapi.co/' + ip + '/' + 'json').then(response => {
-                        if(!response.error) {
-                                queryHelper.logViewLocation(client,
+                        if(!response.error) {   
+                                queryHelper.logLocation(client,
                                 response.data.city,
                                 response.data.region,
                                 response.data.country,
@@ -265,11 +321,29 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
             userId : req.isAuthenticated() ? req.session.passport.user.id : null
         };
         if(data.userId == null) return;
-        switch(data.itemType) {
-            case 'quality': {
-                queryHelper.addFavoriteQuality(data.userId, data.itemId, client);
-            }
-        }
+        axios.get('https://api.ipify.org?format=json').then(response => {
+            const ip = response.data.ip;
+            axios.get('https://ipapi.co/' + ip + '/' + 'json').then(response => {
+                if(!response.error) {   
+                        queryHelper.logLocation(client,
+                        response.data.city,
+                        response.data.region,
+                        response.data.country,
+                        response.data.continent_code,
+                        response.data.postal,
+                        response.data.latitude,
+                        response.data.longitude,
+                        location_id => {
+                            switch(data.itemType) {
+                                case 'quality': {
+                                    queryHelper.addFavoriteQuality(data.userId, data.itemId, ip, location_id, client);
+                                }
+                            }
+                        }
+                    );
+                }
+            });
+        });
 
     });
 
