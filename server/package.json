@@ -19,9 +19,21 @@
     "express-flash": "^0.0.2",
     "express-handlebars": "^6.0.7",
     "express-session": "^1.17.3",
+    "nodemailer": "^6.9.1",
     "nodemon": "^2.0.21",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
-    "pg": "^8.9.0"
+    "pg": "^8.9.0",
+    "rand-token": "^1.0.1"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/**/node_modules"
+    ],
+    "delay": "2500",
+    "env": {
+      "CONN_PORT": "34.168.239.168"
+    }
   }
 }
