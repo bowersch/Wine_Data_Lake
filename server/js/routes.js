@@ -351,7 +351,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
                             if(error){
                                 throw error;
                             }
-                            console.log("Made it to the render link sent successfully");
+
                             //email sent successfully, token and token_created added to user
                             res.render("forgot-password-success", {
                                 layout:"main",
@@ -501,12 +501,12 @@ async function sendEmail(email, token) {
     let testAccount = await nodemailer.createTestAccount();
 
     let sender = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        secure: false,
+        //depending on sender's email service, this might need to be changed 
+        service: "hotmail",
         auth: {
-            user: testAccount.user,
-            pass: testAccount.pass
+            //need to add the sender's email(user) and password 
+            user: "",
+            pass: ""
         }
     });
 
@@ -514,7 +514,7 @@ async function sendEmail(email, token) {
         from: "Wine Data Lake",
         to: email,
         subject: "Reset Password",
-        html: '<p> Here is the link to reset your password. The link will expire in 15 minutes. <br> <a href="http://localhost:8080/update-password/" + token>Reset Password</a>'
+        html: '<p> Here is the link to reset your password. The link will expire in 15 minutes. <br> <a href="http://winedatalake.com/update-password/' + token + '">Reset Password</a>'
     }
 
     sender.sendMail(message, function(error, info) {
