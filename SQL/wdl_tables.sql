@@ -19,14 +19,14 @@ DROP TABLE IF EXISTS locations CASCADE;
 
 CREATE TABLE IF NOT EXISTS locations 
 (
-	location_id		 SERIAL PRIMARY KEY,
-	city			 VARCHAR(255),
-	region			 VARCHAR(255),
-	country			 VARCHAR(255),
-	continent		 VARCHAR(255),
-	postal			 VARCHAR(64),
-	latitude		 FLOAT(12),
-	longitude		 FLOAT(12)
+	location_id		    SERIAL PRIMARY KEY,
+	city			        VARCHAR(255),
+	region			      VARCHAR(255),
+	country			      VARCHAR(255),
+	continent		      VARCHAR(255),
+	postal			      VARCHAR(64),
+	latitude		      FLOAT(12),
+	longitude		      FLOAT(12)
 );
 
 CREATE TABLE IF NOT EXISTS ava
@@ -34,9 +34,9 @@ CREATE TABLE IF NOT EXISTS ava
 	ava_id            SERIAL PRIMARY KEY,
 
 	ava_name          VARCHAR(255) UNIQUE NOT NULL,
-	location	      VARCHAR(800),
-	climate		      VARCHAR(800),
-	soils			  VARCHAR(800),
+	location	        VARCHAR(800),
+	climate		        VARCHAR(800),
+	soils			        VARCHAR(800),
 	topography        VARCHAR(800)
 );
 
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS regional_varietals
 (
 	reg_varietals_id  SERIAL PRIMARY KEY,
 
-	ava_id		      INTEGER REFERENCES ava(ava_id),
+	ava_id		        INTEGER REFERENCES ava(ava_id),
 	varietal_id       INTEGER REFERENCES varietals(varietal_id)
 );
 
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS wineries
 
 	address	          VARCHAR(255),
 	phone_number      VARCHAR(30),
-	winery_url		  VARCHAR(255)
+	winery_url		    VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS sweetness
@@ -95,34 +95,34 @@ CREATE TABLE IF NOT EXISTS body
 
 CREATE TABLE IF NOT EXISTS bottle_data
 (
-    bottle_id         SERIAL PRIMARY KEY,
-    winery_id         INTEGER REFERENCES wineries(winery_id),
-    year              VARCHAR(6) NOT NULL,
-    wine_name         VARCHAR(255) NOT NULL,
-    pct_alcohol       VARCHAR(10),
-    ta                VARCHAR(10),
-    ph                VARCHAR(10),
-    soils             VARCHAR(255),
-    varietal_id       INTEGER REFERENCES varietals(varietal_id),
+    bottle_id       SERIAL PRIMARY KEY,
+    winery_id       INTEGER REFERENCES wineries(winery_id),
+    year            VARCHAR(6) NOT NULL,
+    wine_name       VARCHAR(255) NOT NULL,
+    pct_alcohol     VARCHAR(10),
+    ta              VARCHAR(10),
+    ph              VARCHAR(10),
+    soils           VARCHAR(255),
+    varietal_id     INTEGER REFERENCES varietals(varietal_id),
     clones		      VARCHAR(255),
-    clusters          VARCHAR(10),
-    aging_process     VARCHAR(255),
-    cases_produced    INTEGER,
-    ava_id            INTEGER REFERENCES ava(ava_id),
-    techsheet_id      INTEGER REFERENCES techsheets(techsheet_id),
-    run_date          DATE DEFAULT CURRENT_DATE,
-    winemaker_id      INTEGER REFERENCES winemakers(winemaker_id),
-    description       VARCHAR(1000),
-    sweetness_id      INTEGER REFERENCES sweetness(sweetness_id),
-    body_id           INTEGER REFERENCES body(body_id)
+    clusters        VARCHAR(10),
+    aging_process   VARCHAR(255),
+    cases_produced  INTEGER,
+    ava_id          INTEGER REFERENCES ava(ava_id),
+    techsheet_id    INTEGER REFERENCES techsheets(techsheet_id),
+    run_date        DATE DEFAULT CURRENT_DATE,
+    winemaker_id    INTEGER REFERENCES winemakers(winemaker_id),
+    description     VARCHAR(1000),
+    sweetness_id    INTEGER REFERENCES sweetness(sweetness_id),
+    body_id         INTEGER REFERENCES body(body_id)
 );
 
 CREATE TABLE IF NOT EXISTS qualities
 (
 	quality_id	      SERIAL PRIMARY KEY,
 
-	quality_name	  VARCHAR(30) UNIQUE NOT NULL,
-	description		  VARCHAR(1000)
+	quality_name	    VARCHAR(30) UNIQUE NOT NULL,
+	description		    VARCHAR(1000)
 );
 
 CREATE TABLE IF NOT EXISTS wine_qualities
@@ -138,9 +138,9 @@ CREATE TABLE IF NOT EXISTS users
 	user_id          SERIAL PRIMARY KEY,
 
 	username         VARCHAR(30) UNIQUE NOT NULL,
-	user_auth		 VARCHAR(255) NOT NULL,
+	user_auth		     VARCHAR(255) NOT NULL,
 	email            VARCHAR(50) UNIQUE NOT NULL,
-	token		     VARCHAR(10),
+	token		         VARCHAR(10),
 	token_created    BIGINT
 );
 
@@ -149,9 +149,10 @@ CREATE TABLE IF NOT EXISTS favorite_ava
 	fav_ava_id       SERIAL PRIMARY KEY,
 
 	user_id          INTEGER REFERENCES users(user_id),
-	ava_id           INTEGER REFERENCES ava(ava_id),	favorite_date	 DATE DEFAULT CURRENT_DATE,
-	user_ip		     VARCHAR(15),
-	user_location	 INTEGER REFERENCES locations(location_id)
+	ava_id           INTEGER REFERENCES ava(ava_id),
+	favorite_date		 DATE DEFAULT CURRENT_DATE,
+	user_ip		       VARCHAR(15),
+	user_location	   INTEGER REFERENCES locations(location_id)
 );
 
 CREATE TABLE IF NOT EXISTS favorite_qualities
@@ -160,9 +161,9 @@ CREATE TABLE IF NOT EXISTS favorite_qualities
 
 	user_id          INTEGER REFERENCES users(user_id),
 	quality_id       INTEGER REFERENCES qualities(quality_id),
-	favorite_date	 DATE DEFAULT CURRENT_DATE,
-	user_ip			 VARCHAR(15),
-	user_location	 INTEGER REFERENCES locations(location_id)
+	favorite_date		 DATE DEFAULT CURRENT_DATE,
+	user_ip		       VARCHAR(15),
+	user_location	   INTEGER REFERENCES locations(location_id)
 );
 
 CREATE TABLE IF NOT EXISTS favorite_techsheets
@@ -171,9 +172,9 @@ CREATE TABLE IF NOT EXISTS favorite_techsheets
 
 	user_id          INTEGER REFERENCES users(user_id),
 	techsheet_id     INTEGER REFERENCES techsheets(techsheet_id),
-	favorite_date	 DATE DEFAULT CURRENT_DATE,
-	user_ip		     VARCHAR(15),
-	user_location	 INTEGER REFERENCES locations(location_id)
+	favorite_date		 DATE DEFAULT CURRENT_DATE,
+	user_ip		       VARCHAR(15),
+	user_location	   INTEGER REFERENCES locations(location_id)
 );
 
 CREATE TABLE IF NOT EXISTS favorite_wineries
@@ -182,9 +183,9 @@ CREATE TABLE IF NOT EXISTS favorite_wineries
 
 	user_id          INTEGER REFERENCES users(user_id),
 	winery_id        INTEGER REFERENCES wineries(winery_id),
-	favorite_date	 DATE DEFAULT CURRENT_DATE,
-	user_ip			 VARCHAR(15),
-	user_location	 INTEGER REFERENCES locations(location_id)
+	favorite_date		 DATE DEFAULT CURRENT_DATE,
+	user_ip		       VARCHAR(15),
+	user_location	   INTEGER REFERENCES locations(location_id)
 );
 
 
@@ -214,12 +215,10 @@ CREATE OR REPLACE VIEW wine_data AS
 
 CREATE TABLE IF NOT EXISTS wine_views
 (
-	wine_view_id	SERIAL PRIMARY KEY,
-	user_id			INTEGER REFERENCES users(user_id),
-	bottle_id		INTEGER REFERENCES bottle_data(bottle_id),
-	view_date		DATE DEFAULT CURRENT_DATE,
-	viewer_ip		VARCHAR(15),
-	viewer_location	INTEGER REFERENCES locations(location_id)
-	user_ip			VARCHAR(15),
-	user_location	INTEGER REFERENCES locations(location_id)
+	wine_view_id	  SERIAL PRIMARY KEY,
+	user_id			    INTEGER REFERENCES users(user_id),
+	bottle_id		    INTEGER REFERENCES bottle_data(bottle_id),
+	view_date		    DATE DEFAULT CURRENT_DATE,
+	user_ip		      VARCHAR(15),
+	user_location	  INTEGER REFERENCES locations(location_id)
 );
