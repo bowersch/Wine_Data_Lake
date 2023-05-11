@@ -43,11 +43,13 @@
                         const bars = document.querySelector("#bars");
                         const xmark = document.querySelector("#xmark");
 
+                        //display the hamburger icon, no menu
                         if(hamburgerMenu.classList.contains("showHamburgerMenu")){
                             hamburgerMenu.classList.remove("showHamburgerMenu");
                             xmark.style.display = "none";
                             bars.style.display = "block";
                         }
+                        //display the menu with close icon (x)
                         else{
                             hamburgerMenu.classList.add("showHamburgerMenu");
                             xmark.style.display = "block";

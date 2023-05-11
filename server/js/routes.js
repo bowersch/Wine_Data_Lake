@@ -1,5 +1,9 @@
 const axios = require('axios')
 const parser = require('body-parser');
+const randtoken = require('rand-token');
+const nodemailer = require('nodemailer');
+const email_sender = require("../email_sender.json");
+
 const jsonParser = parser.json();
 
 module.exports = function(app, client, queryHelper, passport, bcrypt, flash, popularityJS) {
@@ -390,6 +394,172 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
         });
     });
 
+    app.get('/forgot-password', (req, res, next) => {
+        res.locals.pack.template = 'forgot-password';
+        res.locals.pack.config.css = ['forgot-password.css'];
+        next();
+    });
+
+    app.get('/forgot-password-success', (req, res, next) => {
+        res.locals.pack.template = 'forgot-password-success';
+        res.locals.pack.config.css = ['forgot-password.css'];
+        next();
+    })
+
+    app.post('/forgot-password', function(req, res, next) {
+        let email = req.body.email;
+    
+        //check if email is already registered
+        client.query(`SELECT * FROM users WHERE email = $1;`,
+            [email],
+            async (error, results) => {
+                if(error) {
+                    throw error;
+                }
+    
+                //user exists
+                if(results.rows.length > 0) {
+                    let token = randtoken.generate(10);
+                    var sentEmail = await sendEmail(email, token);
+
+                    //check if email sent successfully
+                    if(sentEmail != '0'){
+                        //update user token and time token was created
+                        client.query(`UPDATE users SET token = $1, token_created = $2 WHERE email = $3;`,
+                           [token, Math.floor(Date.now() / 1000), email], 
+                           function(error, results) {
+                            if(error){
+                                throw error;
+                            }
+
+                            //email sent successfully, token and token_created added to user
+                            res.render("forgot-password-success", {
+                                layout:"main",
+                                css: ["forgot-password-success.css"], 
+                                message: "Link was sent successfully. Please check your email" 
+                            });
+                        })
+                    }
+                    //email not sent
+                    else {
+                        res.render("forgot-password", {
+                            layout:"main",
+                            css: ["forgot-password.css"], 
+                            message: "Forgot password email was not sent. Please try again" 
+                        });
+                    }
+                }
+                //user does not exist
+                else {
+                    res.render("forgot-password", {
+                        layout:"main",
+                        css: ["forgot-password.css"], 
+                        message: "Account does not exist. Please try again" 
+                    });
+                }
+            })
+    });
+
+    app.get('/update-password/:token', (req, res, next) => {
+
+        let token = req.params.token;
+
+        //find user with matching token
+        client.query(`SELECT * FROM users WHERE token = $1;`, 
+            [token], 
+            function(error, results) {
+                if(error) {
+                    throw error; 
+                }
+
+                //user found, load the update password page
+                if(results.rows.length > 0) {
+                    res.render('update-password', {
+                        layout: "main",
+                        css: ["login.css"],
+                        data: token
+                    })
+                }
+                //user with matching token not found
+                else {
+                    res.render('forgot-password', {
+                        layout: "main",
+                        css: ["forgot-password.css"],
+                        message: "Token not found. Try again"
+                    })
+                }
+        })
+    })
+
+    app.post('/update-password/:token', function(req, res, next) {
+
+        let token = req.params.token;
+        var password = req.body.password;
+        var password2 = req.body.password2;
+
+        //check if new passwords do not match
+        if(password != password2) {
+            res.render('update-password', {
+                layout: "main",
+                css: ["login.css"],
+                data: token,
+                message: "Passwords do not match"
+            })
+        } else {
+            //form validation has passed
+            client.query(`SELECT * FROM users WHERE token = $1;`, 
+                [token], 
+                async function(error, results) {
+                    if(error) {
+                        throw error;
+                    }
+
+                    //user is found
+                    if(results.rows.length > 0) {
+                        //hash the password
+                        let hashedPassword = await bcrypt.hash(password, 10);
+
+                        //will need to get current time and compare to the token_created from user table
+                        //difference in time needs to be within 15 minutes (900 seconds)
+                        var current_time = Math.floor(Date.now() / 1000.0);
+
+                        if((current_time - results.rows[0].token_created) < 900){
+                            //update the user's password
+                            client.query(`UPDATE users SET user_auth = $1 WHERE email = $2;`,
+                                [hashedPassword, results.rows[0].email], 
+                                function (error, results) {
+                                    if(error) {
+                                        throw error;
+                                    }
+
+                                    res.render('login', {
+                                        layout: "main",
+                                        css: ["login.css"],
+                                        message: "Password updated successfully"
+                                    })
+                                })
+                        }
+                        //token expired, need to retry
+                        else {
+                            res.render("forgot-password", {
+                                layout:"main",
+                                css: ["forgot-password.css"], 
+                                message: "Token expired. Please try again" 
+                            });
+                        }
+                    }
+                    //user not found (wrong token)
+                    else {
+                        res.render("forgot-password", {
+                            layout:"main",
+                            css: ["forgot-password.css"], 
+                            message: "Incorrect token. Please try again" 
+                        });
+                    }
+                })
+        }
+
+    })
 };
 
 function checkAuthenticated(req, res, next) {
@@ -404,4 +574,46 @@ function checkNotAuthenticated(req, res, next) {
         return next();
     }
     res.redirect('/login');
+}
+
+async function sendEmail(email, token) {
+
+    let sender = nodemailer.createTransport({
+        //depending on sender's email service, this might need to be changed 
+        service: "outlook",
+        host: "smtp-mail.outlook.com",
+        port: 587,
+        secureConnection: false,
+        tls: {
+            ciphers: 'SSLv3'
+        },
+        auth: {
+            //need to add the sender's email(user) and password 
+            user: email_sender.user,
+            pass: email_sender.pass
+        },
+        from: email_sender.user
+    });
+
+    let message = {
+        from: email_sender.user,
+        to: email,
+        subject: "Reset Password Link",
+        text: "This email is for your reset password link.", 
+        html: '<p> Here is the link to reset your password. The link will expire in 15 minutes. <br> <a href="http://localhost:8080/update-password/' + token + '">Reset Password</a>'
+    }
+
+    sender.sendMail(message, function(error, info) {
+
+        //email was not sent
+        if(error) {
+            console.log('Error sending reset password link');
+            return 0;
+        }
+        //email sent
+        else {
+            console.log("Reset password link sent successfully");
+            return 1;
+        }
+    });
 }
