@@ -75,23 +75,20 @@ How To Use
 - To view official page: <https://winedatalake.com/>
 - WDL 2023 Repo: <https://github.com/bowersch/Wine_Data_Lake>
 - Local:
-- After cloning the repo:
-- For database: in pgAdmin (with full permissions)
-- Create an empty database
-- Right click on the database name, select Query Tool
-- Add code from wdl\_tables.sql and run the query to add the tables
-- Add code from wdl\_data.sql and run the query to add some data
-- In a terminal (at the repo location), run:
-
-npm install
-
-This will download any dependencies from package.json.
-
-- In main.js, comment out the secrets.js lines and update the database authorization information with the new database information (host, database, user, and password)
-- Two ways to run the code:
-- npm start
-- npm test
-- This is for using the nodemon package
+    After cloning the repo:
+        For database: in pgAdmin (with full permissions)
+            Create an empty database
+            Right click on the database name, select Query Tool
+            Add code from wdl\_tables.sql and run the query to add the tables
+            Add code from wdl\_data.sql and run the query to add some data
+        In a terminal (at the repo location), run:
+            npm install
+            This will download any dependencies from package.json.
+        In main.js, comment out the secrets.js lines and update the database authorization information with the new database information (host, database, user, and password)
+        Two ways to run the code:
+            npm start
+            npm test
+            This is for using the nodemon package
 
 *Credits*
 
