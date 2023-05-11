@@ -2,6 +2,7 @@ const axios = require('axios')
 const parser = require('body-parser');
 const randtoken = require('rand-token');
 const nodemailer = require('nodemailer');
+const email_sender = require("../email_sender.json");
 
 const jsonParser = parser.json();
 
@@ -342,8 +343,10 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash) {
                     let token = randtoken.generate(10);
                     var sentEmail = await sendEmail(email, token);
 
+                    console.log("sentEmail: " + sentEmail);
+
                     //check if email sent successfully
-                    if(sentEmail != '1'){
+                    if(sentEmail != '0'){
                         //update user token and time token was created
                         client.query(`UPDATE users SET token = $1, token_created = $2 WHERE email = $3;`,
                            [token, Math.floor(Date.now() / 1000), email], 
@@ -498,34 +501,42 @@ function checkNotAuthenticated(req, res, next) {
 
 async function sendEmail(email, token) {
 
-    let testAccount = await nodemailer.createTestAccount();
-
     let sender = nodemailer.createTransport({
         //depending on sender's email service, this might need to be changed 
-        service: "hotmail",
+        service: "outlook",
+        host: "smtp-mail.outlook.com",
+        port: 587,
+        secureConnection: false,
+        tls: {
+            ciphers: 'SSLv3'
+        },
         auth: {
             //need to add the sender's email(user) and password 
-            user: "",
-            pass: ""
-        }
+            user: email_sender.user,
+            pass: email_sender.pass
+        },
+        from: email_sender.user
     });
 
     let message = {
-        from: "Wine Data Lake",
+        from: email_sender.user,
         to: email,
-        subject: "Reset Password",
-        html: '<p> Here is the link to reset your password. The link will expire in 15 minutes. <br> <a href="http://winedatalake.com/update-password/' + token + '">Reset Password</a>'
+        subject: "Reset Password Link",
+        text: "This email is for your reset password link.", 
+        html: '<p> Here is the link to reset your password. The link will expire in 15 minutes. <br> <a href="http://localhost:8080/update-password/' + token + '">Reset Password</a>'
     }
 
     sender.sendMail(message, function(error, info) {
+
         //email was not sent
         if(error) {
             console.log('Error sending reset password link');
-            return process.exit(1);
+            return 0;
         }
         //email sent
         else {
             console.log("Reset password link sent successfully");
+            return 1;
         }
     });
 }
