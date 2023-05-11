@@ -417,8 +417,6 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
                     let token = randtoken.generate(10);
                     var sentEmail = await sendEmail(email, token);
 
-                    console.log("sentEmail: " + sentEmail);
-
                     //check if email sent successfully
                     if(sentEmail != '0'){
                         //update user token and time token was created
