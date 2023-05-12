@@ -26,7 +26,7 @@ WebsiteRoadMap
 
 Folder Directory
 
-![Folder Chart](/server/public/images/Folder Flow Chart.png)
+[Folder Flow Chart](/server/public/images/folderFlow.png)
 
 Homepage/Search
 
