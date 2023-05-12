@@ -151,6 +151,19 @@ exports.randomWineId = (client, callback) => {
     });
 }
 
+exports.randomTechsheets = (n, client, callback) => {
+    client.query("SELECT source_file FROM techsheets ORDER BY RANDOM() LIMIT $1;",
+    [n],
+    (err, res) => {
+        if(err) {
+            console.log(err);
+            callback(null);
+        } else {
+            callback(res.rows);
+        }
+    });
+}
+
 exports.addFavoriteWinery = (userId, wineryId, ip, location_id, client) => {
     client.query("INSERT INTO favorite_wineries (user_id, winery_id, user_ip, location_id) VALUES ($1, $2, $3, $4);",
         [userId, wineryId, ip, location_id],

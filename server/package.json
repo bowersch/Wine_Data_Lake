@@ -24,6 +24,7 @@
     "nodemon": "^2.0.21",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
+    "pdfjs-dist": "^3.5.141",
     "pg": "^8.9.0"
   },
   "nodemonConfig": {

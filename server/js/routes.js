@@ -12,6 +12,30 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
         next();
     });
 
+    app.get('/test', (req, res, next) => {
+        res.locals.pack.template = 'newHome';
+        res.locals.pack.config.css = ['newHome.css'];
+        res.locals.pack.config.js = ['newHome.js', '../../node_modules/pdfjs-dist/build/pdf.js'];
+        queryHelper.randomTechsheets(10, client, res2 => {
+            if (!res2) res.status(400).send('Error.');
+            else {
+                res.locals.pack.config.data = {
+                    "techsheet1": res2[0].source_file,
+                    "techsheet2": res2[1].source_file,
+                    "techsheet3": res2[2].source_file,
+                    "techsheet4": res2[3].source_file,
+                    "techsheet5": res2[4].source_file,
+                    "techsheet6": res2[5].source_file,
+                    "techsheet7": res2[6].source_file,
+                    "techsheet8": res2[7].source_file,
+                    "techsheet9": res2[8].source_file,
+                    "techsheet10": res2[9].source_file
+                };
+                next();
+            }
+        });
+    });
+
     app.get('/info', (req, res, next) => {
         res.locals.pack.config.layout = 'productPageTemplate';
         res.locals.pack.template = 'productPage';
