@@ -53,3 +53,18 @@ exports.getTopN = (n, offset, client, callback) => {
         callback(tab.slice(offset, offset + n));
     });
 } 
+
+exports.getTopPercentile = (id, client, callback) => {
+    if(id != null) {
+        getTable(client, tab => {
+            for(let i = 0; i < tab.length; i++) {
+                if(tab[i].id == id) {
+                    var popStat = (i + 1.0) / tab.length;
+                    callback(popStat);
+                    return;
+                }
+            }
+            callback(1.0);
+        });
+    } else callback(null);
+}
