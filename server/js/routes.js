@@ -74,7 +74,7 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
         }
 
         client.query(query1, [search], function(error, res2, fields) {
-            if (error) alert("Error while searching results.")
+            // if (error) alert("Error while searching results.")
 
             //results found
             if(res2.rows.length > 0) {
@@ -123,30 +123,41 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
             let filter_rows = rows.rows;
             if (filter_body !== '' && filter_body !== undefined && filter_body !== null) {
                 filter_rows = filter_rows.filter(item=>{
-                   return item.body === filter_body;
+                   return item.body_level === filter_body;
                 });
             }
             if (filter_sweet !== '' && filter_sweet !== undefined && filter_sweet !== null) {
                 filter_rows = filter_rows.filter(item=>{
-                    return item.sweetness === filter_sweet;
+                    return parseFloat(item.sweetness_id) === parseFloat(filter_sweet);
                 });
             }
             if (filter_alcohol_from !== '' && filter_alcohol_from !== undefined && filter_alcohol_from !== null) {
                 filter_rows = filter_rows.filter(item=>{
-                    return item.pct_alcohol >= filter_alcohol_from;
+                    let bool = parseFloat(item.pct_alcohol) >= parseFloat(filter_alcohol_from)
+                    return bool;
                 });
             }
             if (filter_alcohol_to !== '' && filter_alcohol_to !== undefined && filter_alcohol_to !== null) {
                 filter_rows = filter_rows.filter(item=>{
-                    return item.pct_alcohol <= filter_alcohol_to;
+                    let bool = parseFloat(item.pct_alcohol) <= parseFloat(filter_alcohol_to)
+                    return bool;
                 });
             }
-
-            return res.render("wineResults", {
-                layout: "main",
-                css: ["wineResults.css"],
-                data: {"rows": filter_rows, "search": filter_search},
-            });
+            if(filter_rows.length > 0) {
+                return res.render("wineResults", {
+                    layout: "main",
+                    css: ["wineResults.css"],
+                    data: filter_rows,
+                });
+            }
+            //no results found
+            else {
+                return res.render("wineResults", {
+                    layout: "main",
+                    css: ["wineResults.css"],
+                    message: "No Results Found"});
+            }
+            
         })
     });
     
