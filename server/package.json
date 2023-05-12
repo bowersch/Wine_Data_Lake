@@ -21,11 +21,12 @@
     "express-flash": "^0.0.2",
     "express-handlebars": "^6.0.7",
     "express-session": "^1.17.3",
+    "nodemailer": "^6.9.1",
     "nodemon": "^2.0.21",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
-    "pdfjs-dist": "^3.5.141",
-    "pg": "^8.9.0"
+    "pg": "^8.9.0",
+    "rand-token": "^1.0.1"
   },
   "nodemonConfig": {
     "restartable": "rs",
