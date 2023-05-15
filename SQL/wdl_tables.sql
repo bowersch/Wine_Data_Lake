@@ -198,6 +198,7 @@ CREATE OR REPLACE VIEW wine_data AS
 		wm.winemaker_name,
 		av.ava_name,
 		bd.year,
+		th.techsheet_id,
 		ts.source_file,
 		bd.description
 	FROM bottle_data AS bd

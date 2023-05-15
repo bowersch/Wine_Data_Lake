@@ -16,6 +16,30 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
         next();
     });
 
+    app.get('/test', (req, res, next) => {
+        res.locals.pack.template = 'newHome';
+        res.locals.pack.config.css = ['newHome.css'];
+        res.locals.pack.config.js = ['newHome.js', '../../node_modules/pdfjs-dist/build/pdf.js'];
+        queryHelper.randomTechsheets(10, client, res2 => {
+            if (!res2) res.status(400).send('Error.');
+            else {
+                res.locals.pack.config.data = {
+                    "techsheet1": res2[0].source_file,
+                    "techsheet2": res2[1].source_file,
+                    "techsheet3": res2[2].source_file,
+                    "techsheet4": res2[3].source_file,
+                    "techsheet5": res2[4].source_file,
+                    "techsheet6": res2[5].source_file,
+                    "techsheet7": res2[6].source_file,
+                    "techsheet8": res2[7].source_file,
+                    "techsheet9": res2[8].source_file,
+                    "techsheet10": res2[9].source_file
+                };
+                next();
+            }
+        });
+    });
+
     app.get('/info', (req, res, next) => {
         res.locals.pack.config.layout = 'productPageTemplate';
         res.locals.pack.template = 'productPage';
@@ -43,18 +67,11 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
         });
     });
 
-    app.get('/results/*', (req, res, next) => {
-        res.locals.pack.template = 'wineResults';
-        res.locals.pack.config.css = ['wineResults.css'];
-        res.locals.pack.config.data = require('../resultsDummy.json');;
-        next();
-    });
-
     // Citation
     // Date: 03/12/2023
     // Source: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%206%20-%20Dynamically%20Filling%20Dropdowns%20and%20Adding%20a%20Search%20Box
     // Comment: Referred to search bar implementation for this query!
-    app.get('/search-results', (req, res) => {
+    app.get('/search-results', (req, res, next) => {
             
         let query1;
 
@@ -63,36 +80,36 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
         //if text box is empty when submit is done, set to a basic query
         //otherwise, set to a search query
         if(search === undefined){
-            query1 = "SELECT * FROM wine_data LIMIT 100;";
-        }
-        else {
+            query1 = "SELECT * FROM wine_data LIMIT $2 OFFSET $3;";
+        } else {
             // For Postgresql use ILIKE because database defaulted to case-sensitive
             query1 = `SELECT * FROM wine_data WHERE wine_name ILIKE $1 OR
                     winery_name ILIKE $1 OR varietal_name ILIKE $1 OR
                     winemaker_name ILIKE $1 OR ava_name ILIKE $1 OR
-                    year ILIKE $1`
+                    year ILIKE $1 LIMIT $2 OFFSET $3;`
         }
 
-        client.query(query1, [search], function(error, res2, fields) {
+        var page = req.query.page ? Number(req.query.page) : 0;
 
-            //results found
-            if(res2.rows.length > 0) {
-                return res.render("wineResults", {
-                    layout: "main",
-                    css: ["wineResults.css"],
-                    message:"",
-                    data: res2.rows});
-            }
-            //no results found
+        client.query(query1, [search, page * 10 + 10, page * 10], (err, res2) => {
+            if(err) console.log(err);
             else {
-                return res.render("wineResults", {
-                    layout: "main",
-                    css: ["wineResults.css"],
-                    message: "No Results Found"});
+                //results found
+                if(res2.rows.length > 0) {
+                    res.locals.pack.template = 'wineResults';
+                    res.locals.pack.config.css = ['wineResults.css'];
+                    res.locals.pack.config.data = res2.rows;
+                    res.locals.pack.config.message = "";
+                } else { //no results found
+                    res.locals.pack.template = 'wineResults';
+                    res.locals.pack.config.css = ['wineResults.css'];
+                    res.locals.pack.config.message = "No Results Found";
+                }
             }
-        })
+            next();
+        });
     });
-    
+
     app.get('/search-filter', (req, res) => {
         let filter_search = req.query.filter_search;
         let filter_body = req.query.filter_body;
@@ -122,33 +139,44 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
             let filter_rows = rows.rows;
             if (filter_body !== '' && filter_body !== undefined && filter_body !== null) {
                 filter_rows = filter_rows.filter(item=>{
-                   return item.body === filter_body;
+                   return item.body_level === filter_body;
                 });
             }
             if (filter_sweet !== '' && filter_sweet !== undefined && filter_sweet !== null) {
                 filter_rows = filter_rows.filter(item=>{
-                    return item.sweetness === filter_sweet;
+                    return parseFloat(item.sweetness_id) === parseFloat(filter_sweet);
                 });
             }
             if (filter_alcohol_from !== '' && filter_alcohol_from !== undefined && filter_alcohol_from !== null) {
                 filter_rows = filter_rows.filter(item=>{
-                    return item.pct_alcohol >= filter_alcohol_from;
+                    let bool = parseFloat(item.pct_alcohol) >= parseFloat(filter_alcohol_from)
+                    return bool;
                 });
             }
             if (filter_alcohol_to !== '' && filter_alcohol_to !== undefined && filter_alcohol_to !== null) {
                 filter_rows = filter_rows.filter(item=>{
-                    return item.pct_alcohol <= filter_alcohol_to;
+                    let bool = parseFloat(item.pct_alcohol) <= parseFloat(filter_alcohol_to)
+                    return bool;
                 });
             }
-
-            return res.render("wineResults", {
-                layout: "main",
-                css: ["wineResults.css"],
-                data: {"rows": filter_rows, "search": filter_search},
-            });
+            if(filter_rows.length > 0) {
+                return res.render("wineResults", {
+                    layout: "main",
+                    css: ["wineResults.css"],
+                    data: filter_rows,
+                });
+            }
+            //no results found
+            else {
+                return res.render("wineResults", {
+                    layout: "main",
+                    css: ["wineResults.css"],
+                    message: "No Results Found"});
+            }
+            
         })
     });
-
+    
     app.get('/wines/random', (req, res, next) => {
         queryHelper.randomWineId(client, id => {
             if (!id) res.status(400).send('Error.');
@@ -165,42 +193,45 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
                 res.locals.pack.template = 'wineEntry';
                 res.locals.pack.config.css = ['wineEntry.css'];
                 res.locals.pack.config.js = ['wineEntry.js'];
-                res.locals.pack.config.data = data;
-                axios.get('https://api.ipify.org?format=json').then(response => {
-                    const ip = response.data.ip;
-                    axios.get('https://ipapi.co/' + ip + '/' + 'json').then(response => {
-                        if(!response.error) {   
-                                queryHelper.logLocation(client,
-                                response.data.city,
-                                response.data.region,
-                                response.data.country,
-                                response.data.continent_code,
-                                response.data.postal,
-                                response.data.latitude,
-                                response.data.longitude,
-                                location_id => {
-                                    queryHelper.logWineView(
-                                        req.passport ? req.passport.user.id : null,
-                                        req.params.bottle_id,
-                                        ip,
-                                        location_id,
-                                        client, () => {
-                                            next();
-                                        }
-                                    );
-                                }
-                            );
-                        } else {
-                            queryHelper.logWineView(
-                                req.passport ? req.passport.user.id : null,
-                                req.params.bottle_id,
-                                ip,
-                                null,
-                                client, () => {
-                                    next();
-                                }
-                            );
-                        }
+                popularityJS.getTopPercentile(req.params.bottle_id, client, stat => {
+                    data.popStat = (stat * 100).toFixed(2);
+                    res.locals.pack.config.data = data;
+                        axios.get('https://api.ipify.org?format=json').then(response => {
+                        const ip = response.data.ip;
+                        axios.get('https://ipapi.co/' + ip + '/' + 'json').then(response => {
+                            if(!response.error) {   
+                                    queryHelper.logLocation(client,
+                                    response.data.city,
+                                    response.data.region,
+                                    response.data.country,
+                                    response.data.continent_code,
+                                    response.data.postal,
+                                    response.data.latitude,
+                                    response.data.longitude,
+                                    location_id => {
+                                        queryHelper.logWineView(
+                                            req.passport ? req.passport.user.id : null,
+                                            req.params.bottle_id,
+                                            ip,
+                                            location_id,
+                                            client, () => {
+                                                next();
+                                            }
+                                        );
+                                    }
+                                );
+                            } else {
+                                queryHelper.logWineView(
+                                    req.passport ? req.passport.user.id : null,
+                                    req.params.bottle_id,
+                                    ip,
+                                    null,
+                                    client, () => {
+                                        next();
+                                    }
+                                );
+                            }
+                        });
                     });
                 });
             }
@@ -209,6 +240,8 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
 
     app.get('/directory', (req, res, next) => {
         queryHelper.getWineriesWines(client, data => {
+            if(!data) res.status(400).send('Error.');
+
             res.locals.pack.template = 'directory';
             res.locals.pack.config.css = ['directory.css'];
             res.locals.pack.config.data = data;
@@ -218,6 +251,8 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
 
     app.get('/favorites', checkNotAuthenticated, (req, res, next) => {
         queryHelper.getUserFavoriteInfo(req.session.passport.user.id, client, data => {
+            if(!data) res.status(400).send('Error.');
+
             res.locals.pack.template = 'userFavorites';
             res.locals.pack.config.css = ['userFavorites.css'];
             res.locals.pack.config.data = data;
@@ -266,8 +301,8 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
         if(password != password2) {
             res.render("register", {
                 layout:"main",
-                css: ["register.css"], 
-                message: "Passwords do not match" 
+                css: ["register.css"],
+                message: "Passwords do not match"
              });
         } else {
             //form validation has passed
@@ -287,8 +322,8 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
                         //errors.push({ message: "Email already registered" });
                         res.render("register", {
                             layout:"main",
-                            css: ["register.css"], 
-                            message: "Email already registered" 
+                            css: ["register.css"],
+                            message: "Email already registered"
                         });
                     }
                     else{
@@ -303,8 +338,8 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
 
                                 res.render("login", {
                                     layout:"main",
-                                    css: ["login.css"], 
-                                    message: "You are now registered. Please log in" 
+                                    css: ["login.css"],
+                                    message: "You are now registered. Please log in"
                                 });
                             }
                         )
@@ -321,11 +356,11 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
             itemId : req.body.itemId,
             userId : req.isAuthenticated() ? req.session.passport.user.id : null
         };
-        if(data.userId == null) return;
+        if(data.userId == null || data.itemId == null) return;
         axios.get('https://api.ipify.org?format=json').then(response => {
             const ip = response.data.ip;
             axios.get('https://ipapi.co/' + ip + '/' + 'json').then(response => {
-                if(!response.error) {   
+                if(!response.error) {
                         queryHelper.logLocation(client,
                         response.data.city,
                         response.data.region,
@@ -338,6 +373,9 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
                             switch(data.itemType) {
                                 case 'quality': {
                                     queryHelper.addFavoriteQuality(data.userId, data.itemId, ip, location_id, client);
+                                }
+                                case 'wine': {
+                                    queryHelper.addFavoriteSheet(data.userId, data.itemId, ip, location_id, client);
                                 }
                             }
                         }
@@ -355,33 +393,37 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
             itemId : req.body.itemId,
             userId : req.isAuthenticated() ? req.session.passport.user.id : null
         };
-        if(data.userId == null) return;
+        if(data.userId == null || data.itemId == null) return;
         switch(data.itemType) {
             case 'quality': {
                 queryHelper.delFavoriteQuality(data.userId, data.itemId, client);
+            }
+            case 'wine': {
+                queryHelper.addFavoriteSheet(data.userId, data.itemId, ip, location_id, client);
             }
         }
 
     });
 
-    app.get("/popular", (req, res) => {
-        popularityJS.getTopN(5, 0, client, table => {
+    app.get("/popular", (req, res, next) => {
+        var page = req.query.page ? Number(req.query.page) : 0;
+        popularityJS.getTopN(page * 10 + 10, page * 10, client, table => {
             var done = 0;
             rows = [];
             for(let i = 0; i < table.length; i++) {
                 client.query("SELECT * from wine_data WHERE bottle_id = $1;",
                 [table[i].id],
                 (err, res2) => {
-                    if(err) res.send(err);
-                    else {
+                    if(err) {
+                        console.log(err);
+                    } else {
                         rows[i] = res2.rows[0];
                         done++;
                         if(done == table.length) {
-                            res.render("wineResults", {
-                                layout: "main",
-                                css: ["wineResults.css"],
-                                data: rows
-                            });
+                            res.locals.pack.template = 'wineResults';
+                            res.locals.pack.config.css = ['wineResults.css'];
+                            res.locals.pack.config.data = rows;
+                            next();
                         }
                     }
                 })

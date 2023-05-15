@@ -1,12 +1,19 @@
 <div class="entryWrapper">
-        <!--
-        <button class="favoriteWineButton" onclick="toggleFavorite(this,'wine',{{data.id}})"><i class="fa-regular fa-heart"></i></button>
-        -->
+        
+        <button class="favoriteWineButton" onclick="toggleFavorite(this,'wine',{{data.techsheet_id}})"><i class="fa-regular fa-heart"></i></button>
+        
         <div class="entryDataWrapper">
                 <div class="wineName">
                         {{data.name}}
                 </div>
-                <button class="visitButton">Visit Winery</button>
+                {{#if data.popStat}}
+                        <div class="popStat">
+                                Top {{data.popStat}}% of Popular Wines
+                        </div>
+                {{/if}}
+                {{#if data.wineryLink}}
+                        <button class="visitButton">Visit Winery</button>
+                {{/if}}
                 {{#if data.description}}
                         <div class="wineDescription">
                                 {{data.description}}
@@ -18,7 +25,7 @@
                 <div class="wineKeywords">
                         {{#each data.keywords}}
                                 <div class="keywordLink">
-                                        <a href="">{{this}}</a>
+                                        <a href="/search-results?search={{this}}">{{this}}</a>
                                 </div>
                         {{/each}}
                 </div>
@@ -41,9 +48,20 @@
                 </div>
         </div>
         <div class="techSheet">
-                <embed src="https://storage.googleapis.com/winedatalake-377223.appspot.com/techSheets/{{data.techSheet}}">
+                <div id="adobe-dc-view" style="height: 360px; width: 500px;"></div>
+                <script src="https://documentservices.adobe.com/view-sdk/viewer.js"></script>
+                <script type="text/javascript">
+                        document.addEventListener("adobe_dc_view_sdk.ready", function(){ 
+                                var adobeDCView = new AdobeDC.View({clientId: "c304d3b5f02c40db943b0e507396d4e3", divId: "adobe-dc-view"});
+                                adobeDCView.previewFile({
+                                        content:{location: {url: "https://storage.googleapis.com/winedatalake-377223.appspot.com/techSheets/{{data.techSheet}}"}},
+                                        metaData:{fileName: "{{data.techSheet}}"}
+                                }, {embedMode: "SIZED_CONTAINER"});
+                        });
+                </script>
+                <!--<embed src="https://storage.googleapis.com/winedatalake-377223.appspot.com/techSheets/{{data.techSheet}}">-->
                 <div class="downloadButton">
-                        <a href="https://storage.googleapis.com/winedatalake-377223.appspot.com/techSheets/{{data.techSheet}}">Download Tech Sheet</a>
+                        <a href="https://storage.googleapis.com/winedatalake-377223.appspot.com/techSheets/{{data.techSheet}}">Open in Window</a>
                 </div>
         </div>
         {{#if data.purchaseLink}}

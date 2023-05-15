@@ -45,10 +45,4 @@ module.exports = function(router, client, popularityJS) {
         });
     });
 
-    router.get("/test", (req, res) => {
-        popularityJS.getTopN(5, req.query.page * 5, client, table => {
-            res.send(table);
-        })
-    });
-
 }
