@@ -14,15 +14,15 @@ const { Pool } = require("pg");
 
 const popularityJS = require('./js/popularity.js');
 
-const secrets = require('./js/secrets.js');
-secrets.getSecret('DB_USER').then(user => { secrets.getSecret('DB_PASS').then(pass => {
+//const secrets = require('./js/secrets.js');
+//secrets.getSecret('DB_USER').then(user => { secrets.getSecret('DB_PASS').then(pass => {
 
     const conn = new Pool({
-        host: process.env.CONN_PORT || '10.115.240.3',
+        host: "localhost",
         port: 5432,
-        database: "postgres",
-        user: user,
-        password: pass
+        database: "Wine_Data_Lake",
+        user: "postgres",
+        password: "123456post"
     });
     
     conn.connect().then(() => {
@@ -78,4 +78,4 @@ secrets.getSecret('DB_USER').then(user => { secrets.getSecret('DB_PASS').then(pa
 
     });
 
-});});
+//});});
