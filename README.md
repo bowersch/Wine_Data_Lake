@@ -24,6 +24,10 @@ WebsiteRoadMap
 
 ![Wine Data Lake Road Map](/server/public/images/siteLayout.png)
 
+Folder Directory
+
+![Folder Flow Chart](/server/public/images/folderFlow.png)
+
 Homepage/Search
 
 ![Wine Data Lake Homepage / Search](/server/public/images/homepage.png)

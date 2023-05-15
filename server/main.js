@@ -14,15 +14,16 @@ const { Pool } = require("pg");
 
 const popularityJS = require('./js/popularity.js');
 
-//const secrets = require('./js/secrets.js');
-//secrets.getSecret('DB_USER').then(user => { secrets.getSecret('DB_PASS').then(pass => {
+const secrets = require('./js/secrets.js');
+const cookieParser = require('cookie-parser');
+secrets.getSecret('DB_USER').then(user => { secrets.getSecret('DB_PASS').then(pass => {
 
     const conn = new Pool({
-        host: "localhost",
+        host: process.env.CONN_PORT || '10.115.240.3',
         port: 5432,
-        database: "Wine_Data_Lake",
-        user: "postgres",
-        password: "123456post"
+        database: "postgres",
+        user: user,
+        password: pass
     });
     
     conn.connect().then(() => {
@@ -42,6 +43,7 @@ const popularityJS = require('./js/popularity.js');
         
         app.use(express.urlencoded({ extended: false }));
         app.use(express.static('public'));
+        app.use(cookieParser());
         app.use(session({
             secret: "akjfhakjaw8723bs873ka7ykhasi7yq2kjhfa8k72ydbk37",
             saveUninitialized: true,
@@ -78,4 +80,4 @@ const popularityJS = require('./js/popularity.js');
 
     });
 
-//});});
+});});
