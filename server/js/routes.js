@@ -2,7 +2,7 @@ const axios = require('axios')
 const parser = require('body-parser');
 const randtoken = require('rand-token');
 const nodemailer = require('nodemailer');
-const email_sender = require("../email_sender.json");
+//const email_sender = require("../email_sender.json");
 
 const jsonParser = parser.json();
 
