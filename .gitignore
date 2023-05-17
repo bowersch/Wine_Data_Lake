@@ -4,3 +4,4 @@ test_server/*
 test_server/config.json
 test_server/server.js
 server/secrets.json
+server/email_sender.json
