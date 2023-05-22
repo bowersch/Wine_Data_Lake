@@ -12,7 +12,11 @@ Project is live at [ Wine Data Lake ](https://winedatalake.com)
 - User gets logged out moving between pages
 - Home page scales unevenly
 - Web Server crashes when SQL errors occur
-- Directory does load correctly
+- Bad Gateway (502) on /forgot-password
+
+## Not Implemented
+
+- Tech Sheet Upload Functionality
 
 ## Code Style
 
@@ -102,3 +106,50 @@ widedatalake.com/api
 - John Perez Almejo - Lead Front End Developer
 - Chris Styles - Additional Outside Help
 - Aaron Thompson - Additional Outside Help
+
+## Tasks Completed by Each Team Member
+
+1. Austin
+    - Wine Entry Page Developed
+    - Wine Search Results Page Developed
+    - Google Cloud Setup 
+    - PostgreSQL Server Setup
+    - "Surprise Me" Button Functionality Development
+    - Secret Manager Integration ( for DB User Authentication )
+    - Database Querying / Formatting
+    - User View Location Database Logging
+    - User Sessions
+    - Server Routing Rework
+    - Popularity Metrics System
+        - Currently Popular Page
+    - API Router Development
+    - Keyword Search
+
+2. Chelsea
+    - Directory Page Developed
+    - User Favorites Page Developed
+    - Database Updates ( to Previous WDL Team Database )
+        - Added Tables and Intersection Tables
+        - Establishing Relationships
+        - Data Reorganization
+    - User Authentication
+    - Search Bar Functionality
+    - Hamburger Menu
+    - Forgot Password Functionality ( including Forgot Password and Update Password Pages )
+
+3. John
+    - Figma Page Prototyping
+    - Home Page Development
+    - Login Page Developed
+    - Search Page Developed
+    - Account Recovery Page Developed
+    - Stats Page Link and Display ( in Development Currently )
+    - Page Connections Established
+    - About Us Page Updated and Fixed
+
+4. Sam
+    - Database User Favorites Table
+    - Register Page
+    - "Like" Feature Functionality
+    - Error Handling 
+    - Filter Functionality
