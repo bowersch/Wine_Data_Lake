@@ -12,9 +12,8 @@ Project is live at [ Wine Data Lake ](https://winedatalake.com)
 - User gets logged out moving between pages
 - Home page scales unevenly
 - Web Server crashes when SQL errors occur
-- Bad Gateway (502) on /forgot-password
 
-## Not Implemented
+## Not Yet Implemented
 
 - Tech Sheet Upload Functionality
 
