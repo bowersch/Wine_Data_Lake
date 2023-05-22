@@ -16,6 +16,7 @@ Project is live at [ Wine Data Lake ](https://winedatalake.com)
 ## Not Yet Implemented
 
 - Tech Sheet Upload Functionality
+- Data Visualization Page
 
 ## Code Style
 
