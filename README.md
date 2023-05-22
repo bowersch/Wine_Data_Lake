@@ -109,7 +109,7 @@ widedatalake.com/api
 
 ## Tasks Completed by Each Team Member
 
-1. Austin
+#### 1. Austin
     - Wine Entry Page Developed
     - Wine Search Results Page Developed
     - Google Cloud Setup 
@@ -125,7 +125,7 @@ widedatalake.com/api
     - API Router Development
     - Keyword Search
 
-2. Chelsea
+#### 2. Chelsea
     - Directory Page Developed
     - User Favorites Page Developed
     - Database Updates ( to Previous WDL Team Database )
@@ -137,7 +137,7 @@ widedatalake.com/api
     - Hamburger Menu
     - Forgot Password Functionality ( including Forgot Password and Update Password Pages )
 
-3. John
+#### 3. John
     - Figma Page Prototyping
     - Home Page Development
     - Login Page Developed
@@ -147,7 +147,7 @@ widedatalake.com/api
     - Page Connections Established
     - About Us Page Updated and Fixed
 
-4. Sam
+#### 4. Sam
     - Database User Favorites Table
     - Register Page
     - "Like" Feature Functionality
