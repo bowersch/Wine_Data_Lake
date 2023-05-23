@@ -637,7 +637,7 @@ async function sendEmail(email, token) {
         to: email,
         subject: "Reset Password Link",
         text: "This email is for your reset password link.", 
-        html: '<p> Here is the link to reset your password. The link will expire in 15 minutes. <br> <a href="http://localhost:8080/update-password/' + token + '">Reset Password</a>'
+        html: '<p> Here is the link to reset your password. The link will expire in 15 minutes. <br> <a href="http://winedatalake.com/update-password/' + token + '">Reset Password</a>'
     }
 
     sender.sendMail(message, function(error, info) {
