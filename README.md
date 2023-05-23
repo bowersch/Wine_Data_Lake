@@ -11,7 +11,10 @@ Project is live at [ Wine Data Lake ](https://winedatalake.com)
 - Search results page loads continuously
 - User gets logged out moving between pages
 - Home page scales unevenly
+- Minor cosmetic issues
 - Web Server crashes when SQL errors occur
+- Cookie / IP checker pops up on every page
+- Forgot Password Bad Gateway (502) error
 
 ## Not Yet Implemented
 
