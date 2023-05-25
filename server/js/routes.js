@@ -20,6 +20,11 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
         res.redirect('/');
     })
 
+    app.get("/login", (req, res, next) => {
+        res.locals.pack.template = 'login';
+        res.locals.pack.config.css = ['login.css'];
+        next();
+    });
 
     app.get("/logout", (req, res) => {
         req.logout(req.user, err => {
