@@ -2,7 +2,6 @@ const axios = require('axios')
 const parser = require('body-parser');
 const randtoken = require('rand-token');
 const nodemailer = require('nodemailer');
-const email_sender = require("../email_sender.json");
 
 const jsonParser = parser.json();
 
@@ -626,14 +625,14 @@ async function sendEmail(email, token) {
         },
         auth: {
             //need to add the sender's email(user) and password 
-            user: email_sender.user,
-            pass: email_sender.pass
+            user: "winedatalake@outlook.com",
+            pass: "wine123data456"
         },
-        from: email_sender.user
+        from: "winedatalake@outlook.com"
     });
 
     let message = {
-        from: email_sender.user,
+        from: "winedatalake@outlook.com",
         to: email,
         subject: "Reset Password Link",
         text: "This email is for your reset password link.", 
