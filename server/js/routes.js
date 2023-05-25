@@ -15,14 +15,15 @@ module.exports = function(app, client, queryHelper, passport, bcrypt, flash, pop
         next();
     });
 
-    app.post('/cookiesOK', (req, res) => {
-        req.session.cookiesOK = 'true';
-        res.redirect('/');
-    })
-
     app.get("/login", (req, res, next) => {
         res.locals.pack.template = 'login';
         res.locals.pack.config.css = ['login.css'];
+        next();
+    });
+
+    app.get("/register", (req, res, next) => {
+        res.locals.pack.template = 'register';
+        res.locals.pack.config.css = ['register.css'];
         next();
     });
 
