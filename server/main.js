@@ -64,7 +64,8 @@ secrets.getSecret('DB_USER').then(user => { secrets.getSecret('DB_PASS').then(pa
                     css: null,
                     js: null,
                     data: null,
-                    user: req.session.passport ? req.session.passport.user.username : null
+                    user: req.session.passport ? req.session.passport.user.username : null,
+                    cookiesOK: req.session.cookiesOK ? req.session.cookiesOK : null
                 }
             };
             next();
