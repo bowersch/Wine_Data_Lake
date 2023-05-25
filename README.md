@@ -11,10 +11,14 @@ Project is live at [ Wine Data Lake ](https://winedatalake.com)
 - Search results page loads continuously
 - User gets logged out moving between pages
 - Home page scales unevenly
+- Minor cosmetic issues
 - Web Server crashes when SQL errors occur
+- Cookie / IP checker pops up on every page
+- Forgot Password Bad Gateway (502) error
 
 ## Not Yet Implemented
 
+- Winery Account Management System
 - Tech Sheet Upload Functionality
 - Data Visualization Page
 
@@ -54,8 +58,6 @@ Homepage/Search
 - Mathematical analysis of user metadata to determine which wines/attributes are most popular among users
 - Publicly accessible API, allowing third-party services to query wine data from the database
 - Publicly available cloud hosting of wine tech sheets, that users are able to read and download
-- Winery account management system, where winery owners can view metrics about their wine releases
-- The ability for wineries to upload their own data to the database, via webpage as well as API
 - A system to recommend new wines to users based on their history and meta-data on the website
 
 ## Installations

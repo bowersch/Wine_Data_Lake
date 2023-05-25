@@ -141,6 +141,7 @@
     min-width: 164px;
     text-align: center;
     white-space: nowrap;
+    border: none;
 }
 
 .valign-text-middle {
